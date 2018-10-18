@@ -13,13 +13,13 @@ The purpose of this project it to provide a interface to IndySDK that is
 easy to consume and implementation following SOLID engineering principles. 
 
 # LICENSE
-MIT
+MIT  
 Apache 2.0
 
 
 # STRUCTURE
-IndyDotNet - library
-Test - integration level tests.  See Testing.MD for details on how to set that up
+IndyDotNet - library  
+Test - integration level tests.  See Testing.MD for details on how to set that up  
 Demo - runnable demos of IndyDotNet (future work)
 
 
