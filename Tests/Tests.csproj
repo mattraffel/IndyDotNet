@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
 
-    <IsPackable>false</IsPackable>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IndyDotNet\IndyDotNet.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PoolTests\" />
   </ItemGroup>
 </Project>
