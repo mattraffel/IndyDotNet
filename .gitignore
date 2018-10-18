@@ -1,3 +1,4 @@
+.gitignore.swp
 bin/
 indy-sdk-dotnet/
 obj/
