@@ -1,0 +1,4 @@
+bin/
+indy-sdk-dotnet/
+obj/
+.vs/
