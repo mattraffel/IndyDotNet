@@ -18,7 +18,7 @@ Apache 2.0
 
 
 # STRUCTURE
-IndyDotNet - library 
+IndyDotNet - library
 Test - integration level tests.  See Testing.MD for details on how to set that up
 Demo - runnable demos of IndyDotNet (future work)
 
