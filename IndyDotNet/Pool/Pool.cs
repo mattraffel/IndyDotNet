@@ -45,6 +45,7 @@ namespace IndyDotNet.Pool
 
         public string Name { get; protected internal set; }
         public string GenesisFileName { get; protected internal set; }
+        public int ProtocolVersion { get; protected internal set; }
 
         public void Close()
         {
@@ -53,6 +54,7 @@ namespace IndyDotNet.Pool
 
         public void Create()
         {
+            PoolAsync.SetProtocolVersionAsync(ProtocolVersion).Wait();
             PoolAsync.CreatePoolLedgerConfigAsync(Name, CreateConfigJson()).Wait();
         }
 
@@ -74,6 +76,8 @@ namespace IndyDotNet.Pool
         #region private methods
         private string CreateConfigJson() 
         {
+            if (null == GenesisFileName) return null;
+
             return "{ \"genesis_txn\" : \"" + GenesisFileName + "\" }";
         }
         #endregion
