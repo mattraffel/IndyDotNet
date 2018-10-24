@@ -11,12 +11,12 @@ namespace IndyDotNet.Pool
     public interface IPool : IDisposable
     {
         /// <summary>
-        /// Gets the name.
+        /// The pool name.
         /// </summary>
         /// <value>The name.</value>
         string Name { get; }
         /// <summary>
-        /// Gets the name of the genesis file.
+        /// The name of the genesis file.
         /// </summary>
         /// <value>The name of the genesis file.</value>
         string GenesisFileName { get; }
