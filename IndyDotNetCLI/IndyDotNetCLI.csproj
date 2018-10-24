@@ -9,4 +9,11 @@
     <ProjectReference Include="..\IndyDotNet\IndyDotNet.csproj" />
     <ProjectReference Include="..\DotNetPay\DotNetPay.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Terminal.Gui" Version="0.16.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
 </Project>
