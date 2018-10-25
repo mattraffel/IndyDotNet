@@ -1,7 +1,6 @@
 ﻿using System;
 using Terminal.Gui;
-using Hyperledger.Indy.PoolApi;
-
+using IndyDotNet.Pool;
 
 namespace IndyDotNetCLI.Views
 {
@@ -23,9 +22,10 @@ namespace IndyDotNetCLI.Views
         {
             try
             {
-                Pool.CreatePoolLedgerConfigAsync("nameTBD", null).Wait(5000);
+                IPool pool = Factory.GetPool("name");
+                pool.Create();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Query(70, 7, "Pool Create Failed", $"Error: {ex.Message}", "Ok");
             }
@@ -33,7 +33,7 @@ namespace IndyDotNetCLI.Views
 
         private void OpenPool() 
         {
-
+            MessageBox.Query(50, 7, "Menu Selected", "Open", "Yes");
         }
 
         private void ClosePool()
