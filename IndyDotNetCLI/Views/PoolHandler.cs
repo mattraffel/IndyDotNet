@@ -22,8 +22,14 @@ namespace IndyDotNetCLI.Views
         {
             try
             {
-                IPool pool = Factory.GetPool("name");
-                pool.Create();
+                EditDialog dlg = new EditDialog("Open Pool", "Enter pool name:");
+                var dlgResults = dlg.Show();
+                if (1 == dlgResults.Item1)
+                {
+                    IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
+                    pool.Create();
+                }
+
             }
             catch(Exception ex)
             {
