@@ -9,16 +9,19 @@ developers to know the intrisic details of IndySDK, explicitly needing to know t
 contracts.  Not necessarily a bad thing, but _it does make it every unfriendly
 and difficult to use._ 
 
-We believe there is a better implementation.  IndyDotNet (this project) is 
-truly object oriented and follows SOLID principles.  The benefits (and goals) 
-of this implementation are:
+We believe there is a better implementation.  No offense to all the hard working people
+contributing to IndySDK .NET wrapper, but it's just time for something better.  
+
+IndyDotNet (this project) benefits (and goals) of this implementation are:
 - Work with defined types. No need to understand the data contracts and json structure.
 - Make calls synchronously or asynchronously as you need with ease. 
-No need to make ever call asynchronous
-- Better compatibility between IndySDK versions. Updates in IndySDK API will 
-isolate breaking changes much better than the other wrapper, thereby making your projects less fragile.
-- Better error messages
-
+No need to make ever call asynchronous needlessly.
+- Much better isolatation of the IndySDK API resulting in your projects being less fragile.
+- Better compatibility between IndySDK versions.
+- Better error messages.
+- More intutitive CLI implementation.
+- DotNetPay serves as an example for implementing specific Indy SDK Payment API.
+- For you developers, a true object oriented implementation that follows SOLID principles.
 
 # LICENSE
 MIT  
