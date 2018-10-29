@@ -14,9 +14,10 @@ namespace IndyDotNetCLI.Views
         public MenuBarItem CreateMenu()
         {
             return new MenuBarItem("_Pool", new MenuItem[] {
-                new MenuItem ("_Create", "", () => { CreatePool(); }),
-                new MenuItem ("_Open", "", () => { OpenPool(); }),
-                new MenuItem ("_Close", "", () => { ClosePool(); })
+                new MenuItem("_Create", "", () => { CreatePool(); }),
+                new MenuItem("_Open", "", () => { OpenPool(); }),
+                new MenuItem("_Close", "", () => { ClosePool(); }),
+                new MenuItem("_List", "", () => { ListPools();})
             });
         }
         #endregion
@@ -74,6 +75,19 @@ namespace IndyDotNetCLI.Views
             catch (Exception ex)
             {
                 MessageBox.Query(70, 7, "Pool Close Failed", $"Error: {ex.Message}", "Ok");
+            }
+        }
+
+        private void ListPools()
+        {
+            try
+            {
+                List<IPool> pools = Factory.ListPools();
+                MessageBox.Query(70, 7, "List pools", $"{pools[0].Name}", "Ok");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Query(70, 7, "List Pools Failed", $"Error: {ex.Message}", "Ok");
             }
         }
         #endregion

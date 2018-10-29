@@ -46,6 +46,26 @@ namespace IndyDotNet.Pool
         private static ListPoolsCompletedDelegate ListPoolsCallback = ListPoolsCallbackMethod;
 
         /// <summary>
+        /// Initializes a new Pool instance with the specified handle.
+        /// </summary>
+        /// <param name="handle">The handle of the underlying unmanaged pool.</param>
+        private PoolAsync(IntPtr handle)
+        {
+            Handle = handle;
+            _requiresClose = true;
+        }
+
+        /// <summary>
+        /// Whether or not the close function has been called.
+        /// </summary>
+        private bool _requiresClose = false;
+
+        /// <summary>
+        /// Gets the handle for the pool.
+        /// </summary>
+        internal IntPtr Handle { get; }
+
+        /// <summary>
         /// Creates a new local pool configuration with the specified name that can be used later to open a connection to 
         /// pool nodes.
         /// </summary>
@@ -179,24 +199,33 @@ namespace IndyDotNet.Pool
             return taskCompletionSource.Task;
         }
 
-        /// <summary>
-        /// Whether or not the close function has been called.
-        /// </summary>
-        private bool _requiresClose = false;
-
-        /// <summary>
-        /// Gets the handle for the pool.
-        /// </summary>
-        internal IntPtr Handle { get; }
-
-        /// <summary>
-        /// Initializes a new Pool instance with the specified handle.
-        /// </summary>
-        /// <param name="handle">The handle of the underlying unmanaged pool.</param>
-        private PoolAsync(IntPtr handle)
+        /// <summary> 
+        /// Set PROTOCOL_VERSION to specific version. 
+        /// 
+        /// There is a global property PROTOCOL_VERSION that used in every request to the pool and 
+        /// specified version of Indy Node which Libindy works. 
+        /// 
+        /// By default PROTOCOL_VERSION=1. 
+        /// </summary> 
+        /// <param name="protocolVersion">Protocol version will be used: 
+        /// <c> 
+        ///     1 - for Indy Node 1.3 
+        ///     2 - for Indy Node 1.4 and greater
+        /// </c></param> 
+        public static Task SetProtocolVersionAsync(int protocolVersion)
         {
-            Handle = handle;
-            _requiresClose = true;
+            var taskCompletionSource = new TaskCompletionSource<bool>();
+            var commandHandle = PendingCommands.Add(taskCompletionSource);
+
+            var result = NativeMethods.indy_set_protocol_version(
+                commandHandle,
+                protocolVersion,
+                CallbackHelper.TaskCompletingNoValueCallback
+                );
+
+            CallbackHelper.CheckResult(result);
+
+            return taskCompletionSource.Task;
         }
 
         /// <summary>
@@ -243,35 +272,6 @@ namespace IndyDotNet.Pool
             CallbackHelper.CheckResult(result);
 
             GC.SuppressFinalize(this);
-
-            return taskCompletionSource.Task;
-        }
-
-        /// <summary> 
-        /// Set PROTOCOL_VERSION to specific version. 
-        /// 
-        /// There is a global property PROTOCOL_VERSION that used in every request to the pool and 
-        /// specified version of Indy Node which Libindy works. 
-        /// 
-        /// By default PROTOCOL_VERSION=1. 
-        /// </summary> 
-        /// <param name="protocolVersion">Protocol version will be used: 
-        /// <c> 
-        ///     1 - for Indy Node 1.3 
-        ///     2 - for Indy Node 1.4 and greater
-        /// </c></param> 
-        public static Task SetProtocolVersionAsync(int protocolVersion)
-        {
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-            var commandHandle = PendingCommands.Add(taskCompletionSource);
-
-            var result = NativeMethods.indy_set_protocol_version(
-                commandHandle,
-                protocolVersion,
-                CallbackHelper.TaskCompletingNoValueCallback
-                );
-
-            CallbackHelper.CheckResult(result);
 
             return taskCompletionSource.Task;
         }

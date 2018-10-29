@@ -2,6 +2,10 @@
 
 namespace IndyDotNet.Pool
 {
+    /// <summary>
+    /// Implementation of IPool. 
+    /// <see cref="IPool"/> for description of each function
+    /// </summary>
     public class PoolInstance : IPool
     {
         #region constructors/destructors/cleanup
@@ -43,13 +47,17 @@ namespace IndyDotNet.Pool
         #endregion
         #endregion
 
+        private PoolAsync _asyncHandle = null;
+        public IntPtr Handle { get; protected internal set; }
         public string Name { get; protected internal set; }
         public string GenesisFileName { get; protected internal set; }
         public int ProtocolVersion { get; protected internal set; }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            if (null == _asyncHandle) return;
+
+            _asyncHandle.CloseAsync().Wait();
         }
 
         public void Create()
@@ -60,17 +68,20 @@ namespace IndyDotNet.Pool
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            PoolAsync.DeletePoolLedgerConfigAsync(Name).Wait();
         }
 
         public void Open()
         {
-            throw new NotImplementedException();
+            _asyncHandle = PoolAsync.OpenPoolLedgerAsync(Name, CreateConfigJson()).Result;
+            Handle = _asyncHandle.Handle;
         }
 
         public void Refresh()
         {
-            throw new NotImplementedException();
+            if (null == _asyncHandle) return;
+
+            _asyncHandle.RefreshAsync().Wait();
         }
 
         #region private methods

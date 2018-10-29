@@ -11,6 +11,11 @@ namespace IndyDotNet.Pool
     public interface IPool : IDisposable
     {
         /// <summary>
+        /// Pool handle
+        /// </summary>
+        /// <value>The handle.</value>
+        IntPtr Handle { get; }
+        /// <summary>
         /// The pool name.
         /// </summary>
         /// <value>The name.</value>
