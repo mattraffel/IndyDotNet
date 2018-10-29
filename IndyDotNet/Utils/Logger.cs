@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+
 using static IndyDotNet.Utils.NativeMethods;
 
 #if __IOS__
@@ -17,6 +18,30 @@ namespace IndyDotNet.Utils
         {
             // TODO:  need to filter by log level etc
             Debug.WriteLine("Level {0} Target {1} Message {2}", level, target, message);
+
+            var logger = NLog.LogManager.GetCurrentClassLogger();
+            var logMessage = string.Format("{0}:{1} | {2}", file, line, message);
+
+            switch (level)
+            {
+                case 1:
+                    logger.Error(logMessage);
+                    break;
+                case 2:
+                    logger.Warn(logMessage);
+                    break;
+                case 3:
+                    logger.Info(logMessage);
+                    break;
+                case 4:
+                    logger.Debug(logMessage);
+                    break;
+                case 5:
+                    logger.Trace(logMessage);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static LogMessageDelegate LogMessageCallback = LogMessageDelegateMethod;

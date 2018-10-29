@@ -2,7 +2,8 @@
 using Terminal.Gui;
 
 using IndyDotNetCLI.Views;
-
+using NLog.Config;
+using NLog.Targets;
 
 namespace IndyDotNetCLI
 {
@@ -23,8 +24,13 @@ namespace IndyDotNetCLI
 
         static void InitializeLogging()
         {
-            // all logging currently goes to Debug.Console.
-            // for mac os: View -> Pads -> Application Output
+            var config = new LoggingConfiguration();
+            var debuggerTarget = new DebuggerTarget("debugger")
+            {
+                Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception}"
+            };
+            config.AddTarget(debuggerTarget);
+            config.AddRuleForAllLevels(debuggerTarget);
             IndyDotNet.Utils.Logger.Init();
         }
 
