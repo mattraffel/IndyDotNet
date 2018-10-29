@@ -22,9 +22,9 @@ namespace IndyDotNetCLI.Views
         {
             try
             {
-                EditDialog dlg = new EditDialog("Open Pool", "Enter pool name:");
+                EditDialog dlg = new EditDialog("Create Pool", "Enter pool name:");
                 var dlgResults = dlg.Show();
-                if (1 == dlgResults.Item1)
+                if (DialogConstants.OK == dlgResults.Item1)
                 {
                     IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
                     pool.Create();
@@ -39,12 +39,25 @@ namespace IndyDotNetCLI.Views
 
         private void OpenPool() 
         {
-            MessageBox.Query(50, 7, "Menu Selected", "Open", "Yes");
+            try
+            {
+                EditDialog dlg = new EditDialog("Open Pool", "Enter pool name:");
+                var dlgResults = dlg.Show();
+                if (DialogConstants.OK == dlgResults.Item1)
+                {
+                    IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
+                    pool.Open();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Query(70, 7, "Pool Create Failed", $"Error: {ex.Message}", "Ok");
+            }
         }
 
         private void ClosePool()
         {
-            MessageBox.Query(50, 7, "Menu Selected", "Close", "Yes");
         }
 
     }

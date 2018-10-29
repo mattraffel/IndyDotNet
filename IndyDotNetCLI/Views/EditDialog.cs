@@ -4,6 +4,9 @@ using Terminal.Gui;
 
 namespace IndyDotNetCLI.Views
 {
+    /// <summary>
+    /// A generic, single edit field dialog box with OK, cancel buttons.
+    /// </summary>
     public class EditDialog : Window
     {
         private static int PADDING = 1;
@@ -13,6 +16,13 @@ namespace IndyDotNetCLI.Views
         private int _selectedButton = 0;
         private string _data = String.Empty;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title">Title of window</param>
+        /// <param name="message">message appearing in dialog box above the edit field</param>
+        /// <param name="width">width of dialog box, default is 60</param>
+        /// <param name="height">height of dialog box, default is 10</param>
         public EditDialog(string title, string message, int width = 60, int height = 10) : base(title, PADDING)
         {
             X = Pos.Center();
@@ -22,16 +32,18 @@ namespace IndyDotNetCLI.Views
             ColorScheme = Colors.Dialog;
 
             var ok = new Button("Ok");
-            ok.Clicked += delegate {
-                _selectedButton = 1;
-                this.Running = false;
-            };
+            ok.Clicked += delegate
+                {
+                    _selectedButton = DialogConstants.OK;
+                    this.Running = false;
+                };
 
             var cancel = new Button("Cancel");
-            cancel.Clicked += delegate {
-                _selectedButton = 2;
-                this.Running = false;
-            };
+            cancel.Clicked += delegate
+                {
+                    _selectedButton = DialogConstants.CANCEL;
+                    this.Running = false;
+                };
 
             _buttons.Add(ok);
             _buttons.Add(cancel);
@@ -53,6 +65,10 @@ namespace IndyDotNetCLI.Views
             this.Add(_textInput);
         }
 
+        /// <summary>
+        /// Show the edit field dialog
+        /// </summary>
+        /// <returns>int, the button chosen.  1 for OK, 2 for cancel.  string, user inputted data.</returns>
         public (int, string) Show() 
         {
             Application.Run(this);
