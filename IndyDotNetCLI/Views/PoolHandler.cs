@@ -1,11 +1,13 @@
 ﻿using System;
 using Terminal.Gui;
 using IndyDotNet.Pool;
+using System.Collections.Generic;
 
 namespace IndyDotNetCLI.Views
 {
     public class PoolHandler
     {
+        #region public methods
         public PoolHandler()
         { }
 
@@ -17,8 +19,14 @@ namespace IndyDotNetCLI.Views
                 new MenuItem ("_Close", "", () => { ClosePool(); })
             });
         }
+        #endregion
 
-        private void CreatePool() 
+        #region private data
+        private List<IPool> _openPools = new List<IPool>();
+        #endregion
+
+        #region private methods
+        private void CreatePool()
         {
             try
             {
@@ -31,13 +39,13 @@ namespace IndyDotNetCLI.Views
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Query(70, 7, "Pool Create Failed", $"Error: {ex.Message}", "Ok");
             }
         }
 
-        private void OpenPool() 
+        private void OpenPool()
         {
             try
             {
@@ -47,18 +55,28 @@ namespace IndyDotNetCLI.Views
                 {
                     IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
                     pool.Open();
+                    _openPools.Add(pool);
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Query(70, 7, "Pool Create Failed", $"Error: {ex.Message}", "Ok");
+                MessageBox.Query(70, 7, "Pool Open Failed", $"Error: {ex.Message}", "Ok");
             }
         }
 
         private void ClosePool()
         {
+            try 
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Query(70, 7, "Pool Close Failed", $"Error: {ex.Message}", "Ok");
+            }
         }
+        #endregion
 
     }
 }

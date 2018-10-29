@@ -76,7 +76,7 @@ namespace IndyDotNet.Pool
         #region private methods
         private string CreateConfigJson() 
         {
-            if (null == GenesisFileName) return null;
+            if (string.IsNullOrEmpty(GenesisFileName)) return null;
 
             return "{ \"genesis_txn\" : \"" + GenesisFileName + "\" }";
         }

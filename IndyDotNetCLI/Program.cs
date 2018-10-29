@@ -1,6 +1,8 @@
 ﻿using System;
 using Terminal.Gui;
+
 using IndyDotNetCLI.Views;
+
 
 namespace IndyDotNetCLI
 {
@@ -19,8 +21,17 @@ namespace IndyDotNetCLI
             return n == 0;
         }
 
+        static void InitializeLogging()
+        {
+            // all logging currently goes to Debug.Console.
+            // for mac os: View -> Pads -> Application Output
+            IndyDotNet.Utils.Logger.Init();
+        }
+
         static void Main(string[] args)
         {
+            InitializeLogging();
+
             Application.Init();
             var top = Application.Top;
 
@@ -40,7 +51,9 @@ namespace IndyDotNetCLI
                 _poolStatus,
                 _walletStatus,
                 _didStatus,
-                new Label(3, top.Frame.Height - 5, "Press ESC and 9 to activate the menubar"));
+                new Label(3, top.Frame.Height - 5, "Press ESC and 9 to activate the menubar"),
+                new Label(3, top.Frame.Height - 6, System.Reflection.Assembly.GetExecutingAssembly().CodeBase)
+            );
 
             Application.Run();
         }

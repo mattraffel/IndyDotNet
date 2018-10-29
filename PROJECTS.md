@@ -10,3 +10,4 @@
 # 3rd Party Libraries
 - Newtonsoft.Json [website](https://www.nuget.org/packages/Newtonsoft.Json/)
 - Terminal.Gui [website](https://www.nuget.org/packages/Terminal.Gui/)
+- Nlog [website](https://nlog-project.org/)
