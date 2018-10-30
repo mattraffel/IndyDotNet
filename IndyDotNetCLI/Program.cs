@@ -36,10 +36,11 @@ namespace IndyDotNetCLI
 
         static void Main(string[] args)
         {
+
+
             try
             {
                 InitializeLogging();
-
                 IndyDotNet.Utils.Logger.GetLogger().Info("application started");
 
                 Application.Init();
@@ -73,15 +74,11 @@ namespace IndyDotNetCLI
             catch (Exception ex)
             {
                 string errorMessage = $"Fatal Exception kills process: {ex.Message}";
-
-                if (null == IndyDotNet.Utils.Logger.GetLogger())
-                {
-                    Console.WriteLine(errorMessage);
-                }
-                else 
-                {
-                    IndyDotNet.Utils.Logger.GetLogger().Warn(errorMessage);
-                }
+                // since this is a console app, force output to the console because the app is terminating anyways.
+                // this will ensure users have a chance to see the error regardless of logging
+                Console.WriteLine(errorMessage);
+                // and follow through with logger, which could possible blow up :(
+                IndyDotNet.Utils.Logger.GetLogger().Warn(errorMessage);
             }
         }
     }
