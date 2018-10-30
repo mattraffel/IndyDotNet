@@ -15,5 +15,6 @@
     <Folder Include="Pool\" />
     <Folder Include="Utils\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Wallet\" />
   </ItemGroup>
 </Project>
