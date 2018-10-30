@@ -152,12 +152,12 @@ namespace IndyDotNet.Wallet
         ///
         ///   }
         /// </param>
-        public static Task<Wallet> OpenWalletAsync(string config, string credentials)
+        public static Task<WalletAsync> OpenWalletAsync(string config, string credentials)
         {
             ParamGuard.NotNullOrWhiteSpace(config, "config");
             ParamGuard.NotNullOrWhiteSpace(credentials, "credentials");
 
-            var taskCompletionSource = new TaskCompletionSource<Wallet>();
+            var taskCompletionSource = new TaskCompletionSource<WalletAsync>();
             var commandHandle = PendingCommands.Add(taskCompletionSource);
 
             var result = NativeMethods.indy_open_wallet(

@@ -20,5 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PoolTests\" />
+    <Folder Include="WalletTests\" />
   </ItemGroup>
 </Project>
