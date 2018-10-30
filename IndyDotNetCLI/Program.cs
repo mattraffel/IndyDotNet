@@ -36,32 +36,53 @@ namespace IndyDotNetCLI
 
         static void Main(string[] args)
         {
-            InitializeLogging();
+            try
+            {
+                InitializeLogging();
 
-            Application.Init();
-            var top = Application.Top;
+                IndyDotNet.Utils.Logger.GetLogger().Info("application started");
 
-            _mainWindow = new Window(new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1), "IndyDotNet Command Line");
-            top.Add(_mainWindow);
+                Application.Init();
+                var top = Application.Top;
 
-            var menu = new MenuBar(new MenuBarItem[] {
-                new MenuBarItem ("_Application", new MenuItem [] {
-                        new MenuItem ("_Quit", "", () => { if (ConfirmQuit ()) top.Running = false; })
-                    }),
-                _poolHanlder.CreateMenu()
-            });
-            top.Add(menu);
+                _mainWindow = new Window(new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1), "IndyDotNet Command Line");
+                top.Add(_mainWindow);
 
-            // Add some controls
-            _mainWindow.Add(
-                _poolStatus,
-                _walletStatus,
-                _didStatus,
-                new Label(3, top.Frame.Height - 5, "Press ESC and 9 to activate the menubar"),
-                new Label(3, top.Frame.Height - 6, System.Reflection.Assembly.GetExecutingAssembly().CodeBase)
-            );
+                var menu = new MenuBar(new MenuBarItem[] 
+                {
+                    new MenuBarItem ("_Application", new MenuItem [] 
+                        {
+                            new MenuItem ("_Quit", "", () => { if (ConfirmQuit ()) top.Running = false; })
+                        }),
+                        _poolHanlder.CreateMenu()
+                });
+                top.Add(menu);
 
-            Application.Run();
+                // Add some controls
+                _mainWindow.Add(
+                    _poolStatus,
+                    _walletStatus,
+                    _didStatus,
+                    new Label(3, top.Frame.Height - 5, "Press ESC and 9 to activate the menubar"),
+                    new Label(3, top.Frame.Height - 6, System.Reflection.Assembly.GetExecutingAssembly().CodeBase)
+                );
+
+                Application.Run();
+                IndyDotNet.Utils.Logger.GetLogger().Info("application ended");
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Fatal Exception kills process: {ex.Message}";
+
+                if (null == IndyDotNet.Utils.Logger.GetLogger())
+                {
+                    Console.WriteLine(errorMessage);
+                }
+                else 
+                {
+                    IndyDotNet.Utils.Logger.GetLogger().Warn(errorMessage);
+                }
+            }
         }
     }
 }

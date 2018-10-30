@@ -11,6 +11,11 @@ namespace IndyDotNet.Pool
         #region constructors/destructors/cleanup
         protected internal PoolInstance() { }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

@@ -35,7 +35,7 @@ namespace IndyDotNetCLI.Views
                 var dlgResults = dlg.Show();
                 if (DialogConstants.OK == dlgResults.Item1)
                 {
-                    IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
+                    IPool pool = Factory.GetPool($"{dlgResults.Item2}");
                     pool.Create();
                 }
 
@@ -54,7 +54,7 @@ namespace IndyDotNetCLI.Views
                 var dlgResults = dlg.Show();
                 if (DialogConstants.OK == dlgResults.Item1)
                 {
-                    IPool pool = Factory.GetPool($"pool_{dlgResults.Item2}");
+                    IPool pool = Factory.GetPool($"{dlgResults.Item2}");
                     pool.Open();
                     _openPools.Add(pool);
                 }
@@ -83,7 +83,10 @@ namespace IndyDotNetCLI.Views
             try
             {
                 List<IPool> pools = Factory.ListPools();
-                MessageBox.Query(70, 7, "List pools", $"{pools[0].Name}", "Ok");
+
+                ListDialog dialog = new ListDialog("List Pools", "Pools:", pools);
+                dialog.Show();
+
             }
             catch (Exception ex)
             {

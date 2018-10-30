@@ -46,6 +46,12 @@ namespace IndyDotNet.Utils
 
         private static LogMessageDelegate LogMessageCallback = LogMessageDelegateMethod;
 
+        // TODO: abstract this away from client so as to 
+        public static NLog.Logger GetLogger()
+        {
+            return NLog.LogManager.GetCurrentClassLogger();
+        }
+
         public static void Init()
         {
             NativeMethods.indy_set_logger(IntPtr.Zero, null, LogMessageCallback, null);
