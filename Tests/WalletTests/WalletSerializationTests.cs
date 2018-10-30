@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 using IndyDotNet.Wallet;
 using IndyDotNet.Utils;
+using Newtonsoft.Json.Linq;
 
 namespace Tests.WalletTests
 {
@@ -30,8 +31,11 @@ namespace Tests.WalletTests
                         }
                     }";
 
+            var resultObject = JValue.Parse(result);
 
-            Assert.AreEqual(0, string.Compare(json, result), $"json {json} did not match to result {result}");
+            Assert.AreEqual(config.Id, resultObject["id"], "Id did not match");
+            Assert.AreEqual(config.StorageType, resultObject["storage_type"], "StorageType did not match");
+
         }
 
         [TestMethod]
@@ -50,8 +54,10 @@ namespace Tests.WalletTests
                   ""storage_credentials"": ""StorageCredentials""
                   }";
 
+            var resultObject = JValue.Parse(result);
 
-            Assert.AreEqual(0, string.Compare(json, result), $"json {json} did not match to result {result}");
+            Assert.AreEqual(credentials.Key, resultObject["key"], "Key did not match");
+            Assert.AreEqual(credentials.StorageCredentials, resultObject["storage_credentials"], "StorageCredentials did not match");
         }
     }
 
