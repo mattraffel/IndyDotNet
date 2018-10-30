@@ -18,6 +18,7 @@ IndyDotNet (this project) benefits (and goals) of this implementation are:
 No need to make ever call asynchronous needlessly.
 - Much better isolatation of the IndySDK API resulting in your projects being less fragile.
 - Better compatibility between IndySDK versions.
+- Better support on all OSes (dependeny on IndySDK OS hanlding as well, unfortunately)
 - Better error messages.
 - More intutitive CLI implementation.
 - DotNetPay serves as an example for implementing specific Indy SDK Payment API.
