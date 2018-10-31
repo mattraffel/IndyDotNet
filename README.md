@@ -33,8 +33,8 @@ Apache 2.0
 See [PROJECTS.md](PROJECTS.md)
 
 # Project Documentation
-[PROJECTS.md](PROJECTS.md) - describes the projects that make up this repo
-[TESTING.md](TESTING.md) - how to setup environment for running the tests
+[PROJECTS.md](PROJECTS.md) - describes the projects that make up this repo  
+[TESTING.md](TESTING.md) - how to setup environment for running the tests  
 [TODOS.md](TODOS.md) - important engineering topics to be completed 
 
 # See Also
