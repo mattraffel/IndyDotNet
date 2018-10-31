@@ -1,11 +1,14 @@
 ﻿using System;
+
 namespace IndyDotNet.Wallet
 {
     public static class Factory
     {
         public static IWallet GetWallet(WalletConfig config, WalletCredentials credentials)
         {
-            throw new NotImplementedException();
+            IWallet wallet = new WalletInstance(config, credentials);
+
+            return wallet;
         }
     }
 }

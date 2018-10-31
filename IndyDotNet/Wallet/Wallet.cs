@@ -1,4 +1,7 @@
 ﻿using System;
+
+using IndyDotNet.Utils;
+
 namespace IndyDotNet.Wallet
 {
     public class WalletInstance : IWallet
@@ -12,24 +15,33 @@ namespace IndyDotNet.Wallet
             _credentials = credentials;
         }
 
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
+        public void Close() {}
 
         public void Create()
         {
-            throw new NotImplementedException();
+            string config = _config.ToJson();
+            string credentials = _credentials.ToJson();
+
+
+            Logger.Info($"config is {config}");
+            Logger.Info($"credentials is {credentials}");
+
+            WalletAsync.CreateWalletAsync(config, credentials).Wait();
         }
 
         public void Delete()
         {
-            throw new NotImplementedException();
+            string config = _config.ToJson();
+            string credentials = _credentials.ToJson();
+
+            WalletAsync.DeleteWalletAsync(config, credentials).Wait();
         }
 
         public void Open()
         {
-            throw new NotImplementedException();
+            string config = _config.ToJson();
+            string credentials = _credentials.ToJson();
+            WalletAsync.OpenWalletAsync(config, credentials).Wait();
         }
     }
 }

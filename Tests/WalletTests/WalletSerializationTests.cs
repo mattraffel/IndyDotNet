@@ -17,9 +17,12 @@ namespace Tests.WalletTests
             WalletConfig config = new WalletConfig
             {
                 Id = "Id",
-                StorageType = "StorageType"
+                StorageType = "StorageType",
+                StorageConfig = new WalletStorageConfig()
+                {
+                    Path = "Path"
+                }
             };
-            config.StorageConfig.Path = "Path";
 
             string json = config.ToJson();
 

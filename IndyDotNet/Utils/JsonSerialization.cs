@@ -23,7 +23,8 @@ namespace IndyDotNet.Utils
             return JsonConvert.SerializeObject(instance, new JsonSerializerSettings
             {
                 ContractResolver = contractResolver,
-                Formatting = formattingStyle
+                Formatting = formattingStyle,
+                NullValueHandling = NullValueHandling.Ignore
             });
         }
     }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 using IndyDotNet.Pool;
 using Tests.Utils;
-using NLog;
 
 namespace Tests.PoolTests
 {
