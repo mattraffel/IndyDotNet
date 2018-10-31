@@ -2,7 +2,9 @@
 1. IndyDotNetCLI - UI application for running IndyDotNet interactively
 2. IndyDotNet - DotNet library for accessing libindy APIs
 3. DotNetPay - DotNet implementation of LibNullPay (in IndySDK project)
-4. Tests - contains all of the integration style tests for IndyDotNet
+4. Tests - contains tests for IndyDotNet.  The purpose of these tests is not to 
+test IndySDK. Rather the purpose is to prove IndyDotNet correctly communicates
+to IndySDK.
 
 *note* currently DotNetPay is just an empty project.
 
