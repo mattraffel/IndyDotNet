@@ -37,5 +37,10 @@ See [PROJECTS.md](PROJECTS.md)
 [TESTING.md](TESTING.md) - how to setup environment for running the tests  
 [TODOS.md](TODOS.md) - important engineering topics to be completed 
 
+## Acknowledgements
+Thank you to the indy-sdk-dotnet wrapper project members for assistance, even if indirectly
+helping us.  It would have been much more time consuming if we only had the IndySDK 
+rust libraries to rely on for information.
+
 # See Also
 https://github.com/hyperledger/indy-sdk

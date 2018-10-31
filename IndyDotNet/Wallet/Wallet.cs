@@ -7,8 +7,8 @@ namespace IndyDotNet.Wallet
     public class WalletInstance : IWallet
     {
         private WalletAsync _asyncHandle = null;
-        private WalletConfig _config;
-        private WalletCredentials _credentials;
+        private readonly WalletConfig _config;
+        private readonly WalletCredentials _credentials;
 
         protected internal WalletInstance(WalletConfig config, WalletCredentials credentials) 
         {
