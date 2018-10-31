@@ -21,5 +21,6 @@
   <ItemGroup>
     <Folder Include="PoolTests\" />
     <Folder Include="WalletTests\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>

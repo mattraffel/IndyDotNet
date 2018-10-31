@@ -8,7 +8,7 @@ namespace Tests.PoolTests
     public class CreatePoolTests
     {
         [TestMethod]
-        public void CreateDefaultPool()
+        public void CreatePoolWithNoGenesisFileSpecified()
         {
             IPool pool = Factory.GetPool("CreatePool");
             pool.Create();
@@ -16,7 +16,14 @@ namespace Tests.PoolTests
         }
 
         [TestMethod]
-        public void CreateDefaultPoolWithGenesisFile()
+        public void CreatePoolWithInvalidGenesisFile()
+        {
+            IPool pool = Factory.GetPool("CreatePool", "Bob.txn");
+            pool.Create();
+        }
+
+        [TestMethod]
+        public void CreatePoolWithValidGenesisFile()
         {
             IPool pool = Factory.GetPool("CreatePool", "Bob.txn");
             pool.Create();
