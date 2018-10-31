@@ -10,17 +10,20 @@ namespace IndyDotNet.Utils
     /// </summary>
     public static class JsonSerialization
     {
-        public static string ToJson<T>(this T instance)
+        public static string ToJson<T>(this T instance, bool indentedFormatting = false)
         {
             DefaultContractResolver contractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new SnakeCaseNamingStrategy()
             };
 
+            Formatting formattingStyle = (indentedFormatting ? Formatting.Indented : Formatting.None);
+
+
             return JsonConvert.SerializeObject(instance, new JsonSerializerSettings
             {
                 ContractResolver = contractResolver,
-                Formatting = Formatting.Indented
+                Formatting = formattingStyle
             });
         }
     }

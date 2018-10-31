@@ -34,6 +34,8 @@ namespace Tests
             LogManager.Configuration = config;
 
             IndyDotNet.Utils.Logger.Init();
+
+            LogManager.GetCurrentClassLogger().Info("Logging started");
         }
 
         [AssemblyCleanup]

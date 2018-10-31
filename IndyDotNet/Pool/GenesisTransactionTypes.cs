@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace IndyDotNet.Pool
 {
@@ -39,15 +40,19 @@ namespace IndyDotNet.Pool
     /// </summary>
     public class GenesisTransaction
     {
+        [JsonProperty("reqSignature")]
         public ReqSignature reqSignature { get; set; }
         public Txn txn { get; set; }
+        [JsonProperty("txnMetadata")]
         public TxnMetadata txnMetadata { get; set; }
         public string ver { get; set; }
     }
 
     public class TxnMetadata
     {
+        [JsonProperty("seqNo")]
         public int seqNo { get; set; }
+        [JsonProperty("txnId")]
         public string txnId { get; set; }
     }
 

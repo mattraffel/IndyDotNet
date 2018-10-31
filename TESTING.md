@@ -13,3 +13,7 @@ either build or run the docker image.  Run command looks like this
 ```
 docker run -itd -p 9701-9708:9701-9708 indy_pool
 ```
+
+## Alternative to building LibIndy, download stable 1.6.7
+Windows - download [binary](https://repo.sovrin.org/windows/libindy/)
+Ubuntu - download [binary](https://repo.sovrin.org/lib/apt/xenial/)
