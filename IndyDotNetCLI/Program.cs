@@ -41,7 +41,7 @@ namespace IndyDotNetCLI
             try
             {
                 InitializeLogging();
-                IndyDotNet.Utils.Logger.GetLogger().Info("application started");
+                IndyDotNet.Utils.Logger.Info("application started");
 
                 Application.Init();
                 var top = Application.Top;
@@ -69,7 +69,7 @@ namespace IndyDotNetCLI
                 );
 
                 Application.Run();
-                IndyDotNet.Utils.Logger.GetLogger().Info("application ended");
+                IndyDotNet.Utils.Logger.Info("application ended");
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace IndyDotNetCLI
                 // this will ensure users have a chance to see the error regardless of logging
                 Console.WriteLine(errorMessage);
                 // and follow through with logger, which could possible blow up :(
-                IndyDotNet.Utils.Logger.GetLogger().Warn(errorMessage);
+                IndyDotNet.Utils.Logger.Error(errorMessage);
             }
         }
     }
