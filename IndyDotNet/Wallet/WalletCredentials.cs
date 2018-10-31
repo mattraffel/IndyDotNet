@@ -14,16 +14,13 @@ namespace IndyDotNet.Wallet
 
     public class WalletCredentials
     {
-        [JsonProperty("key")]
         public string Key { get; set; }
         public string StorageCredentials { get; set; }
         [JsonProperty("reKey")]
         public string Rekey { get; set; }
-        [JsonProperty("key_derivation_method")]
         [JsonConverter(typeof(StringEnumConverter))]
         public KeyDerivationMethod KeyDerivationMethod { get; set; } = KeyDerivationMethod.ARGON2I_MOD;
-        //[JsonProperty("rekey_derivation_method")]
-        //[JsonConverter(typeof(StringEnumConverter))]
-        //public KeyDerivationMethod RekeyDerivationMethod { get; set; } = KeyDerivationMethod.ARGON2I_MOD;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public KeyDerivationMethod RekeyDerivationMethod { get; set; } = KeyDerivationMethod.ARGON2I_MOD;
     }
 }
