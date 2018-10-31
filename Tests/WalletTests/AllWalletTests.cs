@@ -31,20 +31,17 @@ namespace Tests.WalletTests
         {
             try
             {
-                Logger.Info("deleting genesis files");
                 foreach (string fileName in _filesCreated)
                 {
                     System.IO.File.Delete(fileName);
                 }
 
-                Logger.Info("deleting wallets");
                 foreach (IWallet wallet in _walletsCreated)
                 {
                     wallet.Close();
                     wallet.Delete();
                 }
 
-                Logger.Info("deleting pools");
                 foreach (IPool pool in _poolsCreated)
                 {
                     pool.Close();
@@ -110,6 +107,9 @@ namespace Tests.WalletTests
             wallet.Open();
         }
 
+        /// <summary>
+        /// rm -rf ~/.indy_client/pool && rm -rf ~/.indy_client/wallet
+        /// </summary>
         [TestMethod]
         public void DeleteOpenWalletSuccessfully()
         {
@@ -132,9 +132,8 @@ namespace Tests.WalletTests
 
             IWallet wallet = IndyDotNet.Wallet.Factory.GetWallet(config, credentials);
             wallet.Create();
-            _walletsCreated.Add(wallet);
-
             wallet.Open();
+            wallet.Close();
             wallet.Delete();
         }
     }

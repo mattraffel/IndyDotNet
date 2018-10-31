@@ -6,6 +6,7 @@ namespace IndyDotNet.Wallet
 {
     public class WalletInstance : IWallet
     {
+        private WalletAsync _asyncHandle = null;
         private WalletConfig _config;
         private WalletCredentials _credentials;
 
@@ -15,7 +16,13 @@ namespace IndyDotNet.Wallet
             _credentials = credentials;
         }
 
-        public void Close() {}
+        public void Close() 
+        {
+            if (null == _asyncHandle) return;
+
+            _asyncHandle.CloseAsync().Wait();
+            _asyncHandle = null;
+        }
 
         public void Create()
         {
@@ -41,7 +48,7 @@ namespace IndyDotNet.Wallet
         {
             string config = _config.ToJson();
             string credentials = _credentials.ToJson();
-            WalletAsync.OpenWalletAsync(config, credentials).Wait();
+            _asyncHandle = WalletAsync.OpenWalletAsync(config, credentials).Result;
         }
     }
 }
