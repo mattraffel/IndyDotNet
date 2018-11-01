@@ -12,6 +12,17 @@ namespace IndyDotNet.Did
         /// 
         /// </summary>
         string VerKey { get; }
+
+        /// <summary>
+        /// Abbreviateds the ver key.
+        /// Maps to AbbreviateVerkeyAsync
+        /// </summary>
+        /// <returns>The ver key.</returns>
+        string AbbreviatedVerKey();
+        /// <summary>
+        /// Maps to CreateAndStoreMyDidAsync
+        /// </summary>
+        void Create(IdentitySeed seed);
     }
 
     public interface IEndPoint

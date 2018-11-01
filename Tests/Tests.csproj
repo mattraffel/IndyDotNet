@@ -22,5 +22,6 @@
     <Folder Include="PoolTests\" />
     <Folder Include="WalletTests\" />
     <Folder Include="Utils\" />
+    <Folder Include="DidTests\" />
   </ItemGroup>
 </Project>

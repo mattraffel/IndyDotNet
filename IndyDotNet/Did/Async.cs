@@ -413,74 +413,6 @@ namespace IndyDotNet.Did
         }
 
         /// <summary>
-        /// Sets the endpoint details for the specified DID.
-        /// </summary>
-        /// <param name="wallet">The wallet containing the DID.</param>
-        /// <param name="did">The DID to set the endpoint details on.</param>
-        /// <param name="address">The address of the endpoint.</param>
-        /// <param name="transportKey">The transport key.</param>
-        /// <returns>An asynchronous <see cref="Task"/> that completes when the operation completes.</returns>
-        /// <exception cref="InvalidStructureException">Thrown if the <paramref name="did"/> or <paramref name="transportKey"/> values are malformed.</exception>
-        public static Task SetEndpointForDidAsync(IWallet wallet, string did, string address, string transportKey)
-        {
-            ParamGuard.NotNull(wallet, "wallet");
-            ParamGuard.NotNullOrWhiteSpace(did, "did");
-            ParamGuard.NotNullOrWhiteSpace(address, "address");
-            ParamGuard.NotNullOrWhiteSpace(transportKey, "transportKey");
-
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-            var commandHandle = PendingCommands.Add(taskCompletionSource);
-
-            var commandResult = NativeMethods.indy_set_endpoint_for_did(
-                commandHandle,
-                wallet.Handle,
-                did,
-                address,
-                transportKey,
-                CallbackHelper.TaskCompletingNoValueCallback
-                );
-
-            CallbackHelper.CheckResult(commandResult);
-
-            return taskCompletionSource.Task;
-        }
-
-        /// <summary>
-        /// Gets the endpoint details for the specified DID.
-        /// </summary>
-        /// <remarks>
-        /// If the <paramref name="did"/> is present in the <paramref name="wallet"/> and is considered "fresh" then
-        /// the endpoint will be resolved from the wallet.  If, on the other hand, the DID is not present in the wallet or
-        /// is not fresh then the details will be resolved from the <paramref name="pool"/> and will be cached in the wallet.
-        /// </remarks>
-        /// <param name="pool">The pool to resolve the endpoint data from if not present in the wallet.</param>
-        /// <param name="wallet">The wallet containing the DID.</param>
-        /// <param name="did">The DID to get the endpoint data for.</param>
-        /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to an <see cref="EndpointForDidResult"/> containing the endpoint information 
-        /// associated with the DID.</returns>
-        public static Task<EndpointForDidResult> GetEndpointForDidAsync(IPool pool, IWallet wallet, string did)
-        {
-            ParamGuard.NotNull(wallet, "wallet");
-            ParamGuard.NotNull(pool, "pool");
-            ParamGuard.NotNullOrWhiteSpace(did, "did");
-
-            var taskCompletionSource = new TaskCompletionSource<EndpointForDidResult>();
-            var commandHandle = PendingCommands.Add(taskCompletionSource);
-
-            var commandResult = NativeMethods.indy_get_endpoint_for_did(
-                commandHandle,
-                wallet.Handle,
-                pool.Handle,
-                did,
-                GetEndpointForDidCompletedCallback
-                );
-
-            CallbackHelper.CheckResult(commandResult);
-
-            return taskCompletionSource.Task;
-        }
-
-        /// <summary>
         /// Sets metadata for the specified DID.
         /// </summary>
         /// <remarks>
@@ -615,6 +547,76 @@ namespace IndyDotNet.Did
 
             return taskCompletionSource.Task;
         }
+
+        #region Endpoint methods
+        /// <summary>
+        /// Sets the endpoint details for the specified DID.
+        /// </summary>
+        /// <param name="wallet">The wallet containing the DID.</param>
+        /// <param name="did">The DID to set the endpoint details on.</param>
+        /// <param name="address">The address of the endpoint.</param>
+        /// <param name="transportKey">The transport key.</param>
+        /// <returns>An asynchronous <see cref="Task"/> that completes when the operation completes.</returns>
+        /// <exception cref="InvalidStructureException">Thrown if the <paramref name="did"/> or <paramref name="transportKey"/> values are malformed.</exception>
+        public static Task SetEndpointForDidAsync(IWallet wallet, string did, string address, string transportKey)
+        {
+            ParamGuard.NotNull(wallet, "wallet");
+            ParamGuard.NotNullOrWhiteSpace(did, "did");
+            ParamGuard.NotNullOrWhiteSpace(address, "address");
+            ParamGuard.NotNullOrWhiteSpace(transportKey, "transportKey");
+
+            var taskCompletionSource = new TaskCompletionSource<bool>();
+            var commandHandle = PendingCommands.Add(taskCompletionSource);
+
+            var commandResult = NativeMethods.indy_set_endpoint_for_did(
+                commandHandle,
+                wallet.Handle,
+                did,
+                address,
+                transportKey,
+                CallbackHelper.TaskCompletingNoValueCallback
+                );
+
+            CallbackHelper.CheckResult(commandResult);
+
+            return taskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// Gets the endpoint details for the specified DID.
+        /// </summary>
+        /// <remarks>
+        /// If the <paramref name="did"/> is present in the <paramref name="wallet"/> and is considered "fresh" then
+        /// the endpoint will be resolved from the wallet.  If, on the other hand, the DID is not present in the wallet or
+        /// is not fresh then the details will be resolved from the <paramref name="pool"/> and will be cached in the wallet.
+        /// </remarks>
+        /// <param name="pool">The pool to resolve the endpoint data from if not present in the wallet.</param>
+        /// <param name="wallet">The wallet containing the DID.</param>
+        /// <param name="did">The DID to get the endpoint data for.</param>
+        /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to an <see cref="EndpointForDidResult"/> containing the endpoint information 
+        /// associated with the DID.</returns>
+        public static Task<EndpointForDidResult> GetEndpointForDidAsync(IPool pool, IWallet wallet, string did)
+        {
+            ParamGuard.NotNull(wallet, "wallet");
+            ParamGuard.NotNull(pool, "pool");
+            ParamGuard.NotNullOrWhiteSpace(did, "did");
+
+            var taskCompletionSource = new TaskCompletionSource<EndpointForDidResult>();
+            var commandHandle = PendingCommands.Add(taskCompletionSource);
+
+            var commandResult = NativeMethods.indy_get_endpoint_for_did(
+                commandHandle,
+                wallet.Handle,
+                pool.Handle,
+                did,
+                GetEndpointForDidCompletedCallback
+                );
+
+            CallbackHelper.CheckResult(commandResult);
+
+            return taskCompletionSource.Task;
+        }
+        #endregion
     }
 
 }

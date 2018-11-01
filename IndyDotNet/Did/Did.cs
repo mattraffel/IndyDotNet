@@ -1,5 +1,6 @@
 ﻿using System;
 using IndyDotNet.Pool;
+using IndyDotNet.Utils;
 using IndyDotNet.Wallet;
 
 namespace IndyDotNet.Did
@@ -17,5 +18,18 @@ namespace IndyDotNet.Did
 
         public string Did { get; internal set; }
         public string VerKey { get; internal set; }
+
+        public string AbbreviatedVerKey()
+        {
+            return DidAsync.AbbreviateVerkeyAsync(Did, VerKey).Result;
+        }
+
+        public void Create(IdentitySeed seed)
+        {
+            CreateAndStoreMyDidResult result = DidAsync.CreateAndStoreMyDidAsync(_wallet, seed.ToJson()).Result;
+
+            Did = result.Did;
+            VerKey = result.VerKey;
+        }
     }
 }
