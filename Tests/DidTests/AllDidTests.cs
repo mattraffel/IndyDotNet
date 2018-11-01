@@ -132,7 +132,8 @@ namespace Tests.DidTests
 
             List<IDid> dids = IndyDotNet.Did.Factory.GetAllDids(_pool, _wallet);
 
-            Assert.IsTrue(false);
+            Assert.IsNotNull(dids, "list was empty");
+            Assert.IsTrue(0 < dids.Count, "Exptected to have more than 0 dids in list");
         }
     }
 }

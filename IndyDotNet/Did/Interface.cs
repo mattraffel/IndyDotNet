@@ -14,6 +14,12 @@ namespace IndyDotNet.Did
         string VerKey { get; }
 
         /// <summary>
+        /// Gets the metadata.
+        /// </summary>
+        /// <value>The metadata.</value>
+        string Metadata { get; }
+
+        /// <summary>
         /// Abbreviateds the ver key.
         /// Maps to AbbreviateVerkeyAsync
         /// </summary>
