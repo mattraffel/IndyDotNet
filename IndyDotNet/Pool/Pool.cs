@@ -6,7 +6,7 @@ namespace IndyDotNet.Pool
     /// Implementation of IPool. 
     /// <see cref="IPool"/> for description of each function
     /// </summary>
-    public class PoolInstance : IPool
+    internal class PoolInstance : IPool
     {
         #region constructors/destructors/cleanup
         protected internal PoolInstance() { }

@@ -10,7 +10,7 @@ namespace IndyDotNet.Wallet
     /// Facade to the async methods.
     /// <see cref="IWallet"/> for description of each function
     /// </summary>
-    public class WalletInstance : IWallet
+    internal class WalletInstance : IWallet
     {
         private WalletAsync _asyncHandle = null;
         private readonly WalletConfig _config;
