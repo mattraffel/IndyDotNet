@@ -20,17 +20,17 @@ namespace IndyDotNet.Pool
         {
             List<IPool> pools = new List<IPool>();
 
-            var poolJson = JArray.Parse(PoolAsync.ListPoolsAsync().Result);
+            var poolArray = JArray.Parse(PoolAsync.ListPoolsAsync().Result);
 
             /*
                  json will be like this: [{\"pool\":\"qPKbDswvLm\"},{\"pool\":\"m4f5A8ADMk\"}
                  we want to convert those into IPool instances
              */
-            foreach (var ugh in poolJson)
+            foreach (var onePool in poolArray)
             {
                 IPool pool = new PoolInstance()
                 {
-                    Name = ugh["pool"].ToString()
+                    Name = onePool["pool"].ToString()
                 };
 
                 pools.Add(pool);

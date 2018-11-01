@@ -136,5 +136,42 @@ namespace Tests.WalletTests
             wallet.Close();
             wallet.Delete();
         }
+
+        [TestMethod]
+        public void ExportWalletSuccessfully()
+        {
+            IPool pool = IndyDotNet.Pool.Factory.GetPool("DeleteCreatedWalletPool", _genesisFileName);
+            pool.Create();
+            pool.Open();
+
+            _poolsCreated.Add(pool);
+
+            WalletConfig config = new WalletConfig()
+            {
+                Id = "DeleteCreateWalletID"
+            };
+
+            WalletCredentials credentials = new WalletCredentials()
+            {
+                Key = "8dvfYSt5d1taSd6yJdpjq4emkwsPDDLYxkNFysFD2cZY",
+                KeyDerivationMethod = KeyDerivationMethod.RAW
+            };
+
+            IWallet wallet = IndyDotNet.Wallet.Factory.GetWallet(config, credentials);
+            wallet.Create();
+            wallet.Open();
+            _walletsCreated.Add(wallet);
+
+            WalletImportExportConfig exportConfig = new WalletImportExportConfig()
+            {
+                Key = "8dvfYSt5d1taSd6yJdpjq4emkwsPDDLYxkNFysFD2cZY",
+                Path = System.IO.Path.GetTempFileName()
+            };
+
+            wallet.Export(exportConfig);
+            _filesCreated.Add(exportConfig.Path);
+
+            Assert.IsTrue(System.IO.File.Exists(exportConfig.Path));
+        }
     }
 }

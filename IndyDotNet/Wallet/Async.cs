@@ -10,7 +10,7 @@ namespace IndyDotNet.Wallet
     /// Represents a wallet that stores key value records and provides static methods for managing
     /// wallets.
     /// </summary>
-    public sealed class WalletAsync : IDisposable
+    internal sealed class WalletAsync : IDisposable
     {
         /// <summary>
         /// Gets the callback to use when a wallet open command has completed.
@@ -99,21 +99,6 @@ namespace IndyDotNet.Wallet
             return taskCompletionSource.Task;
         }
 
-        ///// <summary>
-        ///// Same as CreateWalletAsync(string config, string credentials)
-        ///// </summary>
-        ///// <returns>The wallet async.</returns>
-        ///// <param name="config">Config.</param>
-        ///// <param name="cred">Cred.</param>
-        //public static Task CreateWalletAsync(WalletConfig config, Credentials cred) 
-        //{
-        //    var json = new JavaScriptSerializer().Serialize(obj);
-        //    string configStr = JsonConvert.SerializeObject(config, Formatting.Indented); 
-        //    string credStr = JsonConvert.SerializeObject(cred, Formatting.Indented);
-
-        //    return CreateWalletAsync(configStr, credStr);
-        //}
-
         /// <summary>
         /// Open the wallet.
         ///
@@ -165,55 +150,6 @@ namespace IndyDotNet.Wallet
                 config,
                 credentials,
                 OpenWalletCallback
-                );
-
-            CallbackHelper.CheckResult(result);
-
-            return taskCompletionSource.Task;
-        }
-
-        ///// <summary>
-        ///// Same as OpenWalletAsync(string config, string credentials)
-        ///// </summary>
-        ///// <returns>The wallet async.</returns>
-        ///// <param name="config">Config.</param>
-        ///// <param name="cred">Cred.</param>
-        //public static Task<Wallet> OpenWalletAsync(WalletConfig config, Credentials cred) 
-        //{
-        //    string configStr = JsonConvert.SerializeObject(config, Formatting.Indented);
-        //    string credStr = JsonConvert.SerializeObject(cred, Formatting.Indented);
-
-        //    return OpenWalletAsync(configStr, credStr);
-        //}
-
-        /// <summary>
-        /// Exports opened wallet
-        ///
-        /// Note this endpoint is EXPERIMENTAL. Function signature and behaviour may change
-        /// in the future releases.
-        /// </summary>
-        /// <returns>The async.</returns>
-        /// <param name="exportConfig">
-        /// <code>
-        /// JSON containing settings for input operation.
-        ///   {
-        ///     "path": &lt;string>, Path of the file that contains exported wallet content
-        ///     "key": &lt;string>, Passphrase used to derive export key
-        ///   }
-        /// </code>
-        /// </param>
-        public Task ExportAsync(string exportConfig)
-        {
-            ParamGuard.NotNullOrWhiteSpace(exportConfig, "exportConfig");
-
-            var taskCompletionSource = new TaskCompletionSource<bool>();
-            var commandHandle = PendingCommands.Add(taskCompletionSource);
-
-            var result = NativeMethods.indy_export_wallet(
-                commandHandle,
-                this.Handle,
-                exportConfig,
-                CallbackHelper.TaskCompletingNoValueCallback
                 );
 
             CallbackHelper.CheckResult(result);
@@ -372,6 +308,41 @@ namespace IndyDotNet.Wallet
         {
             Handle = handle;
             _requiresClose = true;
+        }
+
+        /// <summary>
+        /// Exports opened wallet
+        ///
+        /// Note this endpoint is EXPERIMENTAL. Function signature and behaviour may change
+        /// in the future releases.
+        /// </summary>
+        /// <returns>The async.</returns>
+        /// <param name="exportConfig">
+        /// <code>
+        /// JSON containing settings for input operation.
+        ///   {
+        ///     "path": &lt;string>, Path of the file that contains exported wallet content
+        ///     "key": &lt;string>, Passphrase used to derive export key
+        ///   }
+        /// </code>
+        /// </param>
+        public Task ExportAsync(string exportConfig)
+        {
+            ParamGuard.NotNullOrWhiteSpace(exportConfig, "exportConfig");
+
+            var taskCompletionSource = new TaskCompletionSource<bool>();
+            var commandHandle = PendingCommands.Add(taskCompletionSource);
+
+            var result = NativeMethods.indy_export_wallet(
+                commandHandle,
+                this.Handle,
+                exportConfig,
+                CallbackHelper.TaskCompletingNoValueCallback
+                );
+
+            CallbackHelper.CheckResult(result);
+
+            return taskCompletionSource.Task;
         }
 
         /// <summary>

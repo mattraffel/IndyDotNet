@@ -5,7 +5,6 @@ namespace IndyDotNet.Pool
     /// Instance methods for a pool.   
     /// 
     /// TODO: are these static methods, instance or what?
-    /// ListPools
     /// SetProtocolVersion
     /// </summary>
     public interface IPool : IDisposable
