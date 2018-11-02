@@ -135,5 +135,34 @@ namespace Tests.DidTests
             Assert.IsNotNull(dids, "list was empty");
             Assert.IsTrue(0 < dids.Count, "Exptected to have more than 0 dids in list");
         }
+
+        [TestMethod]
+        public void OpenDidSuccessfully()
+        {
+            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
+
+            IdentitySeed seed = new IdentitySeed()
+            {
+                Seed = "00000000000000000000000000000My1"
+            };
+
+            did.Create(seed);
+
+            IDid did2 = IndyDotNet.Did.Factory.GetDid(_pool, _wallet, did.Did);
+            did2.Open();
+
+            Assert.AreEqual(did.Did, did2.Did, "Dids are not the same");
+            Assert.AreEqual(did.VerKey, did2.VerKey, "VerKey are not the same");
+            Assert.AreEqual(did.TempVerKey, did2.TempVerKey, "TempVerKey are not the same");
+        }
+
+        [TestMethod]
+        public void SaveDidSuccessfully()
+        {
+            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet, "CnEDk9HrMnmiHXEV1WFgbVCRteYnPqsJwrTdcZaNhFVW", "GjZWsBLgZCR18aL468JAT7w9CZRiBnpxUPPgyQxh4voa");
+
+            did.Save();
+
+        }
     }
 }
