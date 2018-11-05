@@ -10,6 +10,23 @@ namespace IndyDotNet.Did
     public static class Factory
     {
 
+        #region IMetaDataFactory
+        /// <summary>
+        /// Gets or sets the meta data factory.
+        /// </summary>
+        /// <value>The meta data factory.</value>
+        // public static IMetaDataFactory MetaDataFactory { get; set; } 
+
+        /// <summary>
+        /// Initializes the <see cref="T:IndyDotNet.Did.Factory"/> class.
+        /// </summary>
+        //static Factory()
+        //{
+        //    MetaDataFactory = new DefaultStringMetaDataFactory();
+        //}
+        #endregion
+
+        #region TheirDid Handlers
         /// <summary>
         /// Gets their did.
         /// </summary>
@@ -27,7 +44,7 @@ namespace IndyDotNet.Did
             {
                 metaData = DidAsync.GetDidMetadataAsync(wallet, did).Result;
             }
-            catch(System.AggregateException aex) 
+            catch (System.AggregateException aex)
             {
                 Logger.Info($"metadata error, likely there is no metadata {aex.Message}");
             }
@@ -52,7 +69,9 @@ namespace IndyDotNet.Did
 
             return Factory.GetTheirDid(pool, wallet, did);
         }
+        #endregion
 
+        #region MyDid Handlers
         /// <summary>
         /// Loads MyDid from ledger
         /// TODO: replace string metadata with IMetadata and use "injected" factory for IMetadata
@@ -116,22 +135,25 @@ namespace IndyDotNet.Did
 
             var didList = JArray.Parse(didsJson);
 
-            foreach(var didObject in didList)
+            foreach (var didObject in didList)
             {
                 string did = didObject["did"].Value<string>();
                 string metadata = didObject["metadata"].Value<string>();
                 string verkey = didObject["verkey"].Value<string>();
 
-                IDid didType = new DidInstance(pool, wallet, did, verkey, metadata);
+                DidInstance didType = new DidInstance(pool, wallet, did, verkey, metadata);
                 dids.Add(didType);
             }
 
             return dids;
         }
+        #endregion
 
+        #region Endpoint Handlers
         public static IEndPoint GetEndPoint()
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
