@@ -10,7 +10,6 @@ namespace IndyDotNet.Did
     {
         private readonly IWallet _wallet;
         private readonly IPool _pool;
-        private bool _isDirty = false;
 
         /// <summary>
         /// Initializes a new instance of DidInstance <see cref="T:IndyDotNet.Did.IDid"/> class.  
@@ -32,8 +31,6 @@ namespace IndyDotNet.Did
             if (!string.IsNullOrEmpty(verkey)) VerKey = verkey;
             if (!string.IsNullOrEmpty(metadata)) Metadata = metadata;
             if (!string.IsNullOrEmpty(tempVerkey)) TempVerKey = tempVerkey;
-
-            _isDirty = false;
         }
 
         public string Did { get; internal set; }

@@ -13,7 +13,7 @@ namespace IndyDotNet.Exceptions
         /// </summary>
         /// <param name="message">The message for the exception.</param>
         /// <param name="sdkErrorCode">The SDK error code for the exception.</param>
-        internal IndyException(String message, int sdkErrorCode) : base(message)
+        internal IndyException(String message, ErrorCode sdkErrorCode) : base(message)
         {
             SdkErrorCode = sdkErrorCode;
         }
@@ -56,7 +56,7 @@ namespace IndyDotNet.Exceptions
                 case ErrorCode.CommonInvalidParam25:
                 case ErrorCode.CommonInvalidParam26:
                 case ErrorCode.CommonInvalidParam27:
-                    return new InvalidParameterException(sdkErrorCode);
+                    return new InvalidParameterException(errorCode);
                 case ErrorCode.CommonInvalidState:
                     return new InvalidStateException();
                 case ErrorCode.CommonInvalidStructure:
@@ -109,8 +109,8 @@ namespace IndyDotNet.Exceptions
                 //    return new CredentialDefinitionAlreadyExistsException();
                 //case ErrorCode.UnknownCryptoTypeError:
                 //    return new UnknownCryptoTypeException();
-                //case ErrorCode.WalletItemNotFoundError:
-                //    return new WalletItemNotFoundException();
+                case ErrorCode.WalletItemNotFoundError:
+                    return new WalletItemNotFoundException();
                 //case ErrorCode.WalletItemAlreadyExistsError:
                 //    return new WalletItemAlreadyExistsException();
                 //case ErrorCode.WalletQueryError:
@@ -137,15 +137,15 @@ namespace IndyDotNet.Exceptions
                     //return new UnknownPaymentMethodException();
 
                 default:
-                    var message = $"An unmapped error with the code '{sdkErrorCode}' was returned by the SDK.";
-                    return new IndyException(message, sdkErrorCode);
+                    var message = $"An unmapped error with the code '{errorCode} ({sdkErrorCode})' was returned by the SDK.";
+                    return new IndyException(message, errorCode);
             }      
         }
 
         /// <summary>
         /// Gets the error code for the exception.
         /// </summary>
-        public int SdkErrorCode { get; private set; }
+        public ErrorCode SdkErrorCode { get; private set; }
     }
 
     /// <summary>
@@ -158,11 +158,12 @@ namespace IndyDotNet.Exceptions
         /// </summary>
         /// <param name="sdkErrorCode">The SDK error code.</param>
         /// <returns>The parameter index the SDK indicated was invalid.</returns>
-        private static int GetParamIndex(int sdkErrorCode)
+        private static int GetParamIndex(ErrorCode errorCode)
         {
-            Debug.Assert((int)sdkErrorCode >= 100 && (int)sdkErrorCode <= 111);
+            int sdkErrorCode = (int)errorCode;
+            Debug.Assert(sdkErrorCode >= 100 && sdkErrorCode <= 111);
 
-            return (int)sdkErrorCode - 99;
+            return sdkErrorCode - 99;
         }
 
         /// <summary>
@@ -170,16 +171,16 @@ namespace IndyDotNet.Exceptions
         /// </summary>
         /// <param name="sdkErrorCode">Teh SDK error code.</param>
         /// <returns>The error message.</returns>
-        private static string BuildMessage(int sdkErrorCode)
+        private static string BuildMessage(ErrorCode sdkErrorCode)
         {
-            return string.Format("The value passed to parameter {0} is not valid.", GetParamIndex(sdkErrorCode));
+            return $"The value passed to parameter {GetParamIndex(sdkErrorCode)} is not valid.";
         }
 
         /// <summary>
         /// Initializes a new InvalidParameterException from the specified SDK error code.
         /// </summary>
         /// <param name="sdkErrorCode">The SDK error code that specifies which parameter was invalid.</param>
-        internal InvalidParameterException(int sdkErrorCode) : base(BuildMessage(sdkErrorCode), sdkErrorCode)
+        internal InvalidParameterException(ErrorCode sdkErrorCode) : base(BuildMessage(sdkErrorCode), sdkErrorCode)
         {
             ParameterIndex = GetParamIndex(sdkErrorCode);
         }
@@ -200,7 +201,7 @@ namespace IndyDotNet.Exceptions
         /// <summary>
         /// Initializes a new InvalidStateException.
         /// </summary>
-        internal InvalidStateException() : base(message, (int)ErrorCode.CommonInvalidState)
+        internal InvalidStateException() : base(message, ErrorCode.CommonInvalidState)
         {
         }
     }
@@ -215,7 +216,7 @@ namespace IndyDotNet.Exceptions
         /// <summary>
         /// Initializes a new InvalidStructureException.
         /// </summary>
-        internal InvalidStructureException() : base(message, (int)ErrorCode.CommonInvalidStructure)
+        internal InvalidStructureException() : base(message, ErrorCode.CommonInvalidStructure)
         {
 
         }
@@ -231,7 +232,7 @@ namespace IndyDotNet.Exceptions
         /// <summary>
         /// Initializes a new IOException.
         /// </summary>
-        internal IOException() : base(message, (int)ErrorCode.CommonIOError)
+        internal IOException() : base(message, ErrorCode.CommonIOError)
         {
 
         }
