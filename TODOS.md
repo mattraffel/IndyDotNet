@@ -9,3 +9,4 @@ correct with the changes made for IndyDotNet
 [ ] Async files have references to some IndyDotNet types and other cases uses primitives
 such as strings.  This is inconsistent.  
 [ ] General exception definitions
+[ ] Global handler for AggregateException 

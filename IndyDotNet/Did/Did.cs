@@ -19,10 +19,11 @@ namespace IndyDotNet.Did
         /// </summary>
         /// <param name="pool">Pool.</param>
         /// <param name="wallet">Wallet.</param>
-        /// <param name="did">Did (optional)</param>
-        /// <param name="verkey">Verkey (optional)</param>
-        /// <param name="metadata">Metadata (optional)</param>
-        protected internal DidInstance(IPool pool, IWallet wallet, string did = "", string verkey = "", string metadata = "")
+        /// <param name="did">Did</param>
+        /// <param name="verkey">Verkey</param>
+        /// <param name="metadata">Metadata</param>
+        /// <param name="tempVerkey"></param>
+        protected internal DidInstance(IPool pool, IWallet wallet, string did = "", string verkey = "", string metadata = "", string tempVerkey = "")
         {
             _wallet = wallet;
             _pool = pool;
@@ -30,8 +31,9 @@ namespace IndyDotNet.Did
             if (!string.IsNullOrEmpty(did)) Did = did;
             if (!string.IsNullOrEmpty(verkey)) VerKey = verkey;
             if (!string.IsNullOrEmpty(metadata)) Metadata = metadata;
+            if (!string.IsNullOrEmpty(tempVerkey)) TempVerKey = tempVerkey;
 
-            _isDirty = true;
+            _isDirty = false;
         }
 
         public string Did { get; internal set; }
@@ -39,61 +41,20 @@ namespace IndyDotNet.Did
         public string TempVerKey { get; internal set; }
         public string Metadata { get; internal set; }
 
-        public string AbbreviatedVerKey()
+        public string GetAbbreviateVerkey()
         {
             return DidAsync.AbbreviateVerkeyAsync(Did, VerKey).Result;
         }
 
-        public void Create(IdentitySeed seed)
+        public void Refresh(bool localOnly = false)
         {
-            CreateAndStoreMyDidResult result = DidAsync.CreateAndStoreMyDidAsync(_wallet, seed.ToJson()).Result;
+            if (localOnly)
+            {
+                VerKey = DidAsync.KeyForLocalDidAsync(_wallet, Did).Result;
+                return;
+            }
 
-            Did = result.Did;
-            VerKey = result.VerKey;
-            _isDirty = false;
-        }
-
-        /// <summary>
-        /// loads did from the ledger using GetMyDidWithMetaAsync
-        /// expectation is that Did property was set on creation
-        /// </summary>
-        public void Open()
-        {
-            string result = DidAsync.GetMyDidWithMetaAsync(_wallet, Did).Result;
-
-            //   returned  {
-            //     "did": string - DID stored in the wallet,
-            //     "verkey": string - The DIDs transport key (ver key, key id),
-            //     "tempVerkey": string - Temporary DIDs transport key (ver key, key id), exist only during the rotation of the keys.
-            //                            After rotation is done, it becomes a new verkey.
-            //     "metadata": string - The meta information stored with the DID
-            //   }
-
-            var json = JObject.Parse(result);
-            Did = json["did"].Value<string>();
-            VerKey = json["verkey"].Value<string>();
-            TempVerKey = json["tempVerkey"].Value<string>();
-            Metadata = json["metadata"].Value<string>();
-
-            _isDirty = false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Save()
-        {
-            if (false == _isDirty) return;
-
-            _isDirty = false;
-
-            JObject identity = new JObject();
-            identity["did"] = Did;
-            identity["verkey"] = VerKey;
-
-            string json = identity.ToString();
-
-            DidAsync.StoreTheirDidAsync(_wallet, json).Wait();
+            VerKey = DidAsync.KeyForDidAsync(_pool, _wallet, Did).Result;
         }
     }
 }

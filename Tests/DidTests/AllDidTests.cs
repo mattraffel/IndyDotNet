@@ -71,14 +71,13 @@ namespace Tests.DidTests
         [TestMethod]
         public void CreateAndStoreDidWithSeedSuccessfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
 
             IdentitySeed seed = new IdentitySeed()
             {
                 Seed = "00000000000000000000000000000My1"
             };
 
-            did.Create(seed);
+            IDid did = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed);
 
             Assert.IsTrue(0 < did.Did.Length, $"Did was not set {did.Did}");
             Assert.IsTrue(0 < did.VerKey.Length, $"VerKey was not set {did.VerKey}");
@@ -87,33 +86,30 @@ namespace Tests.DidTests
         [TestMethod]
         public void CreateAndStoreDidWithSeedCIDSuccessfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
-
             IdentitySeed seed = new IdentitySeed()
             {
                 Seed = "00000000000000000000000000000My1",
                 CID = true
             };
 
-            did.Create(seed);
+            IDid did = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed);
+
 
             Assert.IsTrue(0 < did.Did.Length, $"Did was not set {did.Did}");
             Assert.IsTrue(0 < did.VerKey.Length, $"VerKey was not set {did.VerKey}");
         }
 
         [TestMethod]
-        public void GetAbbreviatedVerKeySuccessfully()
+        public void GetMyDidAbbreviatedVerKeySuccessfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
-
             IdentitySeed seed = new IdentitySeed()
             {
                 Seed = "00000000000000000000000000000My1",
                 CID = true
             };
 
-            did.Create(seed);
-            string abbreviated = did.AbbreviatedVerKey();
+            IDid did = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed);
+            string abbreviated = did.GetAbbreviateVerkey();
 
             Assert.IsTrue(0 < abbreviated.Length, $"abbreviated verkey was not returned {abbreviated}");
         }
@@ -121,48 +117,36 @@ namespace Tests.DidTests
         [TestMethod]
         public void GetListOfDidsSuccessfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
-
             IdentitySeed seed = new IdentitySeed()
             {
                 Seed = "00000000000000000000000000000My1"
             };
 
-            did.Create(seed);
+            IDid did = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed);
 
-            List<IDid> dids = IndyDotNet.Did.Factory.GetAllDids(_pool, _wallet);
+            List<IDid> dids = IndyDotNet.Did.Factory.GetAllMyDids(_pool, _wallet);
 
             Assert.IsNotNull(dids, "list was empty");
             Assert.IsTrue(0 < dids.Count, "Exptected to have more than 0 dids in list");
         }
 
         [TestMethod]
-        public void OpenDidSuccessfully()
+        public void SaveTheirDidSuccesfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet);
-
-            IdentitySeed seed = new IdentitySeed()
-            {
-                Seed = "00000000000000000000000000000My1"
-            };
-
-            did.Create(seed);
-
-            IDid did2 = IndyDotNet.Did.Factory.GetDid(_pool, _wallet, did.Did);
-            did2.Open();
-
-            Assert.AreEqual(did.Did, did2.Did, "Dids are not the same");
-            Assert.AreEqual(did.VerKey, did2.VerKey, "VerKey are not the same");
-            Assert.AreEqual(did.TempVerKey, did2.TempVerKey, "TempVerKey are not the same");
+            IDid did = IndyDotNet.Did.Factory.CreateTheirDid(_pool, _wallet, "CnEDk9HrMnmiHXEV1WFgbVCRteYnPqsJwrTdcZaNhFVW");
+            Assert.IsTrue(0 < did.Did.Length, $"Did was not set {did.Did}");
+            Assert.IsTrue(0 < did.VerKey.Length, $"VerKey was not set {did.VerKey}");
         }
 
         [TestMethod]
-        public void SaveDidSuccessfully()
+        public void GetTheirDidSuccesfully()
         {
-            IDid did = IndyDotNet.Did.Factory.GetDid(_pool, _wallet, "CnEDk9HrMnmiHXEV1WFgbVCRteYnPqsJwrTdcZaNhFVW", "GjZWsBLgZCR18aL468JAT7w9CZRiBnpxUPPgyQxh4voa");
+            IDid did = IndyDotNet.Did.Factory.CreateTheirDid(_pool, _wallet, "CnEDk9HrMnmiHXEV1WFgbVCRteYnPqsJwrTdcZaNhFVW");
 
-            did.Save();
+            IDid did2 = IndyDotNet.Did.Factory.GetTheirDid(_pool, _wallet, did.Did);
 
+            Assert.IsTrue(0 < did.Did.Length, $"Did was not set {did2.Did}");
+            Assert.IsTrue(0 < did.VerKey.Length, $"VerKey was not set {did2.VerKey}");
         }
     }
 }

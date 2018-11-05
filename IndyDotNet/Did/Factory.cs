@@ -9,18 +9,91 @@ namespace IndyDotNet.Did
 {
     public static class Factory
     {
+
         /// <summary>
-        /// replace string metadata with IMetadata and use "injected" factory for IMetadata
+        /// Gets their did.
+        /// </summary>
+        /// <returns>The their did.</returns>
+        /// <param name="pool">Pool.</param>
+        /// <param name="wallet">Wallet.</param>
+        /// <param name="did">Did.</param>
+        public static IDid GetTheirDid(IPool pool, IWallet wallet, string did)
+        {
+            // if truly needed for optimzation purposes we could parallel these two tasks
+            string verkey = DidAsync.KeyForDidAsync(pool, wallet, did).Result;
+            string metaData = string.Empty;
+
+            try
+            {
+                metaData = DidAsync.GetDidMetadataAsync(wallet, did).Result;
+            }
+            catch(System.AggregateException aex) 
+            {
+                Logger.Info($"metadata error, likely there is no metadata {aex.Message}");
+            }
+
+            return new DidInstance(pool, wallet, did, verkey, metaData);
+        }
+
+        /// <summary>
+        /// Creates their did.
+        /// </summary>
+        /// <returns>The their did.</returns>
+        /// <param name="pool">Pool.</param>
+        /// <param name="wallet">Wallet.</param>
+        /// <param name="did">Did.</param>
+        public static IDid CreateTheirDid(IPool pool, IWallet wallet, string did, string verkey = "")
+        {
+            var identityJson = new JObject();
+            identityJson["did"] = did;
+            if (!string.IsNullOrEmpty(verkey)) identityJson["verkey"] = verkey;
+
+            DidAsync.StoreTheirDidAsync(wallet, identityJson.ToString()).Wait();
+
+            return Factory.GetTheirDid(pool, wallet, did);
+        }
+
+        /// <summary>
+        /// Loads MyDid from ledger
+        /// TODO: replace string metadata with IMetadata and use "injected" factory for IMetadata
         /// </summary>
         /// <returns>The did.</returns>
         /// <param name="pool">Pool.</param>
         /// <param name="wallet">Wallet.</param>
         /// <param name="did">Did.</param>
-        /// <param name="verkey">Verkey.</param>
-        /// <param name="metadata">Metadata.</param>
-        public static IDid GetDid(IPool pool, IWallet wallet, string did = "", string verkey = "", string metadata = "")
+        public static IDid GetMyDid(IPool pool, IWallet wallet, string did)
         {
-            return new DidInstance(pool, wallet, did, verkey, metadata);
+            string result = DidAsync.GetMyDidWithMetaAsync(wallet, did).Result;
+
+            //   returned  {
+            //     "did": string - DID stored in the wallet,
+            //     "verkey": string - The DIDs transport key (ver key, key id),
+            //     "tempVerkey": string - Temporary DIDs transport key (ver key, key id), exist only during the rotation of the keys.
+            //                            After rotation is done, it becomes a new verkey.
+            //     "metadata": string - The meta information stored with the DID
+            //   }
+
+            var json = JObject.Parse(result);
+            did = json["did"].Value<string>();
+            string verkey = json["verkey"].Value<string>();
+            string tempVerkey = json["tempVerkey"].Value<string>();
+            string metadata = json["metadata"].Value<string>();
+
+            return new DidInstance(pool, wallet, did, verkey, metadata, tempVerkey);
+        }
+
+        /// <summary>
+        /// Creates my did.
+        /// </summary>
+        /// <returns>The my did.</returns>
+        /// <param name="pool">Pool.</param>
+        /// <param name="wallet">Wallet.</param>
+        /// <param name="seed">Seed.</param>
+        public static IDid CreateMyDid(IPool pool, IWallet wallet, IdentitySeed seed)
+        {
+            CreateAndStoreMyDidResult result = DidAsync.CreateAndStoreMyDidAsync(wallet, seed.ToJson()).Result;
+
+            return new DidInstance(pool, wallet, result.Did, result.VerKey, string.Empty);
         }
 
         /// <summary>
@@ -29,7 +102,7 @@ namespace IndyDotNet.Did
         /// <returns>The all dids.</returns>
         /// <param name="pool">Pool.</param>
         /// <param name="wallet">Wallet.</param>
-        public static List<IDid> GetAllDids(IPool pool, IWallet wallet)
+        public static List<IDid> GetAllMyDids(IPool pool, IWallet wallet)
         {
             // ListMyDidsWithMetaAsync
 
@@ -46,10 +119,10 @@ namespace IndyDotNet.Did
             foreach(var didObject in didList)
             {
                 string did = didObject["did"].Value<string>();
-                string metaData = didObject["metadata"].Value<string>();
-                string verKey = didObject["verkey"].Value<string>();
+                string metadata = didObject["metadata"].Value<string>();
+                string verkey = didObject["verkey"].Value<string>();
 
-                IDid didType = Factory.GetDid(pool, wallet, did, verKey, metaData);
+                IDid didType = new DidInstance(pool, wallet, did, verkey, metadata);
                 dids.Add(didType);
             }
 

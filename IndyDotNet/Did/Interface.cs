@@ -16,19 +16,19 @@ namespace IndyDotNet.Did
     ///       along with GetDidMetadataAsync
     /// 
     /// development notes:
-    /// CreateAndStoreMyDidAsync - done. Called Create
+    /// CreateAndStoreMyDidAsync - done
+    /// GetMyDidWithMetaAsync - done
     /// ListMyDidsWithMetaAsync - done, pending changes for metadata
     /// AbbreviateVerkeyAsync - done
-    /// GetMyDidWithMetaAsync - Called Open
+    /// StoreTheirDidAsync - done
+    /// KeyForDidAsync  - done
+    /// KeyForLocalDidAsync - done
     /// 
     /// ReplaceKeysStartAsync
     /// ReplaceKeysApplyAsync
-    /// StoreTheirDidAsync - called save
-    /// KeyForDidAsync - called refresh
-    /// KeyForLocalDidAsync
+    /// 
     /// SetDidMetadataAsync
     /// GetDidMetadataAsync
-    /// 
     /// 
     /// </summary>
     public interface IDid
@@ -51,24 +51,9 @@ namespace IndyDotNet.Did
         /// </summary>
         string Metadata { get; }
 
-        /// <summary>
-        /// Abbreviateds the ver key.
-        /// Maps to AbbreviateVerkeyAsync
-        /// </summary>
-        /// <returns>The ver key.</returns>
-        string AbbreviatedVerKey();
-        /// <summary>
-        /// Maps to CreateAndStoreMyDidAsync
-        /// </summary>
-        void Create(IdentitySeed seed);
-        /// <summary>
-        /// Open makes two calls: GetMyDidWithMetaAsync
-        /// </summary>
-        void Open();
-        /// <summary>
-        /// Save this instance.
-        /// </summary>
-        void Save();
+        string GetAbbreviateVerkey();
+        void Refresh(bool localOnly = false);
+
     }
 
     public interface IEndPoint
