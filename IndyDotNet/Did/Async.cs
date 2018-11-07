@@ -558,10 +558,11 @@ namespace IndyDotNet.Did
         /// <param name="transportKey">The transport key.</param>
         /// <returns>An asynchronous <see cref="Task"/> that completes when the operation completes.</returns>
         /// <exception cref="InvalidStructureException">Thrown if the <paramref name="did"/> or <paramref name="transportKey"/> values are malformed.</exception>
-        public static Task SetEndpointForDidAsync(IWallet wallet, string did, string address, string transportKey)
+        public static Task SetEndpointForDidAsync(IWallet wallet, IDid did, string address, string transportKey)
         {
             ParamGuard.NotNull(wallet, "wallet");
-            ParamGuard.NotNullOrWhiteSpace(did, "did");
+            ParamGuard.NotNull(did, "did");
+            ParamGuard.NotNullOrWhiteSpace(did.Did, "did");
             ParamGuard.NotNullOrWhiteSpace(address, "address");
             ParamGuard.NotNullOrWhiteSpace(transportKey, "transportKey");
 
@@ -571,7 +572,7 @@ namespace IndyDotNet.Did
             var commandResult = NativeMethods.indy_set_endpoint_for_did(
                 commandHandle,
                 wallet.Handle,
-                did,
+                did.Did,
                 address,
                 transportKey,
                 CallbackHelper.TaskCompletingNoValueCallback
@@ -595,11 +596,12 @@ namespace IndyDotNet.Did
         /// <param name="did">The DID to get the endpoint data for.</param>
         /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to an <see cref="EndpointForDidResult"/> containing the endpoint information 
         /// associated with the DID.</returns>
-        public static Task<EndpointForDidResult> GetEndpointForDidAsync(IPool pool, IWallet wallet, string did)
+        public static Task<EndpointForDidResult> GetEndpointForDidAsync(IPool pool, IWallet wallet, IDid did)
         {
             ParamGuard.NotNull(wallet, "wallet");
             ParamGuard.NotNull(pool, "pool");
-            ParamGuard.NotNullOrWhiteSpace(did, "did");
+            ParamGuard.NotNull(did, "did");
+            ParamGuard.NotNullOrWhiteSpace(did.Did, "did");
 
             var taskCompletionSource = new TaskCompletionSource<EndpointForDidResult>();
             var commandHandle = PendingCommands.Add(taskCompletionSource);
@@ -608,7 +610,7 @@ namespace IndyDotNet.Did
                 commandHandle,
                 wallet.Handle,
                 pool.Handle,
-                did,
+                did.Did,
                 GetEndpointForDidCompletedCallback
                 );
 

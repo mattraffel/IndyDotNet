@@ -56,9 +56,12 @@ namespace IndyDotNet.Did
 
     }
 
+    /// <summary>
+    /// End point.
+    /// </summary>
     public interface IEndPoint
     {
-
+        IDid Did { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -68,5 +71,17 @@ namespace IndyDotNet.Did
         /// Gets the transport verification key.
         /// </summary>
         string TransportKey { get; }
+
+        /// <summary>
+        /// maps to GetEndpointForDidAsync
+        /// </summary>
+        void Open();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address">Address.</param>
+        /// <param name="transportKey">Transport key.</param>
+        void Save(string address, string transportKey);
     }
 }

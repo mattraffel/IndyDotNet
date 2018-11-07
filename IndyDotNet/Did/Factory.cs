@@ -150,9 +150,11 @@ namespace IndyDotNet.Did
         #endregion
 
         #region Endpoint Handlers
-        public static IEndPoint GetEndPoint()
+        public static IEndPoint GetEndPoint(IPool pool, IWallet wallet, IDid did)
         {
-            throw new NotImplementedException();
+            IEndPoint endPoint = new EndpointInstance(pool, wallet, did);
+
+            return endPoint;
         }
         #endregion
     }

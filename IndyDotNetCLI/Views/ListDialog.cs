@@ -20,16 +20,24 @@ namespace IndyDotNetCLI.Views
             Add(textLabel);
 
             int listViewWidth = width - 8;
+            int x = ComputeLeftOfCenter(width, listViewWidth);
             var listViewRect = new Terminal.Gui.Rect()
             {
-                X = ComputeLeftOfCenter(width, listViewWidth),
+                X = x,
                 Y = textLabel.Frame.Y + textLabel.Frame.Height + 1,
                 Height = 10,
-                Width = listViewWidth
+                Width = listViewWidth - x
             };
 
             var listView = new ListView(listViewRect, source)
             {
+                //ColorScheme = new ColorScheme()
+                //{
+                //    Normal = new Terminal.Gui.Attribute(205),
+                //    Focus = new Terminal.Gui.Attribute(205),
+                //    HotFocus = new Terminal.Gui.Attribute(205),
+                //    HotNormal = new Terminal.Gui.Attribute(205)
+                //}
 
             };
             Add(listView);
