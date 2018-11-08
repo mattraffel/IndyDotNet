@@ -9,7 +9,9 @@ namespace Tests.DotNetPayTests
         [TestMethod]
         public void RegisterDotNetPaySuccessfully()
         {
-            Assert.Fail("RegisterDotNetPaySuccessfully is not implemented yet");
+            bool registrationResult = DotNetPay.Initialization.Register();
+
+            Assert.IsTrue(registrationResult, "DotNetPay.Initialization.Register failed");
         }
     }
 }
