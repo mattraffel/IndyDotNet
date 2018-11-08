@@ -18,5 +18,8 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Wallet\" />
     <Folder Include="Did\" />
+    <Folder Include="Ledger\" />
+    <Folder Include="Payments\" />
+    <Folder Include="PaymentHandler\" />
   </ItemGroup>
 </Project>

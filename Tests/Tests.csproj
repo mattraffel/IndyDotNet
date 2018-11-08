@@ -17,11 +17,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IndyDotNet\IndyDotNet.csproj" />
+    <ProjectReference Include="..\DotNetPay\DotNetPay.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PoolTests\" />
     <Folder Include="WalletTests\" />
     <Folder Include="Utils\" />
     <Folder Include="DidTests\" />
+    <Folder Include="DotNetPayTests\" />
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ namespace IndyDotNet.Utils
         /// </summary>
         /// <param name="xcommand_handle">The handle for the command that initiated the callback.</param>
         /// <param name="err">The outcome of execution of the command.</param>
-        internal delegate void IndyMethodCompletedDelegate(int xcommand_handle, int err);
+        public delegate void IndyMethodCompletedDelegate(int xcommand_handle, int err);
 
         /// <summary>
         /// Gets the callback to use for completing tasks that don't return a value.
