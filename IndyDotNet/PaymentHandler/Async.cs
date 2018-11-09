@@ -4,15 +4,15 @@ using IndyDotNet.Utils;
 
 namespace IndyDotNet.PaymentHandler
 {
-    public static class PaymentHandlerAsync
-    {    
+    internal static class PaymentHandlerAsync
+    {
         /// <summary>
         /// Register custom payment implementation.
         ///
         /// </summary>
         /// <returns>The payment method async.</returns>
         /// <param name="implementation">Payment method.</param>
-        public static Task RegisterPaymentMethodAsync(IPaymentHandlers implementation)
+        internal static Task RegisterPaymentMethodAsync(ISDKPaymentFacade implementation)
         {
             ParamGuard.NotNull(implementation, "implementation");
 

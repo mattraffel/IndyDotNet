@@ -13,5 +13,12 @@ namespace Tests.DotNetPayTests
 
             Assert.IsTrue(registrationResult, "DotNetPay.Initialization.Register failed");
         }
+
+        [TestMethod]
+        public void CreatePaymentAddressSuccessfully()
+        {
+            bool registrationResult = DotNetPay.Initialization.Register();
+            Assert.Fail("CreatePaymentAddressSuccessfully isn't finished");
+        }
     }
 }
