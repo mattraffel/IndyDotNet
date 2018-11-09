@@ -39,7 +39,7 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
         }
 
-        public string Submit(IPool pool, BuildNymRequestResult nymRequest, string nodes, int timeout = -1)
+        public string SubmitRequest(IPool pool, BuildNymRequestResult nymRequest, string nodes, int timeout = -1)
         {
 
 
