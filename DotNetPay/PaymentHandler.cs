@@ -9,7 +9,7 @@ namespace DotNetPay
 
         public string CreatePaymentAddress()
         {
-            throw new NotImplementedException();
+            return $"pay:{PaymentMethod}:someid";
         }
     }
 }

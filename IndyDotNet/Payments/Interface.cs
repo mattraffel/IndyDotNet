@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace IndyDotNet.Payments
 {
-    public class Interface
+    public interface IPayments
     {
-        public Interface()
-        {
-        }
+        string CreatePaymentAddress(string paymentMethod, string seed);
+        List<string> ListPaymentAddresses();
     }
 }
