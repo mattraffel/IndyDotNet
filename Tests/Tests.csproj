@@ -26,5 +26,6 @@
     <Folder Include="DidTests\" />
     <Folder Include="DotNetPayTests\" />
     <Folder Include="PaymentsTests\" />
+    <Folder Include="LedgerTests\" />
   </ItemGroup>
 </Project>

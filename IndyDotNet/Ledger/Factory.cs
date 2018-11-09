@@ -1,10 +1,11 @@
 ﻿using System;
 namespace IndyDotNet.Ledger
 {
-    public class Factory
+    public static class Factory
     {
-        public Factory()
+        public static ILedger GetLedger()
         {
+            return new LedgerInstance();
         }
     }
 }

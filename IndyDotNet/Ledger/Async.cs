@@ -91,28 +91,14 @@ namespace IndyDotNet.Ledger
     /// This class provides methods for generating messages for submission to the ledger; each 
     /// of these methods is prefixed with the word 'Build' and returns a JSON message which must be 
     /// signed and submitted to a node pool. These messages can be submitted to the ledger using the 
-    /// <see cref="SignAndSubmitRequestAsync(Pool, Wallet, string, string)"/> or can be signed first 
-    /// using the <see cref="SignRequestAsync(Wallet, string, string)"/> method then submitted later 
-    /// using the <see cref="SubmitRequestAsync(Pool, string)"/> method.
+    /// <see cref="SignAndSubmitRequestAsync(IPool, IWallet, IDid, string)"/> or can be signed first 
+    /// using the <see cref="SignRequestAsync(IWallet, IDid, string)"/> method then submitted later 
+    /// using the <see cref="SubmitRequestAsync(IPool, string)"/> method.
     /// </para>
     /// </remarks>
     internal static class LedgerAsync
-    {
-        /// <summary>
-        /// The 'Steward' NYM role.
-        /// </summary>
-        public const string NYM_ROLE_STEWARD = "STEWARD";
-
-        /// <summary>
-        /// The 'Trustee' NYM role.
-        /// </summary>
-        public const string NYM_ROLE_TRUSTEE = "TRUSTEE";
-
-        /// <summary>
-        /// The 'Trust Anchor' NYM role.
-        /// </summary>
-        public const string NYM_ROLE_TRUST_ANCHOR = "TRUST_ANCHOR";
-
+    {    
+        #region callback definitions
         /// <summary>
         /// Gets the callback to use when a command that submits a message to the ledger completes.
         /// </summary>
@@ -191,6 +177,7 @@ namespace IndyDotNet.Ledger
             taskCompletionSource.SetResult(signed_request_json);
         }
         private static SignRequestCompletedDelegate SignRequestCallback = SignRequestCallbackMethod;
+        #endregion
 
         /// <summary>
         /// Signs a request message.
