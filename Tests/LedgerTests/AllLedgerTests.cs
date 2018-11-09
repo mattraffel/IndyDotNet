@@ -87,9 +87,58 @@ namespace Tests.LedgerTests
             BuildNymRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
 
 
+            Assert.IsNotNull(result, "failed to create BuildNymRequestResult");
+            Assert.AreEqual(result.Identifier, submitter.Did, $"Identifer failed match to submitter: {submitter.Did}");
+            Assert.AreEqual(result.Operation.Dest, target.Did, $"Dest failed match to target: {target.Did}");
+
+        }
+
+        [TestMethod]
+        public void BuildNymRequestAsTrustAnchorSuccessfully()
+        {
+            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+
+            IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee1"
+            });
+
+            IDid target = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee2"
+            });
+
+            BuildNymRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.TrustAnchor);
+
             Assert.IsNotNull(result, $"failed to create BuildNymRequestResult");
             Assert.AreEqual(result.Identifier, submitter.Did, $"Identifer failed match to submitter: {submitter.Did}");
             Assert.AreEqual(result.Operation.Dest, target.Did, $"Dest failed match to target: {target.Did}");
+
+        }
+    
+        [TestMethod]
+        public void SignAndSubmitRequestNymRequestSuccessfully()
+        {
+            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+
+            IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee1"
+            });
+
+            IDid target = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee2"
+            });
+
+            BuildNymRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
+            SignAndSubmitRequestResult signResult = ledger.SignAndSubmitRequest(_pool, _wallet, submitter, result);
+
+            Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
+
+            // Dids are submitter: V4SGRU86Z58d6TV7PBUe6f and target: LnXR1rPnncTPZvRdmJKhJQ
+            Assert.AreEqual(signResult.Result.Transaction.Metadata.From, submitter.Did, $"txn.metadata.from failed to match submitter: {submitter.Did}");
+            Assert.AreEqual(signResult.Result.Transaction.TxnData.Dest, target.Did, $"txn.data.dest failed to match target: {target.Did}");
 
         }
     }

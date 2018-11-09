@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace IndyDotNet.Ledger
 {
     /// <summary>
@@ -6,12 +8,14 @@ namespace IndyDotNet.Ledger
     /// </summary>
     public class BuildNymRequestResult
     {
+        [JsonProperty("reqId")]
         public long ReqId { get; set; }
         /// <summary>
         /// in a Nym transaction, this will be the submitter DID
         /// </summary>
         public string Identifier { get; set; }
         public BuildNymRequestOperation Operation { get; set; }
+        [JsonProperty("protocolVersion")]
         public int ProtocolVersion { get; set; }
     }
 

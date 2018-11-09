@@ -292,8 +292,8 @@ namespace IndyDotNet.Ledger
         /// <remarks>
         /// This method publishes a message to the validator pool specified in the <paramref name="pool"/> parameter as-is 
         /// and assumes that the message was previously prepared for submission.  Requests can be signed prior to using this 
-        /// call to the <see cref="SignRequestAsync(Wallet, string, string)"/> method, or messages can be 
-        /// both signed and submitted using the <see cref="SignAndSubmitRequestAsync(Pool, Wallet, string, string)"/>
+        /// call to the <see cref="SignRequestAsync(IWallet, IDid, string)"/> method, or messages can be 
+        /// both signed and submitted using the <see cref="SignAndSubmitRequestAsync(IPool, IWallet, IDid, string)"/>
         /// method.
         /// </remarks>
         /// <param name="pool">The validator pool to submit the request to.</param>
