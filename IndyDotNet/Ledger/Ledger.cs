@@ -19,12 +19,22 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<BuildNymRequestResult>(json); 
         }
 
+        public BuildNymRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildNymRequestResult nymRequest)
+        {
+            string nymRequestJson = nymRequest.ToJson();
+            Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
+            string json = LedgerAsync.SignRequestAsync(wallet, submitterDid, nymRequestJson).Result;
+            Logger.Info($"SignRequestAsync returned: {json}");
+
+            return JsonConvert.DeserializeObject<BuildNymRequestResult>(json);
+        }
+
         public SignAndSubmitRequestResult SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildNymRequestResult nymRequest)
         {
             string nymRequestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
             string json = LedgerAsync.SignAndSubmitRequestAsync(pool, wallet, submitterDid, nymRequestJson).Result;
-            Logger.Info($"BuildNymRequestAsync returned: {json}");
+            Logger.Info($"SignAndSubmitRequestAsync returned: {json}");
 
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
         }
