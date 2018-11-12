@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.Ledger
 {
-    internal class LedgerInstance : INymLedger
+    internal class LedgerInstance : INymLedger, IDDOLedger
     {
-        public LedgerInstance() {}
+        public LedgerInstance() { }
 
         #region internal Submit/Sign functions 
         private string SignRequest(IWallet wallet, IDid submitterDid, string requestJson)
@@ -21,7 +21,7 @@ namespace IndyDotNet.Ledger
         {
             return LedgerAsync.SignAndSubmitRequestAsync(pool, wallet, submitterDid, requestJson).Result;
         }
-        
+
         private string SubmitRequest(IPool pool, string requestJson)
         {
             return LedgerAsync.SubmitRequestAsync(pool, requestJson).Result;
@@ -29,25 +29,33 @@ namespace IndyDotNet.Ledger
         #endregion
 
         #region nym functions
-        public BuildNymRequestResult BuildNymRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role)
+        public BuildRequestResult BuildNymRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role)
         {
             string json = LedgerAsync.BuildNymRequestAsync(submitterDid, targetDid, verKey, alias, role.AsString()).Result;
             Logger.Info($"BuildNymRequestAsync returned: {json}");
 
-            return JsonConvert.DeserializeObject<BuildNymRequestResult>(json); 
+            return JsonConvert.DeserializeObject<BuildRequestResult>(json);
         }
 
-        public BuildNymRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildNymRequestResult nymRequest)
+        public BuildRequestResult BuildGetNymRequest(IDid submitterDid, IDid targetDid)
+        {
+            string json = LedgerAsync.BuildGetNymRequestAsync(submitterDid, targetDid).Result;
+            Logger.Info($"BuildGetNymRequestAsync returned: {json}");
+
+            return JsonConvert.DeserializeObject<BuildRequestResult>(json);
+        }
+
+        public BuildRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest)
         {
             string nymRequestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
             string json = SignRequest(wallet, submitterDid, nymRequestJson);
             Logger.Info($"SignRequestAsync returned: {json}");
 
-            return JsonConvert.DeserializeObject<BuildNymRequestResult>(json);
+            return JsonConvert.DeserializeObject<BuildRequestResult>(json);
         }
 
-        public SignAndSubmitRequestResult SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildNymRequestResult nymRequest)
+        public SignAndSubmitRequestResult SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest)
         {
             string nymRequestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
@@ -57,7 +65,7 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
         }
 
-        public SignAndSubmitRequestResult SubmitRequest(IPool pool, BuildNymRequestResult nymRequest)
+        public SignAndSubmitRequestResult SubmitRequest(IPool pool, BuildRequestResult nymRequest)
         {
             string requestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {requestJson}");
@@ -65,6 +73,16 @@ namespace IndyDotNet.Ledger
             Logger.Info($"SubmitRequest as json: {json}");
 
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
+        }
+        #endregion
+
+        #region DDO functions
+        public BuildRequestResult BuildGetDdoRequest(IDid submitterDid, IDid targetDid)
+        {
+            string json = LedgerAsync.BuildGetDdoRequestAsync(submitterDid, targetDid).Result;
+            Logger.Info($"BuildGetDdoRequestAsync returned: {json}");
+
+            return JsonConvert.DeserializeObject<BuildRequestResult>(json);
         }
         #endregion
 

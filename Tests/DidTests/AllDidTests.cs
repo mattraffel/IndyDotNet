@@ -84,6 +84,16 @@ namespace Tests.DidTests
         }
 
         [TestMethod]
+        public void CreateAndStoreDidWithNoSeedSuccessfully()
+        {
+            IDid did = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, null);
+
+            Assert.IsTrue(0 < did.Did.Length, $"Did was not set {did.Did}");
+            Assert.IsTrue(0 < did.VerKey.Length, $"VerKey was not set {did.VerKey}");
+
+        }
+
+        [TestMethod]
         public void CreateAndStoreDidWithSeedCIDSuccessfully()
         {
             IdentitySeed seed = new IdentitySeed()

@@ -11,5 +11,10 @@ namespace IndyDotNet.Ledger
         {
             return new LedgerInstance();
         }
+
+        public static IDDOLedger GetDDOLedger()
+        {
+            return new LedgerInstance();
+        }
     }
 }

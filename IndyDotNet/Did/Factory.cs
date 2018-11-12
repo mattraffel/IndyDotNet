@@ -110,7 +110,10 @@ namespace IndyDotNet.Did
         /// <param name="seed">Seed.</param>
         public static IDid CreateMyDid(IPool pool, IWallet wallet, IdentitySeed seed)
         {
-            CreateAndStoreMyDidResult result = DidAsync.CreateAndStoreMyDidAsync(wallet, seed.ToJson()).Result;
+            // LibIndy doesnt follow rules of json.  an empty seed value is 
+            // communicated by "{}".  TODO:  override ToJson for IdentitySeed
+            string seedJson = (null != seed ? seed.ToJson() : "{}");
+            CreateAndStoreMyDidResult result = DidAsync.CreateAndStoreMyDidAsync(wallet, seedJson).Result;
 
             return new DidInstance(pool, wallet, result.Did, result.VerKey, string.Empty);
         }

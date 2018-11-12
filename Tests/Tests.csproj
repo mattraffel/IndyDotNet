@@ -27,5 +27,6 @@
     <Folder Include="DotNetPayTests\" />
     <Folder Include="PaymentsTests\" />
     <Folder Include="LedgerTests\" />
+    <Folder Include="Demos\" />
   </ItemGroup>
 </Project>

@@ -415,6 +415,7 @@ namespace IndyDotNet.Ledger
         /// <param name="role">The role of the NYM.</param>
         /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to a <see cref="string"/> 
         /// containing the request JSON. </returns>
+        /// TODO:  veryKey is targetDid.Verkey ....verify if this is always true
         public static Task<string> BuildNymRequestAsync(IDid submitterDid, IDid targetDid, string verKey, string alias, string role)
         {
             ParamGuard.NotNull(submitterDid, "submitterDid");
