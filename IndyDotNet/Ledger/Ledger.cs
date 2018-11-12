@@ -7,10 +7,28 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.Ledger
 {
-    internal class LedgerInstance : ILedger
+    internal class LedgerInstance : INymLedger
     {
         public LedgerInstance() {}
 
+        #region internal Submit/Sign functions 
+        private string SignRequest(IWallet wallet, IDid submitterDid, string requestJson)
+        {
+            return LedgerAsync.SignRequestAsync(wallet, submitterDid, requestJson).Result;
+        }
+
+        private string SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, string requestJson)
+        {
+            return LedgerAsync.SignAndSubmitRequestAsync(pool, wallet, submitterDid, requestJson).Result;
+        }
+        
+        private string SubmitRequest(IPool pool, string requestJSon, string nodes, int timeout = -1)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region nym functions
         public BuildNymRequestResult BuildNymRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role)
         {
             string json = LedgerAsync.BuildNymRequestAsync(submitterDid, targetDid, verKey, alias, role.AsString()).Result;
@@ -23,7 +41,7 @@ namespace IndyDotNet.Ledger
         {
             string nymRequestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
-            string json = LedgerAsync.SignRequestAsync(wallet, submitterDid, nymRequestJson).Result;
+            string json = SignRequest(wallet, submitterDid, nymRequestJson);
             Logger.Info($"SignRequestAsync returned: {json}");
 
             return JsonConvert.DeserializeObject<BuildNymRequestResult>(json);
@@ -33,7 +51,7 @@ namespace IndyDotNet.Ledger
         {
             string nymRequestJson = nymRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
-            string json = LedgerAsync.SignAndSubmitRequestAsync(pool, wallet, submitterDid, nymRequestJson).Result;
+            string json = SignAndSubmitRequest(pool, wallet, submitterDid, nymRequestJson);
             Logger.Info($"SignAndSubmitRequestAsync returned: {json}");
 
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
@@ -41,9 +59,10 @@ namespace IndyDotNet.Ledger
 
         public string SubmitRequest(IPool pool, BuildNymRequestResult nymRequest, string nodes, int timeout = -1)
         {
-
-
-            throw new NotImplementedException();
+            string requestJson = nymRequest.ToJson();
+            return SubmitRequest(pool, requestJson, nodes, timeout);
         }
+        #endregion
+
     }
 }

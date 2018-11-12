@@ -3,7 +3,11 @@ namespace IndyDotNet.Ledger
 {
     public static class Factory
     {
-        public static ILedger GetLedger()
+        /// <summary>
+        /// gets the API interface for Nym functions
+        /// </summary>
+        /// <returns></returns>
+        public static INymLedger GetNymLedger()
         {
             return new LedgerInstance();
         }

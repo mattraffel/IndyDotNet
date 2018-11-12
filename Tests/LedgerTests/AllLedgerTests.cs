@@ -72,7 +72,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestSuccessfully()
         {
-            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
                 {
@@ -95,7 +95,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestAsTrustAnchorSuccessfully()
         {
-            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -118,7 +118,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignAndSubmitRequestNymRequestSuccessfully()
         {
-            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -144,7 +144,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignRequestNymRequestSuccessfully()
         {
-            ILedger ledger = IndyDotNet.Ledger.Factory.GetLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
