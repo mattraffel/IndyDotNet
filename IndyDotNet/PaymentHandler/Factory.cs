@@ -17,6 +17,9 @@ namespace IndyDotNet.PaymentHandler
 
     }
 
+    /// <summary>
+    /// TODO:  the pattern is proven, need to finish implementation
+    /// </summary>
     internal class SDKPaymentFacade : ISDKPaymentFacade
     {
         private IPaymentHandler _handler;

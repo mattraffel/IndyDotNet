@@ -8,6 +8,8 @@ namespace IndyDotNet.PaymentHandler
     /// 
     /// Payment libraries, like DotNetPay, implement this interface
     /// See DotNetPay project for an example of this implementation
+    /// 
+    /// TODO:  this interface is not finished.  Serving a POC the pattern works
     /// </summary>
     public interface IPaymentHandler
     {
@@ -16,9 +18,9 @@ namespace IndyDotNet.PaymentHandler
     }
 
     /// <summary>
-    /// This is a facade between .NET and Libindy so that we can isolate the constructors of IPaymentHandler
-    /// from the specifics of the API.  Constructors will not have to load wallets and dids as these can be done
-    /// in the facade
+    /// This is a facade between .NET and Libindy so that we can isolate the implementation of IPaymentHandler
+    /// from the specifics of the API.  Implementers will not have to load wallets and dids as these can be done
+    /// by the facade.
     /// </summary>
     internal interface ISDKPaymentFacade
     {

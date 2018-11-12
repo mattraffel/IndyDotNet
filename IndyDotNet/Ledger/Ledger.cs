@@ -22,9 +22,9 @@ namespace IndyDotNet.Ledger
             return LedgerAsync.SignAndSubmitRequestAsync(pool, wallet, submitterDid, requestJson).Result;
         }
         
-        private string SubmitRequest(IPool pool, string requestJSon, string nodes, int timeout = -1)
+        private string SubmitRequest(IPool pool, string requestJson)
         {
-            throw new NotImplementedException();
+            return LedgerAsync.SubmitRequestAsync(pool, requestJson).Result;
         }
         #endregion
 
@@ -57,10 +57,14 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
         }
 
-        public string SubmitRequest(IPool pool, BuildNymRequestResult nymRequest, string nodes, int timeout = -1)
+        public SignAndSubmitRequestResult SubmitRequest(IPool pool, BuildNymRequestResult nymRequest)
         {
             string requestJson = nymRequest.ToJson();
-            return SubmitRequest(pool, requestJson, nodes, timeout);
+            Logger.Info($"BuildNymRequestResult as json: {requestJson}");
+            string json = SubmitRequest(pool, requestJson);
+            Logger.Info($"SubmitRequest as json: {json}");
+
+            return JsonConvert.DeserializeObject<SignAndSubmitRequestResult>(json);
         }
         #endregion
 

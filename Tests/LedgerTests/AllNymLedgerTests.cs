@@ -12,7 +12,7 @@ using Tests.Utils;
 namespace Tests.LedgerTests
 {
     [TestClass]
-    public class AllLedgerTests
+    public class AllNymLedgerTests
     {
         private IPool _pool;
         private IWallet _wallet;
@@ -69,20 +69,21 @@ namespace Tests.LedgerTests
             }
         }
 
+        #region nym functions
         [TestMethod]
         public void BuildNymRequestSuccessfully()
         {
             INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
-                {
-                    Seed = "000000000000000000000000Trustee1"
-                });
+            {
+                Seed = "000000000000000000000000Trustee1"
+            });
 
             IDid target = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
-                {
-                    Seed = "000000000000000000000000Trustee2"
-                });
+            {
+                Seed = "000000000000000000000000Trustee2"
+            });
 
             BuildNymRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
 
@@ -114,7 +115,7 @@ namespace Tests.LedgerTests
             Assert.AreEqual(result.Operation.Dest, target.Did, $"Dest failed match to target: {target.Did}");
 
         }
-    
+
         [TestMethod]
         public void SignAndSubmitRequestNymRequestSuccessfully()
         {
@@ -169,5 +170,33 @@ namespace Tests.LedgerTests
             Assert.IsFalse(string.IsNullOrEmpty(signResult.Signature), $"Signature not found: '{signResult.Signature}'");
 
         }
+
+        [TestMethod]
+        public void SubmitRequestNymRequestSuccessfully()
+        {
+            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+
+            IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee1"
+            });
+
+            IDid target = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
+            {
+                Seed = "000000000000000000000000Trustee2"
+            });
+
+            BuildNymRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
+            BuildNymRequestResult signedResult = ledger.SignRequest(_wallet, submitter, result);
+            SignAndSubmitRequestResult signResult = ledger.SubmitRequest(_pool, signedResult);
+
+            Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
+
+            // Dids are submitter: V4SGRU86Z58d6TV7PBUe6f and target: LnXR1rPnncTPZvRdmJKhJQ
+            Assert.AreEqual(signResult.Result.Transaction.Metadata.From, submitter.Did, $"txn.metadata.from failed to match submitter: {submitter.Did}");
+            Assert.AreEqual(signResult.Result.Transaction.TxnData.Dest, target.Did, $"txn.data.dest failed to match target: {target.Did}");
+
+        }
+        #endregion
     }
 }
