@@ -10,18 +10,23 @@ namespace IndyDotNet.Ledger
     /// </summary>
     public interface INymLedger
     {
-        BuildRequestResult BuildNymRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role);
-        BuildRequestResult BuildGetNymRequest(IDid submitterDid, IDid targetDid);
+        BuildRequestResult BuildRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role);
         BuildRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
-        SignAndSubmitRequestResult SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
-        SignAndSubmitRequestResult SubmitRequest(IPool pool, BuildRequestResult nymRequest);
+        SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
+        SignAndSubmitRequestResponse SubmitRequest(IPool pool, BuildRequestResult nymRequest);
+    }
+
+    public interface IGetNymLedger
+    {
+        BuildRequestResult BuildGetRequest(IDid submitterDid, IDid targetDid);
+        GetNymSubmitReponse SubmitRequest(IPool pool, BuildRequestResult nymRequest);
     }
 
     public interface IDDOLedger
     {
-        BuildRequestResult BuildGetDdoRequest(IDid submitterDid, IDid targetDid);
+        BuildRequestResult BuildGetRequest(IDid submitterDid, IDid targetDid);
         BuildRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
-        SignAndSubmitRequestResult SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
-        SignAndSubmitRequestResult SubmitRequest(IPool pool, BuildRequestResult nymRequest);
+        SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
+        SignAndSubmitRequestResponse SubmitRequest(IPool pool, BuildRequestResult nymRequest);
     }
 }

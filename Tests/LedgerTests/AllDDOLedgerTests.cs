@@ -71,7 +71,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildDDORequestSuccessfully()
         {
-            IDDOLedger ledger = IndyDotNet.Ledger.Factory.GetDDOLedger();
+            IDDOLedger ledger = IndyDotNet.Ledger.Factory.CreateDDOLedger();
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
                 Seed = "000000000000000000000000Trustee1"
@@ -82,7 +82,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildGetDdoRequest(submitter, target);
+            BuildRequestResult result = ledger.BuildGetRequest(submitter, target);
 
             Assert.IsNotNull(result, "failed to create BuildRequestResult");
             Assert.AreEqual(result.Operation.Type, "120", $"BuildGetDdoRequest request type did not 120: received {result.Operation.Type}");
@@ -93,7 +93,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignAndSubmitRequestDDORequestSuccessfully()
         {
-            IDDOLedger ledger = IndyDotNet.Ledger.Factory.GetDDOLedger();
+            IDDOLedger ledger = IndyDotNet.Ledger.Factory.CreateDDOLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -105,8 +105,8 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildGetDdoRequest(submitter, target);
-            SignAndSubmitRequestResult signResult = ledger.SignAndSubmitRequest(_pool, _wallet, submitter, result);
+            BuildRequestResult result = ledger.BuildGetRequest(submitter, target);
+            SignAndSubmitRequestResponse signResult = ledger.SignAndSubmitRequest(_pool, _wallet, submitter, result);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
 
@@ -119,7 +119,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignRequestDDORequestSuccessfully()
         {
-            IDDOLedger ledger = IndyDotNet.Ledger.Factory.GetDDOLedger();
+            IDDOLedger ledger = IndyDotNet.Ledger.Factory.CreateDDOLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -131,7 +131,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildGetDdoRequest(submitter, target);
+            BuildRequestResult result = ledger.BuildGetRequest(submitter, target);
             BuildRequestResult signResult = ledger.SignRequest(_wallet, submitter, result);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
@@ -148,7 +148,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SubmitRequestDDORequestSuccessfully()
         {
-            IDDOLedger ledger = IndyDotNet.Ledger.Factory.GetDDOLedger();
+            IDDOLedger ledger = IndyDotNet.Ledger.Factory.CreateDDOLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -160,9 +160,9 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildGetDdoRequest(submitter, target);
+            BuildRequestResult result = ledger.BuildGetRequest(submitter, target);
             BuildRequestResult signedResult = ledger.SignRequest(_wallet, submitter, result);
-            SignAndSubmitRequestResult signResult = ledger.SubmitRequest(_pool, signedResult);
+            SignAndSubmitRequestResponse signResult = ledger.SubmitRequest(_pool, signedResult);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
 

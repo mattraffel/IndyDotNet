@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.Ledger
 {
-    public class SignAndSubmitRequestResult
+    public class SignAndSubmitRequestResponse
     {
         public Result Result { get; set; }
         public string OP { get; set; }

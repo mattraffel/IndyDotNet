@@ -73,7 +73,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -85,7 +85,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
+            BuildRequestResult result = ledger.BuildRequest(submitter, target, null, null, NymRoles.NA);
 
             Assert.IsNotNull(result, "failed to create BuildRequestResult");
             Assert.AreEqual(result.Operation.Type, "1", $"BuildNymRequest request type did not 120: received {result.Operation.Type}");
@@ -97,7 +97,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildGetNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            IGetNymLedger ledger = IndyDotNet.Ledger.Factory.CreateGetNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -109,7 +109,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildGetNymRequest(submitter, target);
+            BuildRequestResult result = ledger.BuildGetRequest(submitter, target);
 
             Assert.IsNotNull(result, "failed to create BuildRequestResult");
             Assert.AreEqual(result.Operation.Type, "105", $"BuildGetNymRequest request type did not 120: received {result.Operation.Type}");
@@ -121,7 +121,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestAsTrustAnchorSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -133,7 +133,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.TrustAnchor);
+            BuildRequestResult result = ledger.BuildRequest(submitter, target, null, null, NymRoles.TrustAnchor);
 
             Assert.IsNotNull(result, $"failed to create BuildRequestResult");
             Assert.AreEqual(result.Identifier, submitter.Did, $"Identifer failed match to submitter: {submitter.Did}");
@@ -144,7 +144,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignAndSubmitRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -156,8 +156,8 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
-            SignAndSubmitRequestResult signResult = ledger.SignAndSubmitRequest(_pool, _wallet, submitter, result);
+            BuildRequestResult result = ledger.BuildRequest(submitter, target, null, null, NymRoles.NA);
+            SignAndSubmitRequestResponse signResult = ledger.SignAndSubmitRequest(_pool, _wallet, submitter, result);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
 
@@ -170,7 +170,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -182,7 +182,7 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
+            BuildRequestResult result = ledger.BuildRequest(submitter, target, null, null, NymRoles.NA);
             BuildRequestResult signResult = ledger.SignRequest(_wallet, submitter, result);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
@@ -199,7 +199,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SubmitRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.GetNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -211,9 +211,9 @@ namespace Tests.LedgerTests
                 Seed = "000000000000000000000000Trustee2"
             });
 
-            BuildRequestResult result = ledger.BuildNymRequest(submitter, target, null, null, NymRoles.NA);
+            BuildRequestResult result = ledger.BuildRequest(submitter, target, null, null, NymRoles.NA);
             BuildRequestResult signedResult = ledger.SignRequest(_wallet, submitter, result);
-            SignAndSubmitRequestResult signResult = ledger.SubmitRequest(_pool, signedResult);
+            SignAndSubmitRequestResponse signResult = ledger.SubmitRequest(_pool, signedResult);
 
             Assert.IsNotNull(signResult, "failed to create SignAndSubmitRequestResult");
 

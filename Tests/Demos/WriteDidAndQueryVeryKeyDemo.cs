@@ -93,25 +93,60 @@ namespace Tests.Demos
 
             // PART 3
             // 7. Build NYM request to add Trust Anchor to the ledger
-            INymLedger nymLedger = IndyDotNet.Ledger.Factory.GetNymLedger();
-            BuildRequestResult nymRequest = nymLedger.BuildNymRequest(stewardDid, trustAnchor, trustAnchor.VerKey, "", NymRoles.TrustAnchor);
+            INymLedger nymLedger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            BuildRequestResult nymRequest = nymLedger.BuildRequest(stewardDid, trustAnchor, trustAnchor.VerKey, "", NymRoles.TrustAnchor);
 
             // 8. Sending the nym request to ledger
-            SignAndSubmitRequestResult nymResult = nymLedger.SignAndSubmitRequest(_pool, _wallet, stewardDid, nymRequest);
+            SignAndSubmitRequestResponse nymResult = nymLedger.SignAndSubmitRequest(_pool, _wallet, stewardDid, nymRequest);
 
             // PART 4
             // 9. Generating and storing DID and Verkey to query the ledger with
             IDid clientDid = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, null);
 
             // 10. Building the GET_NYM request to query Trust Anchor's Verkey as the Client
-            BuildRequestResult getNymRequest = nymLedger.BuildGetNymRequest(clientDid, trustAnchor);
+            IGetNymLedger getNymLedger = IndyDotNet.Ledger.Factory.CreateGetNymLedger();
+            BuildRequestResult getNymRequest = getNymLedger.BuildGetRequest(clientDid, trustAnchor);
 
             // 11. Sending the GET_NYM request to the ledger
             Logger.Info("\n\n***************** Step 11: getNymSubmitRequest\n\n");
-            SignAndSubmitRequestResult getNymSubmitRequest = nymLedger.SubmitRequest(_pool, getNymRequest);
+            GetNymSubmitReponse getNymSubmitRequest = getNymLedger.SubmitRequest(_pool, getNymRequest);
 
-            // 12. Comparing Trust Anchor Verkey as written by Steward and as retrieved in Client's query
-            Assert.AreEqual(trustAnchor.VerKey, getNymSubmitRequest.Result.Transaction.TxnData.Dest, $"trustAnchor.VerKey = {trustAnchor.VerKey} and Transaction.TxnData.Dest = {getNymSubmitRequest.Result.Transaction.TxnData.Dest}");
+            /* NOTE: this is what we get back
+            {  
+               "result":{  
+                  "type":"105",
+                  "data":"{\"dest\":\"7TCtk84rc8nuCPAed6gQLu\",\"identifier\":\"Th7MpTaRZVRYnPiabds81Y\",\"role\":null,\"seqNo\":19,\"txnTime\":1542061488,\"verkey\":null}",
+                  "dest":"7TCtk84rc8nuCPAed6gQLu",
+                  "identifier":"FhU8A46Afy7WwssQNAnko",
+                  "state_proof":{  
+                     "proof_nodes":"+QHe+IigPf8Wo24L8qgak4e4rUKm9i41bXqHBKOPoFmYp3exnK64ZfhjuGF7ImlkZW50aWZpZXIiOiJUaDdNcFRhUlpWUlluUGlhYmRzODFZIiwicm9sZSI6bnVsbCwic2VxTm8iOjE5LCJ0eG5UaW1lIjoxNTQyMDYxNDg4LCJ2ZXJrZXkiOm51bGx9+QFRoNPSP24JsVps7QufK62cHm4MLrVBpYu1VMlThcJrixajgKAbc\/Sy8usm4GZWRD4p3F8XPXas0ri5Luf+8Gi4JBP+HqCamro+9EH\/vrNION29c750BMkCYdpXzasRUbZmgA75MKCY86tp91Ze1HhynvcSwZGPMvmkqlA7mj0iz7YnSafoB6ACG8f0w2NsuDibWYibc1TYySAgUKSeIevHF6wVZdMBL6C2VI1QLp0G3pYnkRhImlTL3WqhsQP23Xp\/QKV+DR90KoCAgICgJHIm3oUOYlDrQlw95UDkRdOc2tGIsE9g2r12AjpJiUKAoH0lXE47VtUlFvwnCC5rgY878m6TpeEZTJIKd4SUxXtqoBvSoTludXD0XkhTPm4YxfCcAdCaiDvkzM8w6O4v5\/e1oDs6GXxRL8inD2b3RY1v\/ufksDHNqfFKaK2MEIjNIZwagA==",
+                     "multi_signature":{  
+                        "signature":"RLVggoseps7osSyQ9F3cjvhiQoLc1Dbj9QwGUJhMbfnGNC2xTsuEU7HWUYvf6fmivkZ954n7q8kt66bCGRaCK9Hx8U8YETMUGurDvZkpikEa4rW988YpSujRFMB9XnLWU6ycgTA5FMVW2WatmsbuNALULkMB7NNR9u2RarvBwe74oh",
+                        "participants":[  
+                           "Node4",
+                           "Node3",
+                           "Node2"
+                        ],
+                        "value":{  
+                           "state_root_hash":"68qc6wDWyKHiWW6YdJbYCgVUcrT3tnrrm3a1MVpWtc4f",
+                           "txn_root_hash":"DqfdnzrLK145YnB68D2iZWsvzVQ2Jx9UZJ93h97YVU5F",
+                           "timestamp":1542061488,
+                           "pool_state_root_hash":"NCGqbfRWDWtLB2bDuL6TC5BhrRdQMc5MyKdXQqXii44",
+                           "ledger_id":1
+                        }
+                     },
+                     "root_hash":"68qc6wDWyKHiWW6YdJbYCgVUcrT3tnrrm3a1MVpWtc4f"
+                  },
+                  "seqNo":19,
+                  "reqId":1542061488708038000,
+                  "txnTime":1542061488
+               },
+               "op":"REPLY"
+            }
+            */
+
+            // 12. Comparing Trust Anchor did as written by Steward and as retrieved in Client's query
+            Assert.AreEqual(trustAnchor.Did, getNymSubmitRequest.Result.Dest, $"trustAnchor: Did = {trustAnchor.Did} VerKey = {trustAnchor.VerKey} and Result.Dest = {getNymSubmitRequest.Result.Dest}");
 
             // clean up
             // 13. Close and delete wallet
