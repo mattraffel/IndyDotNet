@@ -84,7 +84,8 @@ namespace IndyDotNet.Did
         {
             string result = DidAsync.GetMyDidWithMetaAsync(wallet, did).Result;
 
-            //   returned  {
+            //   returned  
+            //   {
             //     "did": string - DID stored in the wallet,
             //     "verkey": string - The DIDs transport key (ver key, key id),
             //     "tempVerkey": string - Temporary DIDs transport key (ver key, key id), exist only during the rotation of the keys.
@@ -107,7 +108,7 @@ namespace IndyDotNet.Did
         /// <returns>The my did.</returns>
         /// <param name="pool">Pool.</param>
         /// <param name="wallet">Wallet.</param>
-        /// <param name="seed">Seed.</param>
+        /// <param name="seed">instance of IdentitySeed. If null then LibIndy will use default seed data</param>
         public static IDid CreateMyDid(IPool pool, IWallet wallet, IdentitySeed seed)
         {
             // LibIndy doesnt follow rules of json.  an empty seed value is 

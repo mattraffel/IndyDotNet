@@ -84,16 +84,17 @@ namespace Tests.Demos
 
             // PART 2
             // 5. Generating and storing steward DID and Verkey
-            // 6. Generating and storing Trust Anchor DID and Verkey
             IDid stewardDid = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
                 Seed = "000000000000000000000000Steward1"
             });
+
+            // 6. Generating and storing Trust Anchor DID and Verkey
             IDid trustAnchor = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, null);
 
             // PART 3
             // 7. Build NYM request to add Trust Anchor to the ledger
-            INymLedger nymLedger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger nymLedger = IndyDotNet.Ledger.Factory.CreateNymLedger();
             BuildRequestResult nymRequest = nymLedger.BuildRequest(stewardDid, trustAnchor, trustAnchor.VerKey, "", NymRoles.TrustAnchor);
 
             // 8. Sending the nym request to ledger

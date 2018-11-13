@@ -73,7 +73,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -121,7 +121,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void BuildNymRequestAsTrustAnchorSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -144,7 +144,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignAndSubmitRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -170,7 +170,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SignRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {
@@ -199,7 +199,7 @@ namespace Tests.LedgerTests
         [TestMethod]
         public void SubmitRequestNymRequestSuccessfully()
         {
-            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateBuildNymLedger();
+            INymLedger ledger = IndyDotNet.Ledger.Factory.CreateNymLedger();
 
             IDid submitter = IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, new IdentitySeed()
             {

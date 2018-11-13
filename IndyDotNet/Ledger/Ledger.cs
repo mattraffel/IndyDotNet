@@ -7,7 +7,10 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.Ledger
 {
-    internal class BaseLedgerInstance
+    /// <summary>
+    /// contains common functionality shared by different ledger instances
+    /// </summary>
+    internal abstract class BaseLedgerInstance
     {
         #region internal Submit/Sign functions 
         protected string SignRequest(IWallet wallet, IDid submitterDid, string requestJson)
@@ -27,11 +30,12 @@ namespace IndyDotNet.Ledger
         #endregion
     }
 
+    /// <summary>
+    /// Ledger instance.
+    /// </summary>
     internal class LedgerInstance : BaseLedgerInstance, INymLedger, IDDOLedger
     {
         public LedgerInstance() { }
-
-
 
         #region nym functions
         public BuildRequestResult BuildRequest(IDid submitterDid, IDid targetDid, string verKey, string alias, NymRoles role)
@@ -84,6 +88,9 @@ namespace IndyDotNet.Ledger
         #endregion
     }
 
+    /// <summary>
+    /// API calls for GetNym functions
+    /// </summary>
     internal class GetNymLedgerInstance : BaseLedgerInstance, IGetNymLedger
     {
         public BuildRequestResult BuildGetRequest(IDid submitterDid, IDid targetDid)

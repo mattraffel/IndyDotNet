@@ -7,7 +7,7 @@ namespace IndyDotNet.Ledger
         /// gets the API interface for Nym functions
         /// </summary>
         /// <returns></returns>
-        public static INymLedger CreateBuildNymLedger()
+        public static INymLedger CreateNymLedger()
         {
             return new LedgerInstance();
         }
