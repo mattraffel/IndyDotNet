@@ -23,13 +23,15 @@ namespace IndyDotNet.Did
     /// StoreTheirDidAsync - done
     /// KeyForDidAsync  - done
     /// KeyForLocalDidAsync - done
-    /// 
-    /// ReplaceKeysStartAsync
-    /// ReplaceKeysApplyAsync
+    /// ReplaceKeysStartAsync - done
+    /// ReplaceKeysApplyAsync - done
     /// 
     /// SetDidMetadataAsync
     /// GetDidMetadataAsync
     /// 
+    /// TODO:  ReplaceKeys functions could be merged into a single function.
+    /// there may be no need to require implementors to know the specifics
+    /// of how a key is replaced
     /// </summary>
     public interface IDid
     {
@@ -53,6 +55,8 @@ namespace IndyDotNet.Did
 
         string GetAbbreviateVerkey();
         void Refresh(bool localOnly = false);
+        void ReplaceStart(IdentitySeed seed = null);
+        void ReplaceApply();
 
     }
 

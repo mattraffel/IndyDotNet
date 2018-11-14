@@ -53,5 +53,18 @@ namespace IndyDotNet.Did
 
             VerKey = DidAsync.KeyForDidAsync(_pool, _wallet, Did).Result;
         }
+
+        public void ReplaceStart(IdentitySeed seed = null)
+        {
+            // LibIndy doesnt follow rules of json.  an empty seed value is 
+            // communicated by "{}".  TODO:  override ToJson for IdentitySeed
+            string seedJson = (null != seed ? seed.ToJson() : "{}");
+            TempVerKey = DidAsync.ReplaceKeysStartAsync(_wallet, Did, seedJson).Result;
+        }
+
+        public void ReplaceApply()
+        {
+            DidAsync.ReplaceKeysApplyAsync(_wallet, Did).Wait();
+        }
     }
 }
