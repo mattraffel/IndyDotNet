@@ -26,14 +26,14 @@ namespace IndyDotNet.Ledger
     {
         public Metadata Metadata { get; set; }
         [JsonProperty("data")]
-        public Data TxnData { get; set; }
+        public SchemaResultData TxnData { get; set; }
         [JsonProperty("type")]
         public string TxnType { get; set; }
         [JsonProperty("protocolVersion")]
         public int ProtocolVersion { get; set; }
     }
 
-    public class Data
+    public class SchemaResultData
     {
         public string Dest { get; set; }
     }

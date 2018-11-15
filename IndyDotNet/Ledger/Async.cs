@@ -440,6 +440,38 @@ namespace IndyDotNet.Ledger
         }
 
         /// <summary>
+        /// Builds a GET_NYM ledger request.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Builds a request message that is suitable for requesting a NYM from the 
+        /// ledger.
+        /// </para>
+        /// </remarks>
+        /// <param name="submitterDid">The DID of the party submitting the request.</param>
+        /// <param name="targetDid">The target DID.</param>
+        /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to a <see cref="string"/> 
+        /// containing the request JSON. </returns>
+        public static Task<string> BuildGetNymRequestAsync(IDid submitterDid, IDid targetDid)
+        {
+            ParamGuard.NotNull(targetDid, "targetDid");
+
+            var taskCompletionSource = new TaskCompletionSource<string>();
+            var commandHandle = PendingCommands.Add(taskCompletionSource);
+
+            var result = NativeMethods.indy_build_get_nym_request(
+                commandHandle,
+                submitterDid.Did,
+                targetDid.Did,
+                BuildRequestCallback
+                );
+
+            CallbackHelper.CheckResult(result);
+
+            return taskCompletionSource.Task;
+        }
+
+        /// <summary>
         /// Builds a ledger request for storing an ATTRIB.
         /// </summary>
         /// <remarks>
@@ -512,38 +544,6 @@ namespace IndyDotNet.Ledger
                 raw,
                 hash,
                 enc,
-                BuildRequestCallback
-                );
-
-            CallbackHelper.CheckResult(result);
-
-            return taskCompletionSource.Task;
-        }
-
-        /// <summary>
-        /// Builds a GET_NYM ledger request.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Builds a request message that is suitable for requesting a NYM from the 
-        /// ledger.
-        /// </para>
-        /// </remarks>
-        /// <param name="submitterDid">The DID of the party submitting the request.</param>
-        /// <param name="targetDid">The target DID.</param>
-        /// <returns>An asynchronous <see cref="Task{T}"/> that resolves to a <see cref="string"/> 
-        /// containing the request JSON. </returns>
-        public static Task<string> BuildGetNymRequestAsync(IDid submitterDid, IDid targetDid)
-        {
-            ParamGuard.NotNull(targetDid, "targetDid");
-
-            var taskCompletionSource = new TaskCompletionSource<string>();
-            var commandHandle = PendingCommands.Add(taskCompletionSource);
-
-            var result = NativeMethods.indy_build_get_nym_request(
-                commandHandle,
-                submitterDid.Did,
-                targetDid.Did,
                 BuildRequestCallback
                 );
 

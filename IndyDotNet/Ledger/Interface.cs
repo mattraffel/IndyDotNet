@@ -29,4 +29,13 @@ namespace IndyDotNet.Ledger
         SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest);
         SignAndSubmitRequestResponse SubmitRequest(IPool pool, BuildRequestResult nymRequest);
     }
+
+    public interface ISchemaLedger
+    {
+        BuildSchemaResult BuildSchemaRequest(IDid submitterDid, SchemaDefinition data);
+        string BuildGetSchemaRequest(IDid submitterDid, string schemaId);
+        string ParseGetSchemaResponse(string getSchemaResponse);
+
+        SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildSchemaResult nymRequest);
+    }
 }

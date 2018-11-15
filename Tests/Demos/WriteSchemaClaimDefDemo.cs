@@ -8,11 +8,10 @@ using IndyDotNet.Wallet;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tests.Utils;
 
-
 namespace Tests.Demos
 {
     [TestClass]
-    public class RotateKeyDemo
+    public class WriteSchemaClaimDefDemo
     {
         private IPool _pool;
         private IWallet _wallet;
@@ -24,13 +23,13 @@ namespace Tests.Demos
             string file = PoolUtils.GenerateGenesisFile();
             _filesCreated.Add(file);
 
-            _pool = IndyDotNet.Pool.Factory.GetPool("RotateKeyDemoPool", file);
+            _pool = IndyDotNet.Pool.Factory.GetPool("WriteDidAndQueryVeryKeyDemoPool", file);
             _pool.Create();
             _pool.Open();
 
             WalletConfig config = new WalletConfig()
             {
-                Id = "RotateKeyDemoWalletId"
+                Id = "WriteDidAndQueryVeryKeyDemoWalletId"
             };
 
             WalletCredentials credentials = new WalletCredentials()
@@ -65,7 +64,7 @@ namespace Tests.Demos
             }
             catch (Exception ex)
             {
-                Logger.Warn($"RotateKeyDemo failed to cleanup {ex.Message}");
+                Logger.Warn($"WriteDidAndQueryVeryKeyDemo failed to cleanup {ex.Message}");
             }
         }
 
@@ -95,30 +94,27 @@ namespace Tests.Demos
             // 8. Sending the nym request to ledger
             SignAndSubmitRequestResponse nymResult = nymLedger.SignAndSubmitRequest(_pool, _wallet, stewardDid, nymRequest);
 
-            // 9. Generating new Verkey of Trust Anchor in the wallet
-            trustAnchor.ReplaceStart();
+            // 9. build the schema definition request
+            SchemaDefinition schemaDefinition = new SchemaDefinition()
+            {
+                Name = "name",
+                Version = "1.0",
+                Id = "id"
+            };
 
-            // 10. Building NYM request to update new verkey to ledger
-            //     Note:  using TemnpVerKey which was set in step #9
-            BuildRequestResult updateNymRequest = nymLedger.BuildRequest(trustAnchor, trustAnchor, trustAnchor.TempVerKey, "", NymRoles.TrustAnchor);
+            schemaDefinition.AttributeNames.Add("age");
+            schemaDefinition.AttributeNames.Add("height");
+            schemaDefinition.AttributeNames.Add("sex");
+            schemaDefinition.AttributeNames.Add("name");
 
-            // 11. Sending NYM request to the ledger
-            SignAndSubmitRequestResponse replaceKeyResult = nymLedger.SignAndSubmitRequest(_pool, _wallet, trustAnchor, updateNymRequest);
+            ISchemaLedger schemaLedger = IndyDotNet.Ledger.Factory.CreateSchemaLedger();
+            BuildSchemaResult buildSchema = schemaLedger.BuildSchemaRequest(stewardDid, schemaDefinition);
 
-            // 12. Applying new Trust Anchor's Verkey in wallet
-            trustAnchor.ReplaceApply();
+            // 10. Sending the SCHEMA request to the ledger
+            SignAndSubmitRequestResponse signAndSubmitRequestResponse = schemaLedger.SignAndSubmitRequest(_pool, _wallet, stewardDid, buildSchema);
 
-            // 13. Reading new Verkey from wallet
-            trustAnchor.Refresh(true);
-
-            // 14. Building GET_NYM request to get Trust Anchor from Verkey
-            BuildRequestResult refreshNymRequest = nymLedger.BuildRequest(trustAnchor, trustAnchor, null, null, NymRoles.NA);
-
-            // 15.Sending GET_NYM request to ledger
-            SignAndSubmitRequestResponse refreshNymResult = nymLedger.SubmitRequest(_pool, refreshNymRequest);
-
-            // 16. Comparing Trust Anchor verkeys
-            Assert.AreEqual(trustAnchor.VerKey, refreshNymResult.Result.Transaction.TxnData.Dest);
+            Logger.Info("\n\n\n\n ---------------------------------------------\n\n");
+            Assert.Fail($"results {signAndSubmitRequestResponse}");
 
             // clean up
             // Close and delete wallet

@@ -21,5 +21,10 @@ namespace IndyDotNet.Ledger
         {
             return new LedgerInstance();
         }
+
+        public static ISchemaLedger CreateSchemaLedger()
+        {
+            return new SchemaLedgerInstance();
+        }
     }
 }

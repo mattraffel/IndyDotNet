@@ -111,4 +111,34 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<GetNymSubmitReponse>(json);
         }
     }
+
+    internal class SchemaLedgerInstance : BaseLedgerInstance, ISchemaLedger
+    {
+        public string BuildGetSchemaRequest(IDid submitterDid, string schemaId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BuildSchemaResult BuildSchemaRequest(IDid submitterDid, SchemaDefinition data)
+        {
+            string schemaJson = data.ToJson();
+            string json = LedgerAsync.BuildSchemaRequestAsync(submitterDid, schemaJson).Result;
+
+            return JsonConvert.DeserializeObject<BuildSchemaResult>(json);
+        }
+
+        public string ParseGetSchemaResponse(string getSchemaResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildSchemaResult schemaResult)
+        {
+            string schemaJson = schemaResult.ToJson();
+            string json = SignAndSubmitRequest(pool, wallet, submitterDid, schemaJson);
+
+            return JsonConvert.DeserializeObject<SignAndSubmitRequestResponse>(json);
+        }
+    }
+
 }
