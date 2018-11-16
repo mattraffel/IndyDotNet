@@ -1,10 +1,16 @@
 ﻿using System;
 namespace IndyDotNet.AnonCreds
 {
-    public class Factory
+    public static class Factory
     {
-        public Factory()
+        public static IIssuerAnonCreds GetIssuerAnonCreds()
         {
+            return new IssuerAnonCreds();
+        }
+
+        public static IProverAnonCreds GetProverAnonCreds()
+        {
+            throw new NotImplementedException();
         }
     }
 }

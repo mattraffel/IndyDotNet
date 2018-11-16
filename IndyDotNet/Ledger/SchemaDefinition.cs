@@ -4,6 +4,10 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.Ledger
 {
+    /// <summary>
+    /// TODO: can these be merged
+    /// <seealso cref="IndyDotNet.AnonCreds.CredentialDefinition"/>
+    /// </summary>
     public class SchemaDefinition
     {
         public string Id { get; set; }

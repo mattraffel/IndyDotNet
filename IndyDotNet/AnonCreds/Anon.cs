@@ -654,9 +654,9 @@ namespace IndyDotNet.AnonCreds
         /// <param name="name">Name of the schema</param>
         /// <param name="version">Version of the schema</param>
         /// <param name="attrs">A list of schema attributes descriptions</param>
-        public static Task<IssuerCreateSchemaResult> IssuerCreateSchemaAsync(string issuerDid, string name, string version, string attrs)
+        public static Task<IssuerCreateSchemaResult> IssuerCreateSchemaAsync(IDid issuerDid, string name, string version, string attrs)
         {
-            ParamGuard.NotNullOrWhiteSpace(issuerDid, nameof(issuerDid));
+            ParamGuard.NotNull(issuerDid, nameof(issuerDid));
             ParamGuard.NotNullOrWhiteSpace(name, nameof(name));
             ParamGuard.NotNullOrWhiteSpace(version, nameof(version));
             ParamGuard.NotNullOrWhiteSpace(attrs, nameof(attrs));
@@ -666,7 +666,7 @@ namespace IndyDotNet.AnonCreds
 
             var commandResult = NativeMethods.indy_issuer_create_schema(
                 commandHandle,
-                issuerDid,
+                issuerDid.Did,
                 name,
                 version,
                 attrs,
@@ -700,10 +700,10 @@ namespace IndyDotNet.AnonCreds
         /// credDefId: identifier of created credential definition
         /// credDefJson: public part of created credential definition
         /// </returns>
-        public static Task<IssuerCreateAndStoreCredentialDefResult> IssuerCreateAndStoreCredentialDefAsync(IWallet wallet, string issuerDid, string schemaJson, string tag, string type, string configJson)
+        public static Task<IssuerCreateAndStoreCredentialDefResult> IssuerCreateAndStoreCredentialDefAsync(IWallet wallet, IDid issuerDid, string schemaJson, string tag, string type, string configJson)
         {
             ParamGuard.NotNull(wallet, "wallet");
-            ParamGuard.NotNullOrWhiteSpace(issuerDid, "issuerDid");
+            ParamGuard.NotNull(issuerDid, "issuerDid");
             ParamGuard.NotNullOrWhiteSpace(schemaJson, "schemaJson");
 
             var taskCompletionSource = new TaskCompletionSource<IssuerCreateAndStoreCredentialDefResult>();
@@ -712,7 +712,7 @@ namespace IndyDotNet.AnonCreds
             var commandResult = NativeMethods.indy_issuer_create_and_store_credential_def(
                 commandHandle,
                 wallet.Handle,
-                issuerDid,
+                issuerDid.Did,
                 schemaJson,
                 tag,
                 type,

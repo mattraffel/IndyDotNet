@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IndyDotNet.AnonCreds;
 using IndyDotNet.Did;
 using IndyDotNet.Ledger;
 using IndyDotNet.Pool;
@@ -98,7 +99,7 @@ namespace Tests.Demos
             SchemaDefinition schemaDefinition = new SchemaDefinition()
             {
                 Name = "name",
-                Version = "1.0",
+                Version = "1.1",
                 Id = "id"
             };
 
@@ -113,8 +114,27 @@ namespace Tests.Demos
             // 10. Sending the SCHEMA request to the ledger
             SignAndSubmitRequestResponse signAndSubmitRequestResponse = schemaLedger.SignAndSubmitRequest(_pool, _wallet, stewardDid, buildSchema);
 
-            Logger.Info("\n\n\n\n ---------------------------------------------\n\n");
-            Assert.Fail($"results {signAndSubmitRequestResponse}");
+
+            IIssuerAnonCreds issuer = IndyDotNet.AnonCreds.Factory.GetIssuerAnonCreds();
+            CredentialDefinition credentialDefinition = new CredentialDefinition()
+            {
+                SequenceNo = 1,
+                Id = "id",
+                Name = "name",
+                Version = "1.1",
+                Tag = "TAG"
+            };
+            credentialDefinition.AttributeNames.Add("age");
+            credentialDefinition.AttributeNames.Add("height");
+            credentialDefinition.AttributeNames.Add("sex");
+            credentialDefinition.AttributeNames.Add("name");
+
+            Logger.Info("\n\n\n\n ---------------- Start ----------------------\n\n");
+            string result = issuer.CreateStoreCredentialDef(_wallet, trustAnchor, credentialDefinition);
+
+            Logger.Info("\n\n\n\n ----------------  End  ------------------------\n\n");
+            Logger.Info($"results {result}");
+            Assert.Fail($"results {result}");
 
             // clean up
             // Close and delete wallet
