@@ -28,5 +28,6 @@
     <Folder Include="PaymentsTests\" />
     <Folder Include="LedgerTests\" />
     <Folder Include="Demos\" />
+    <Folder Include="InternalTests\" />
   </ItemGroup>
 </Project>

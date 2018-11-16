@@ -23,5 +23,7 @@
     <Folder Include="PaymentHandler\" />
     <Folder Include="AnonCreds\" />
     <Folder Include="BlobStorage\" />
+    <Folder Include="Internal\" />
+    <Folder Include="Internal\Json\" />
   </ItemGroup>
 </Project>

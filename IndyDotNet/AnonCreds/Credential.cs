@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using IndyDotNet.Internal.Json;
 using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
@@ -18,37 +19,39 @@ namespace IndyDotNet.AnonCreds
     public class CredentialValue
     {
         [JsonProperty("primary")]
-        public Primary PrimaryValue { get; set; }
+        public PrimaryValue Primary { get; set; }
         [JsonProperty("revocation")]
-        public Revocation RevocationValue { get; set; }
+        public RevocationValue Revocation { get; set; }
     }
 
     /// <summary>
-    /// here's the problem with this class as currently defined
-    /// age, height etc...are attributes given in the attributes
-    /// CredentialDefinition 
-    /// TODO:  serialization of this class will not work as designed
+    /// json from LibIndy looks like this
+    /// "{"master_secret":"stufstuff","item1":"value1","item2":"value2"}"
+    /// 
+    /// The json is a master key along with properties for each of the attributes
+    /// in the credental schema.  We use the custom converter to build the Attributes
+    /// property with the credential attributes.  This allows this class to work
+    /// with any schema
     /// </summary>
+    [JsonConverter(typeof(CredentialRConverter))]
     public class R
     {
         [JsonProperty("master_secret")]
         public string MasterSecret { get; set; }
-        public string age { get; set; }
-        public string height { get; set; }
-        public string name { get; set; }
-        public string sex { get; set; }
+        public Dictionary<string, string> Attributes { get; set; } = new Dictionary<string, string>();
     }
 
-    public class Primary
+    public class PrimaryValue
     {
         public string n { get; set; }
         public string s { get; set; }
+        [JsonConverter(typeof(CredentialRConverter))] 
         public R r { get; set; }
         public string rctxt { get; set; }
         public string z { get; set; }
     }
 
-    public class Revocation
+    public class RevocationValue
     {
         public string g { get; set; }
         public string g_dash { get; set; }
