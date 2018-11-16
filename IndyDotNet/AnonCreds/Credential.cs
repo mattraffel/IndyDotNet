@@ -29,9 +29,10 @@ namespace IndyDotNet.AnonCreds
     /// "{"master_secret":"stufstuff","item1":"value1","item2":"value2"}"
     /// 
     /// The json is a master key along with properties for each of the attributes
-    /// in the credental schema.  We use the custom converter to build the Attributes
-    /// property with the credential attributes.  This allows this class to work
-    /// with any schema
+    /// in the credental schema (attrNames array).  We use the custom converter
+    /// to build the Attributes property with the credential attributes.  
+    /// This allows this class to work with any schema
+    /// <seealso cref="CredentialRConverter"/>
     /// </summary>
     [JsonConverter(typeof(CredentialRConverter))]
     public class R

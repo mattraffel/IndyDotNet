@@ -2,6 +2,7 @@
 using IndyDotNet.Did;
 using IndyDotNet.Utils;
 using IndyDotNet.Wallet;
+using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
 {
@@ -9,7 +10,7 @@ namespace IndyDotNet.AnonCreds
     {
         internal IssuerAnonCreds() {}
 
-        public string CreateStoreCredentialDef(IWallet wallet, IDid issuerDid, CredentialDefinition definition)
+        public Credential CreateStoreCredentialDef(IWallet wallet, IDid issuerDid, CredentialDefinition definition)
         {
             string schemaJson = definition.ToJson();
             string tag = definition.Tag;
@@ -23,7 +24,7 @@ namespace IndyDotNet.AnonCreds
 
             IssuerCreateAndStoreCredentialDefResult result = AnonCredsAsync.IssuerCreateAndStoreCredentialDefAsync(wallet, issuerDid, schemaJson, tag, signatureType, configJson).Result;
 
-            return result.CredDefJson;
+            return JsonConvert.DeserializeObject<Credential>(result.CredDefJson);
         }
     }
 }

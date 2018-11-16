@@ -129,12 +129,21 @@ namespace Tests.Demos
             credentialDefinition.AttributeNames.Add("sex");
             credentialDefinition.AttributeNames.Add("name");
 
-            Logger.Info("\n\n\n\n ---------------- Start ----------------------\n\n");
-            string result = issuer.CreateStoreCredentialDef(_wallet, trustAnchor, credentialDefinition);
+            Credential result = issuer.CreateStoreCredentialDef(_wallet, trustAnchor, credentialDefinition);
 
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.SchemaId);
+            Assert.IsNotNull(result.Tag);
+            Assert.AreEqual(credentialDefinition.Tag, result.Tag);
+            Assert.IsNotNull(result.Value);
+            Assert.IsNotNull(result.Value.Primary);
+            Assert.IsNotNull(result.Value.Primary.r);
+            Assert.IsNotNull(result.Value.Primary.r.MasterSecret);
+            Assert.AreEqual(credentialDefinition.AttributeNames.Count, result.Value.Primary.r.Attributes.Count);
+
+            Logger.Info("\n\n\n\n ---------------- Start ----------------------\n\n");
             Logger.Info("\n\n\n\n ----------------  End  ------------------------\n\n");
-            Logger.Info($"results {result}");
-            Assert.Fail($"results {result}");
+
 
             // clean up
             // Close and delete wallet
