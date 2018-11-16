@@ -21,5 +21,7 @@
     <Folder Include="Ledger\" />
     <Folder Include="Payments\" />
     <Folder Include="PaymentHandler\" />
+    <Folder Include="AnonCreds\" />
+    <Folder Include="BlobStorage\" />
   </ItemGroup>
 </Project>
