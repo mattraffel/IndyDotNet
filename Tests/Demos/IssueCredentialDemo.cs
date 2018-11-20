@@ -156,11 +156,12 @@ namespace Tests.Demos
             IssuerCredentialOffer claimOffer = issuer.CreateCredentialOffer(credentialDefinition.Id);
 
             // 15. Prover creates Claim Request
-            string proverDID = "VsKV7grR1BUE29mG2Fm2kX";
-            string request = prover.CreateCredentialRequest(proverDID, claimOffer, credentialDefinition, "master_secret");
+            IDid proverDID = IndyDotNet.Did.Factory.CreateMyDid(_pool, _proverWallet, null);
+            ProverCredentialRequest credentialRequest = prover.CreateCredentialRequest(proverDID, claimOffer, credentialDefinition, "master_secret");
 
-            Logger.Info($"\n\nclaimOffer = {claimOffer.ToJson()}\n\n");
-            Assert.IsTrue(false);
+            Assert.AreEqual(credentialRequest.CredDefId, claimOffer.CredDefId);
+            Assert.AreEqual(credentialRequest.ProverDid, proverDID.Did);
+          
 
             // clean up
             // Close and delete wallet

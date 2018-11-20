@@ -13,6 +13,6 @@ namespace IndyDotNet.AnonCreds
     public interface IProverAnonCreds
     {
         void CreateMasterSecret(string secret);
-        string CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret);
+        ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret);
     }
 }

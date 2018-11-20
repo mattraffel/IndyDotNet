@@ -48,6 +48,7 @@ namespace IndyDotNet.AnonCreds
         public string s { get; set; }
         [JsonConverter(typeof(CredentialRConverter))] 
         public R r { get; set; }
+        [JsonProperty("rctxt")]
         public string rctxt { get; set; }
         public string z { get; set; }
     }

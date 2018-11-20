@@ -1,6 +1,8 @@
 ﻿using System;
 using IndyDotNet.Did;
+using IndyDotNet.Utils;
 using IndyDotNet.Wallet;
+using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
 {
@@ -18,9 +20,18 @@ namespace IndyDotNet.AnonCreds
             AnonCredsAsync.ProverCreateMasterSecretAsync(_wallet, secret).Wait();
         }
 
-        public string CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret)
+        public ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret)
         {
-            throw new NotImplementedException();
+            string claimOfferJson = claimOffer.ToJson();
+            string credDefJson = credentialDefinition.ToJson();
+
+            Logger.Info($"     claimOfferJson = {claimOfferJson}");
+            Logger.Info($"     credDefJson = {credDefJson}");
+            Logger.Info($"     masterSecret = {masterSecret}");
+
+            ProverCreateCredentialRequestResult result = AnonCredsAsync.ProverCreateCredentialReqAsync(_wallet, prover, claimOfferJson, credDefJson, masterSecret).Result;
+
+            return JsonConvert.DeserializeObject< ProverCredentialRequest>(result.CredentialRequestJson);
         }
     }
 }

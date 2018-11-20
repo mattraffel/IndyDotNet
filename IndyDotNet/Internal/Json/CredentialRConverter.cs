@@ -49,6 +49,8 @@ namespace IndyDotNet.Internal.Json
                 writer.WritePropertyName(item.Key);
                 serializer.Serialize(writer, item.Value);
             }
+
+            writer.WriteEnd();
         }
     }
 }

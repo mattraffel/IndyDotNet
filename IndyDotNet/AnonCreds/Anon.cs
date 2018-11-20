@@ -435,6 +435,8 @@ namespace IndyDotNet.AnonCreds
             if (!CallbackHelper.CheckCallback(taskCompletionSource, err))
                 return;
 
+            Logger.Info($"\n\n\n-------------------------------------\n got ${cred_req_json}");
+
             taskCompletionSource.SetResult(new ProverCreateCredentialRequestResult(cred_req_json, cred_req_metadata_json));
         }
         private static ProverCreateCredentialReqCompletedDelegate ProverCreateCredentialReqCallback = ProverCreateCredentialReqCallbackMethod;
@@ -1009,10 +1011,10 @@ namespace IndyDotNet.AnonCreds
         /// <param name="credOfferJson">credential offer as a json containing information about the issuer and a credential.</param>
         /// <param name="credDefJson">credential definition json.</param>
         /// <param name="masterSecretId">the id of the master secret stored in the wallet.</param>
-        public static Task<ProverCreateCredentialRequestResult> ProverCreateCredentialReqAsync(IWallet wallet, string proverDid, string credOfferJson, string credDefJson, string masterSecretId)
+        public static Task<ProverCreateCredentialRequestResult> ProverCreateCredentialReqAsync(IWallet wallet, IDid proverDid, string credOfferJson, string credDefJson, string masterSecretId)
         {
             ParamGuard.NotNull(wallet, "wallet");
-            ParamGuard.NotNullOrWhiteSpace(proverDid, "proverDid");
+            ParamGuard.NotNull(proverDid, "proverDid");
             ParamGuard.NotNullOrWhiteSpace(credOfferJson, "credOfferJson");
             ParamGuard.NotNullOrWhiteSpace(credDefJson, "credDefJson");
             ParamGuard.NotNullOrWhiteSpace(masterSecretId, "masterSecretId");
@@ -1023,7 +1025,7 @@ namespace IndyDotNet.AnonCreds
             var commandResult = NativeMethods.indy_prover_create_credential_req(
                 commandHandle,
                 wallet.Handle,
-                proverDid,
+                proverDid.Did,
                 credOfferJson,
                 credDefJson,
                 masterSecretId,
