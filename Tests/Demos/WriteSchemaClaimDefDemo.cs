@@ -116,7 +116,7 @@ namespace Tests.Demos
 
             // 11. Creating and storing CLAIM DEFINITION using anoncreds as Trust Anchor, for the given Schema
             IIssuerAnonCreds issuer = IndyDotNet.AnonCreds.Factory.GetIssuerAnonCreds(_wallet);
-            CredentialDefinition credentialDefinition = new CredentialDefinition()
+            CredentialDefinitionSchema credentialDefinition = new CredentialDefinitionSchema()
             {
                 SequenceNo = 1,
                 Id = "id",
@@ -129,7 +129,7 @@ namespace Tests.Demos
             credentialDefinition.AttributeNames.Add("sex");
             credentialDefinition.AttributeNames.Add("name");
 
-            Credential result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
+            IssuerCredential result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.SchemaId);

@@ -15,7 +15,7 @@ namespace IndyDotNet.AnonCreds
             _wallet = wallet;
         }
 
-        public Credential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinition definition)
+        public IssuerCredential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinitionSchema definition)
         {
             string schemaJson = definition.ToJson();
             string tag = definition.Tag;
@@ -29,7 +29,14 @@ namespace IndyDotNet.AnonCreds
 
             IssuerCreateAndStoreCredentialDefResult result = AnonCredsAsync.IssuerCreateAndStoreCredentialDefAsync(_wallet, issuerDid, schemaJson, tag, signatureType, configJson).Result;
 
-            return JsonConvert.DeserializeObject<Credential>(result.CredDefJson);
+            return JsonConvert.DeserializeObject<IssuerCredential>(result.CredDefJson);
+        }
+
+        public IssuerCredentialOffer CreateCredentialOffer(string credentialId)
+        {
+            string result = AnonCredsAsync.IssuerCreateCredentialOfferAsync(_wallet, credentialId).Result;
+
+            return JsonConvert.DeserializeObject<IssuerCredentialOffer>(result);
         }
     }
 }

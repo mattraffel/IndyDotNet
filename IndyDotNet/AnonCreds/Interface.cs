@@ -6,11 +6,13 @@ namespace IndyDotNet.AnonCreds
 {
     public interface IIssuerAnonCreds
     {
-        Credential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinition definition);
+        IssuerCredential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinitionSchema definition);
+        IssuerCredentialOffer CreateCredentialOffer(string credentialId);
     }
 
     public interface IProverAnonCreds
     {
         void CreateMasterSecret(string secret);
+        string CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret);
     }
 }

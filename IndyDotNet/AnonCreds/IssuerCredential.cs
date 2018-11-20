@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
 {
-    public class Credential
+    public class IssuerCredential
     {
         public string Ver { get; set; }
         public string Id { get; set; }

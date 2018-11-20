@@ -123,7 +123,7 @@ namespace Tests.Demos
 
             // 11. Creating and storing CLAIM DEFINITION using anoncreds as Trust Anchor, for the given Schema
             IIssuerAnonCreds issuer = IndyDotNet.AnonCreds.Factory.GetIssuerAnonCreds(_wallet);
-            CredentialDefinition credentialDefinition = new CredentialDefinition()
+            CredentialDefinitionSchema credentialschema = new CredentialDefinitionSchema()
             {
                 SequenceNo = 1,
                 Id = "id",
@@ -131,12 +131,12 @@ namespace Tests.Demos
                 Version = "1.1",
                 Tag = "TAG"
             };
-            credentialDefinition.AttributeNames.Add("age");
-            credentialDefinition.AttributeNames.Add("height");
-            credentialDefinition.AttributeNames.Add("sex");
-            credentialDefinition.AttributeNames.Add("name");
+            credentialschema.AttributeNames.Add("age");
+            credentialschema.AttributeNames.Add("height");
+            credentialschema.AttributeNames.Add("sex");
+            credentialschema.AttributeNames.Add("name");
 
-            Credential result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
+            IssuerCredential credentialDefinition = issuer.CreateStoreCredentialDef(trustAnchor, credentialschema);
 
             // 12. Creating Prover wallet and opening it to get the handle
             WalletConfig config = new WalletConfig()
@@ -151,6 +151,16 @@ namespace Tests.Demos
             // 13. Prover is creating Master Secret
             IProverAnonCreds prover = IndyDotNet.AnonCreds.Factory.GetProverAnonCreds(_proverWallet);
             prover.CreateMasterSecret("master_secret");
+
+            // 14. Issuer(Trust Anchor) is creating a Claim Offer for Prover
+            IssuerCredentialOffer claimOffer = issuer.CreateCredentialOffer(credentialDefinition.Id);
+
+            // 15. Prover creates Claim Request
+            string proverDID = "VsKV7grR1BUE29mG2Fm2kX";
+            string request = prover.CreateCredentialRequest(proverDID, claimOffer, credentialDefinition, "master_secret");
+
+            Logger.Info($"\n\nclaimOffer = {claimOffer.ToJson()}\n\n");
+            Assert.IsTrue(false);
 
             // clean up
             // Close and delete wallet

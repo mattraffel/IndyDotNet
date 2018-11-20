@@ -6,7 +6,7 @@ namespace IndyDotNet.Ledger
 {
     /// <summary>
     /// TODO: can these be merged
-    /// <seealso cref="IndyDotNet.AnonCreds.CredentialDefinition"/>
+    /// <seealso cref="IndyDotNet.AnonCreds.CredentialDefinitionSchema"/>
     /// </summary>
     public class SchemaDefinition
     {

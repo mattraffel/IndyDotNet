@@ -8,7 +8,7 @@ namespace IndyDotNet.AnonCreds
     /// TODO: can these be merged
     /// <seealso cref="IndyDotNet.Ledger.SchemaDefinition"/>
     /// </summary>
-    public class CredentialDefinition
+    public class CredentialDefinitionSchema
     {
         [JsonProperty("seqNo")]
         public int SequenceNo { get; set; }
