@@ -8,9 +8,14 @@ namespace IndyDotNet.AnonCreds
 {
     internal class IssuerAnonCreds : IIssuerAnonCreds
     {
-        internal IssuerAnonCreds() {}
+        private IWallet _wallet;
 
-        public Credential CreateStoreCredentialDef(IWallet wallet, IDid issuerDid, CredentialDefinition definition)
+        internal IssuerAnonCreds(IWallet wallet)
+        {
+            _wallet = wallet;
+        }
+
+        public Credential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinition definition)
         {
             string schemaJson = definition.ToJson();
             string tag = definition.Tag;
@@ -22,7 +27,7 @@ namespace IndyDotNet.AnonCreds
             Logger.Info($"     tag = {tag}");
             Logger.Info($"     signatureType = {signatureType}");
 
-            IssuerCreateAndStoreCredentialDefResult result = AnonCredsAsync.IssuerCreateAndStoreCredentialDefAsync(wallet, issuerDid, schemaJson, tag, signatureType, configJson).Result;
+            IssuerCreateAndStoreCredentialDefResult result = AnonCredsAsync.IssuerCreateAndStoreCredentialDefAsync(_wallet, issuerDid, schemaJson, tag, signatureType, configJson).Result;
 
             return JsonConvert.DeserializeObject<Credential>(result.CredDefJson);
         }

@@ -12,11 +12,17 @@ using Tests.Utils;
 namespace Tests.Demos
 {
     [TestClass]
-    public class WriteSchemaClaimDefDemo
+    public class IssueCredentialDemo
     {
         private IPool _pool;
         private IWallet _wallet;
+        private IWallet _proverWallet;
         private List<string> _filesCreated = new List<string>();
+        private WalletCredentials _credentials = new WalletCredentials()
+        {
+            Key = "8dvfYSt5d1taSd6yJdpjq4emkwsPDDLYxkNFysFD2cZY",
+            KeyDerivationMethod = KeyDerivationMethod.RAW
+        };
 
         [TestInitialize]
         public void Initialize()
@@ -24,22 +30,16 @@ namespace Tests.Demos
             string file = PoolUtils.GenerateGenesisFile();
             _filesCreated.Add(file);
 
-            _pool = IndyDotNet.Pool.Factory.GetPool("WriteDidAndQueryVeryKeyDemoPool", file);
+            _pool = IndyDotNet.Pool.Factory.GetPool("IssueCredentialDemoPool", file);
             _pool.Create();
             _pool.Open();
 
             WalletConfig config = new WalletConfig()
             {
-                Id = "WriteDidAndQueryVeryKeyDemoWalletId"
+                Id = "IssueCredentialDemoWalletId"
             };
 
-            WalletCredentials credentials = new WalletCredentials()
-            {
-                Key = "8dvfYSt5d1taSd6yJdpjq4emkwsPDDLYxkNFysFD2cZY",
-                KeyDerivationMethod = KeyDerivationMethod.RAW
-            };
-
-            _wallet = IndyDotNet.Wallet.Factory.GetWallet(config, credentials);
+            _wallet = IndyDotNet.Wallet.Factory.GetWallet(config, _credentials);
             _wallet.Create();
             _wallet.Open();
         }
@@ -52,6 +52,13 @@ namespace Tests.Demos
                 _wallet.Close();
                 _wallet.Delete();
                 _wallet = null;
+
+                if (null != _proverWallet)
+                {
+                    _proverWallet.Close();
+                    _proverWallet.Delete();
+                    _proverWallet = null;
+                }
 
                 _pool.Close();
                 _pool.Delete();
@@ -131,15 +138,19 @@ namespace Tests.Demos
 
             Credential result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.SchemaId);
-            Assert.IsNotNull(result.Tag);
-            Assert.AreEqual(credentialDefinition.Tag, result.Tag);
-            Assert.IsNotNull(result.Value);
-            Assert.IsNotNull(result.Value.Primary);
-            Assert.IsNotNull(result.Value.Primary.r);
-            Assert.IsNotNull(result.Value.Primary.r.MasterSecret);
-            Assert.AreEqual(credentialDefinition.AttributeNames.Count, result.Value.Primary.r.Attributes.Count);
+            // 12. Creating Prover wallet and opening it to get the handle
+            WalletConfig config = new WalletConfig()
+            {
+                Id = "ProverIssueCredentialDemoWalletId"
+            };
+
+            _proverWallet = IndyDotNet.Wallet.Factory.GetWallet(config, _credentials);
+            _proverWallet.Create();
+            _proverWallet.Open();
+
+            // 13. Prover is creating Master Secret
+            IProverAnonCreds prover = IndyDotNet.AnonCreds.Factory.GetProverAnonCreds(_proverWallet);
+            prover.CreateMasterSecret("master_secret");
 
             // clean up
             // Close and delete wallet

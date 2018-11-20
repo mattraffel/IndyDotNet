@@ -1,16 +1,18 @@
 ﻿using System;
+using IndyDotNet.Wallet;
+
 namespace IndyDotNet.AnonCreds
 {
     public static class Factory
     {
-        public static IIssuerAnonCreds GetIssuerAnonCreds()
+        public static IIssuerAnonCreds GetIssuerAnonCreds(IWallet wallet)
         {
-            return new IssuerAnonCreds();
+            return new IssuerAnonCreds(wallet);
         }
 
-        public static IProverAnonCreds GetProverAnonCreds()
+        public static IProverAnonCreds GetProverAnonCreds(IWallet wallet)
         {
-            throw new NotImplementedException();
+            return new ProverAnonCreds(wallet);
         }
     }
 }
