@@ -46,7 +46,7 @@ namespace IndyDotNet.AnonCreds
     {
         public string n { get; set; }
         public string s { get; set; }
-        [JsonConverter(typeof(CredentialRConverter))] 
+        [JsonConverter(typeof(CredentialRConverter))]
         public R r { get; set; }
         [JsonProperty("rctxt")]
         public string rctxt { get; set; }
@@ -67,4 +67,21 @@ namespace IndyDotNet.AnonCreds
         public string pk { get; set; }
         public string y { get; set; }
     }
+
+    /// <summary>
+    /// LibIndy expects credential values to passed as such
+    /// { "sex" : ["male", "a_check_value"] }
+    /// 
+    /// 
+    /// <seealso cref="AttributeWithValueConverter"/>
+    /// </summary>
+    [JsonConverter(typeof(AttributeWithValueConverter))]
+    public class AttributeWithValue
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public string CheckValue { get; set; }
+    }
+
+    public class AttributeValuesList : List<AttributeWithValue> {}
 }

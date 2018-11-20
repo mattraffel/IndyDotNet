@@ -161,7 +161,10 @@ namespace Tests.Demos
 
             Assert.AreEqual(credentialRequest.CredDefId, claimOffer.CredDefId);
             Assert.AreEqual(credentialRequest.ProverDid, proverDID.Did);
-          
+
+            // 16. Issuer(Trust Anchor) creates Claim for Claim Request
+
+            // 17. Prover processes and stores Claim
 
             // clean up
             // Close and delete wallet

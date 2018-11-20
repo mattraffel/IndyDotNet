@@ -31,7 +31,7 @@ namespace IndyDotNet.AnonCreds
 
             ProverCreateCredentialRequestResult result = AnonCredsAsync.ProverCreateCredentialReqAsync(_wallet, prover, claimOfferJson, credDefJson, masterSecret).Result;
 
-            return JsonConvert.DeserializeObject< ProverCredentialRequest>(result.CredentialRequestJson);
+            return JsonConvert.DeserializeObject<ProverCredentialRequest>(result.CredentialRequestJson);
         }
     }
 }
