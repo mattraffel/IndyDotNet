@@ -10,7 +10,7 @@ namespace IndyDotNet.AnonCreds
     {
         IssuerCredentialDefinition CreateStoreCredentialDef(IDid issuerDid, CredentialDefinitionSchema definition);
         IssuerCredentialOffer CreateCredentialOffer(string credentialId);
-        string CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, string revcationId, IBlobStorageReader reader);
+        string CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, string revcationId = null, IBlobStorageReader reader = null);
     }
 
     public interface IProverAnonCreds
