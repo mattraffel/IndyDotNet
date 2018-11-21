@@ -9,8 +9,8 @@ developers to know the intrisic details of IndySDK, explicitly needing to know t
 contracts.  Not necessarily a bad thing, but _it does make it every unfriendly
 and difficult to use._ 
 
-We believe there is a better implementation.  No offense to all the hard working people
-contributing to IndySDK .NET wrapper, but it's just time for something better.  
+We believe DotNot engineers should work with a library that is much easier to use
+and less fragile. This means object oriented approach over json string data manipulation.
 
 IndyDotNet (this project) benefits (and goals) of this implementation are:
 - Work with defined types. No need to understand the data contracts and json structure.
