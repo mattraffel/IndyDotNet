@@ -129,7 +129,7 @@ namespace Tests.Demos
             credentialDefinition.AttributeNames.Add("sex");
             credentialDefinition.AttributeNames.Add("name");
 
-            IssuerCredential result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
+            IssuerCredentialDefinition result = issuer.CreateStoreCredentialDef(trustAnchor, credentialDefinition);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.SchemaId);

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
 {
-    public class IssuerCredential
+    public class IssuerCredentialDefinition
     {
         public string Ver { get; set; }
         public string Id { get; set; }
@@ -68,20 +68,20 @@ namespace IndyDotNet.AnonCreds
         public string y { get; set; }
     }
 
-    /// <summary>
-    /// LibIndy expects credential values to passed as such
-    /// { "sex" : ["male", "a_check_value"] }
-    /// 
-    /// 
-    /// <seealso cref="AttributeWithValueConverter"/>
-    /// </summary>
-    [JsonConverter(typeof(AttributeWithValueConverter))]
     public class AttributeWithValue
     {
         public string Name { get; set; }
         public string Value { get; set; }
+        /// <summary>
+        /// TODO:  need to make this computed based on Value as invalid CheckValues
+        /// will throw an SSL exception
+        /// </summary>
         public string CheckValue { get; set; }
     }
-
+    /// <summary>
+    ///
+    /// <seealso cref="AttributeValuesListConverter"/>
+    /// </summary>
+    [JsonConverter(typeof(AttributeValuesListConverter))]
     public class AttributeValuesList : List<AttributeWithValue> {}
 }

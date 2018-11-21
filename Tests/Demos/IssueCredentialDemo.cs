@@ -136,7 +136,7 @@ namespace Tests.Demos
             credentialschema.AttributeNames.Add("sex");
             credentialschema.AttributeNames.Add("name");
 
-            IssuerCredential credentialDefinition = issuer.CreateStoreCredentialDef(trustAnchor, credentialschema);
+            IssuerCredentialDefinition credentialDefinition = issuer.CreateStoreCredentialDef(trustAnchor, credentialschema);
 
             // 12. Creating Prover wallet and opening it to get the handle
             WalletConfig config = new WalletConfig()
@@ -163,8 +163,42 @@ namespace Tests.Demos
             Assert.AreEqual(credentialRequest.ProverDid, proverDID.Did);
 
             // 16. Issuer(Trust Anchor) creates Claim for Claim Request
+            AttributeValuesList attributes = new AttributeValuesList();
+            attributes.Add(new AttributeWithValue()
+            {
+                Name = "age",
+                Value = "27",
+                CheckValue = "27"
+            });
+            attributes.Add(new AttributeWithValue()
+            {
+                Name = "height",
+                Value = "175",
+                CheckValue = "175"
+            });
+            attributes.Add(new AttributeWithValue()
+            {
+                Name = "name",
+                Value = "Alex",
+                CheckValue = "99262857098057710338306967609588410025648622308394250666849665532448612202874"
+            });
+            attributes.Add(new AttributeWithValue()
+            {
+                Name = "sex",
+                Value = "male",
+                CheckValue = "5944657099558967239210949258394887428692050081607692519917050011144233115103"
+            });
+
+            string credstuff = issuer.CreateCredential(claimOffer, credentialRequest, attributes);
+
+            Logger.Info($"\n\n\nCreateCredential = {credstuff}\n\n\n");
+            Assert.Fail();
+
 
             // 17. Prover processes and stores Claim
+
+
+
 
             // clean up
             // Close and delete wallet

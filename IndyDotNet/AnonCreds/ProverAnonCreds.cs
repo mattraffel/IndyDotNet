@@ -20,7 +20,7 @@ namespace IndyDotNet.AnonCreds
             AnonCredsAsync.ProverCreateMasterSecretAsync(_wallet, secret).Wait();
         }
 
-        public ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret)
+        public ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredentialDefinition credentialDefinition, string masterSecret)
         {
             string claimOfferJson = claimOffer.ToJson();
             string credDefJson = credentialDefinition.ToJson();

@@ -8,9 +8,9 @@ namespace IndyDotNet.AnonCreds
 {
     public interface IIssuerAnonCreds
     {
-        IssuerCredential CreateStoreCredentialDef(IDid issuerDid, CredentialDefinitionSchema definition);
+        IssuerCredentialDefinition CreateStoreCredentialDef(IDid issuerDid, CredentialDefinitionSchema definition);
         IssuerCredentialOffer CreateCredentialOffer(string credentialId);
-        void CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, object revcationId, IBlobStorageReader reader);
+        string CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, string revcationId, IBlobStorageReader reader);
     }
 
     public interface IProverAnonCreds
@@ -19,6 +19,6 @@ namespace IndyDotNet.AnonCreds
         /// <summary>
         /// TODO:  what about the metadata json also returned in ProverCreateCredentialRequestResult result = AnonCredsAsync.ProverCreateCredentialReqAsync...
         /// </summary>
-        ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredential credentialDefinition, string masterSecret);
+        ProverCredentialRequest CreateCredentialRequest(IDid prover, IssuerCredentialOffer claimOffer, IssuerCredentialDefinition credentialDefinition, string masterSecret);
     }
 }
