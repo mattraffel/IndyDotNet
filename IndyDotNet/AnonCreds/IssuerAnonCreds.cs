@@ -1,4 +1,5 @@
 ﻿using System;
+using IndyDotNet.BlobStorage;
 using IndyDotNet.Did;
 using IndyDotNet.Utils;
 using IndyDotNet.Wallet;
@@ -37,6 +38,11 @@ namespace IndyDotNet.AnonCreds
             string result = AnonCredsAsync.IssuerCreateCredentialOfferAsync(_wallet, credentialId).Result;
 
             return JsonConvert.DeserializeObject<IssuerCredentialOffer>(result);
+        }
+
+        public void CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, object revcationId, IBlobStorageReader reader)
+        {
+            throw new NotImplementedException();
         }
     }
 }
