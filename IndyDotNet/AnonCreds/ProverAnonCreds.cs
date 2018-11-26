@@ -25,9 +25,9 @@ namespace IndyDotNet.AnonCreds
             string claimOfferJson = claimOffer.ToJson();
             string credDefJson = credentialDefinition.ToJson();
 
-            /*Logger.Info($"     claimOfferJson = {claimOfferJson}");
-            Logger.Info($"     credDefJson = {credDefJson}");
-            Logger.Info($"     masterSecret = {masterSecret}");*/
+            //Logger.Info($"     claimOfferJson = {claimOfferJson}");
+            //Logger.Info($"     credDefJson = {credDefJson}");
+            //Logger.Info($"     masterSecret = {masterSecret}");
 
             ProverCreateCredentialRequestResult result = AnonCredsAsync.ProverCreateCredentialReqAsync(_wallet, prover, claimOfferJson, credDefJson, masterSecret).Result;
 
@@ -43,11 +43,11 @@ namespace IndyDotNet.AnonCreds
             string credDefinitionJson = credentialDefinition.ToJson();
             string metadataJson = credentialRequestMetadata.ToJson();
 
-            Logger.Info($"\n ------- SaveCredential ------------- ");
-            Logger.Info($"\n     credentialJson = {credentialJson}");
-            Logger.Info($"\n credDefinitionJson = {credDefinitionJson}");
-            Logger.Info($"\n       metadataJson = {metadataJson}");
-            Logger.Info($"\n ------------------------------------ ");
+            //Logger.Info($"\n ------- SaveCredential ------------- ");
+            //Logger.Info($"\n     credentialJson = {credentialJson}");
+            //Logger.Info($"\n credDefinitionJson = {credDefinitionJson}");
+            //Logger.Info($"\n       metadataJson = {metadataJson}");
+            //Logger.Info($"\n ------------------------------------ ");
 
             string credentialId = AnonCredsAsync.ProverStoreCredentialAsync(_wallet, requestedCredentialId, metadataJson, credentialJson, credDefinitionJson, null).Result;
 

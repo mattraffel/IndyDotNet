@@ -189,11 +189,9 @@ namespace Tests.Demos
                 CheckValue = "5944657099558967239210949258394887428692050081607692519917050011144233115103"
             });
 
-            Logger.Info("\n------- issuer.CreateCredential -------- \n");
             IssuerCredential issuerCredential = issuer.CreateCredential(claimOffer, credentialRequest, attributes);
 
             // 17. Prover processes and stores Claim
-            Logger.Info("\n------- prover.SaveCredential -------- \n");
             string proverCredentialId = prover.SaveCredential(issuerCredential, credentialDefinition, credentialRequestMetadata);
 
             Assert.IsTrue(string.IsNullOrEmpty(proverCredentialId), "SaveCredential did not return proverCredentialId");
