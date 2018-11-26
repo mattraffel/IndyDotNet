@@ -9,10 +9,10 @@ namespace IndyDotNet.AnonCreds
     {
         public string Ver { get; set; }
         public string Id { get; set; }
+        [JsonProperty("schema_id")]
+        public string OutSchemaId { get { return SchemaId; } }
         [JsonProperty("schemaId")]
         public string SchemaId { get; set; }
-        [JsonProperty("schema_id")]
-        public string SchemaId2 { get { return SchemaId; } }
         public string Type { get; set; }
         public string Tag { get; set; }
         public CredentialValue Value { get; set; }
@@ -80,6 +80,7 @@ namespace IndyDotNet.AnonCreds
         /// </summary>
         public string CheckValue { get; set; }
     }
+
     /// <summary>
     ///
     /// <seealso cref="AttributeValuesListConverter"/>

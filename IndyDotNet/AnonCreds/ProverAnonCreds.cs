@@ -43,7 +43,7 @@ namespace IndyDotNet.AnonCreds
             string credDefinitionJson = credentialDefinition.ToJson();
             string metadataJson = credentialRequestMetadata.ToJson();
 
-            Logger.Info($"\n ------------------------------------ ");
+            Logger.Info($"\n ------- SaveCredential ------------- ");
             Logger.Info($"\n     credentialJson = {credentialJson}");
             Logger.Info($"\n credDefinitionJson = {credDefinitionJson}");
             Logger.Info($"\n       metadataJson = {metadataJson}");

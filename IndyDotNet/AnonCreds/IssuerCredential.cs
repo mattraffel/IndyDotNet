@@ -2,69 +2,98 @@
 using System.Collections.Generic;
 
 using System.Globalization;
+using IndyDotNet.Internal.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace IndyDotNet.AnonCreds
 {
     /// <summary>
-    /// TODO:  this is exactly the same as <seealso cref="ProverCredentialRequest"/>
+    /// 
     /// </summary>
     public class IssuerCredential
     {
-        [JsonProperty("prover_did")]
-        public string ProverDid { get; set; }
+        [JsonProperty("schema_id")]
+        public string SchemaId { get; set; }
 
         [JsonProperty("cred_def_id")]
         public string CredDefId { get; set; }
 
-        [JsonProperty("blinded_ms")]
-        public IssuerBlindedMs BlindedMs { get; set; }
+        [JsonProperty("rev_reg_id")]
+        public object RevRegId { get; set; }
 
-        [JsonProperty("blinded_ms_correctness_proof")]
-        public IssuerBlindedMsCorrectnessProof BlindedMsCorrectnessProof { get; set; }
+        [JsonProperty("values")]
+        public CredentialValuesList Values { get; set; }
 
-        [JsonProperty("nonce")]
-        public string Nonce { get; set; }
+        [JsonProperty("signature")]
+        public Signature Signature { get; set; }
+
+        [JsonProperty("signature_correctness_proof")]
+        public SignatureCorrectnessProof SignatureCorrectnessProof { get; set; }
+
+        [JsonProperty("rev_reg")]
+        public object RevReg { get; set; }
+
+        [JsonProperty("witness")]
+        public object Witness { get; set; }
     }
 
-    public class IssuerBlindedMs
+    public class Signature
     {
-        [JsonProperty("u")]
-        public string U { get; set; }
+        [JsonProperty("p_credential")]
+        public PCredential PCredential { get; set; }
 
-        [JsonProperty("ur")]
-        public string Ur { get; set; }
-
-        [JsonProperty("hidden_attributes")]
-        public string[] HiddenAttributes { get; set; }
-
-        [JsonProperty("committed_attributes")]
-        public IssuerCommittedAttributes CommittedAttributes { get; set; }
+        [JsonProperty("r_credential")]
+        public object RCredential { get; set; }
     }
 
-    public class IssuerCommittedAttributes
+    public class PCredential
     {
+        [JsonProperty("m_2")]
+        public string M2 { get; set; }
+
+        [JsonProperty("a")]
+        public string A { get; set; }
+
+        [JsonProperty("e")]
+        public string E { get; set; }
+
+        [JsonProperty("v")]
+        public string V { get; set; }
     }
 
-    public class IssuerBlindedMsCorrectnessProof
+    public class SignatureCorrectnessProof
     {
+        [JsonProperty("se")]
+        public string Se { get; set; }
+
         [JsonProperty("c")]
         public string C { get; set; }
-
-        [JsonProperty("v_dash_cap")]
-        public string VDashCap { get; set; }
-
-        [JsonProperty("m_caps")]
-        public IssuerMCaps MCaps { get; set; }
-
-        [JsonProperty("r_caps")]
-        public IssuerCommittedAttributes RCaps { get; set; }
     }
 
-    public class IssuerMCaps
+    /// <summary>
+    /// json from LibIndy looks like this
+    /// "height":{  "raw":"175","encoded":"175"}
+    /// 
+    /// and it needs to converted to IssuerCredentialValue where
+    ///    Name = "height"
+    ///    Raw = "175"
+    ///    Encoded = "175"
+    /// 
+    /// This allows this class to work with any schema
+    /// <seealso cref="CredentialValuesListConverter"/>
+    /// <seealso cref="CredentialRConverter"/>
+    /// </summary>
+    [JsonConverter(typeof(CredentialValuesListConverter))]
+    public class CredentialValuesList : List<IssuerCredentialValue> { }
+
+    /// <summary>
+    /// TODO: very similar to <seealso cref="AttributeWithValue"/>
+    /// </summary>
+    public class IssuerCredentialValue
     {
-        [JsonProperty("master_secret")]
-        public string MasterSecret { get; set; }
+        public string Name { get; set; }
+        public string Raw { get; set; }
+        public string Encoded { get; set; }
     }
 }
