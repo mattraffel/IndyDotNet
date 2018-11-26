@@ -29,8 +29,6 @@ namespace IndyDotNet.Internal.Json
 
             foreach(KeyValuePair<string, JToken> jsonItem in something)
             {
-                Logger.Info($"jsonItem = {jsonItem.ToString()}");
-                Logger.Info($"Value[0] = {jsonItem.Value["raw"]}");
                 AnonCreds.IssuerCredentialValue credentialValue = new AnonCreds.IssuerCredentialValue()
                 {
                     Name = jsonItem.Key,
@@ -61,12 +59,13 @@ namespace IndyDotNet.Internal.Json
             {
                 writer.WritePropertyName(item.Name);
 
-                writer.WriteStartArray();
-
+                writer.WriteStartObject();
+                writer.WritePropertyName("raw");
                 serializer.Serialize(writer, item.Raw);
+                writer.WritePropertyName("encoded");
                 serializer.Serialize(writer, item.Encoded);
 
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
 
             writer.WriteEnd();

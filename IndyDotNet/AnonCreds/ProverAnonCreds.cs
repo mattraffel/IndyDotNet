@@ -49,7 +49,7 @@ namespace IndyDotNet.AnonCreds
             Logger.Info($"\n       metadataJson = {metadataJson}");
             Logger.Info($"\n ------------------------------------ ");
 
-            string credentialId = AnonCredsAsync.ProverStoreCredentialAsync(_wallet, requestedCredentialId, metadataJson, credentialJson, credDefinitionJson, "").Result;
+            string credentialId = AnonCredsAsync.ProverStoreCredentialAsync(_wallet, requestedCredentialId, metadataJson, credentialJson, credDefinitionJson, null).Result;
 
             return credentialId;
         }
