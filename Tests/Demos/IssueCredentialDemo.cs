@@ -157,7 +157,7 @@ namespace Tests.Demos
 
             // 15. Prover creates Claim Request
             IDid proverDID = IndyDotNet.Did.Factory.CreateMyDid(_pool, _proverWallet, null);
-            ProverCredentialRequest credentialRequest = prover.CreateCredentialRequest(proverDID, claimOffer, credentialDefinition, "master_secret");
+            (ProverCredentialRequest credentialRequest, ProverCredentialRequestMetadata credentialRequestMetadata) = prover.CreateCredentialRequest(proverDID, claimOffer, credentialDefinition, "master_secret");
 
             Assert.AreEqual(credentialRequest.CredDefId, claimOffer.CredDefId);
             Assert.AreEqual(credentialRequest.ProverDid, proverDID.Did);
@@ -189,16 +189,12 @@ namespace Tests.Demos
                 CheckValue = "5944657099558967239210949258394887428692050081607692519917050011144233115103"
             });
 
-            string credstuff = issuer.CreateCredential(claimOffer, credentialRequest, attributes);
-
-            Logger.Info($"\n\n\nCreateCredential = {credstuff}\n\n\n");
-            Assert.Fail();
-
+            IssuerCredential issuerCredential = issuer.CreateCredential(claimOffer, credentialRequest, attributes);
 
             // 17. Prover processes and stores Claim
+            string proverCredentialId = prover.SaveCredential(issuerCredential, credentialDefinition, credentialRequestMetadata);
 
-
-
+            Assert.IsTrue(string.IsNullOrEmpty(proverCredentialId), "SaveCredential did not return proverCredentialId");
 
             // clean up
             // Close and delete wallet

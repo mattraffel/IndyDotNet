@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace IndyDotNet.AnonCreds
 {
+    /// <summary>
+    /// TODO: this is exactly the same as <seealso cref="IssuerCredential"/>
+    /// </summary>
     public class ProverCredentialRequest
     {
         [JsonProperty("prover_did")]
@@ -12,16 +15,16 @@ namespace IndyDotNet.AnonCreds
         public string CredDefId { get; set; }
 
         [JsonProperty("blinded_ms")]
-        public BlindedMs BlindedMs { get; set; }
+        public ProverBlindedMs BlindedMs { get; set; }
 
         [JsonProperty("blinded_ms_correctness_proof")]
-        public BlindedMsCorrectnessProof BlindedMsCorrectnessProof { get; set; }
+        public ProverBlindedMsCorrectnessProof BlindedMsCorrectnessProof { get; set; }
 
         [JsonProperty("nonce")]
         public string Nonce { get; set; }
     }
 
-    public class BlindedMs
+    public class ProverBlindedMs
     {
         [JsonProperty("u")]
         public string U { get; set; }
@@ -33,14 +36,14 @@ namespace IndyDotNet.AnonCreds
         public string[] HiddenAttributes { get; set; }
 
         [JsonProperty("committed_attributes")]
-        public CommittedAttributes CommittedAttributes { get; set; }
+        public ProverCommittedAttributes CommittedAttributes { get; set; }
     }
 
-    public class CommittedAttributes
+    public class ProverCommittedAttributes
     {
     }
 
-    public class BlindedMsCorrectnessProof
+    public class ProverBlindedMsCorrectnessProof
     {
         [JsonProperty("c")]
         public string C { get; set; }
@@ -49,13 +52,13 @@ namespace IndyDotNet.AnonCreds
         public string VDashCap { get; set; }
 
         [JsonProperty("m_caps")]
-        public MCaps MCaps { get; set; }
+        public ProverMCaps MCaps { get; set; }
 
         [JsonProperty("r_caps")]
-        public CommittedAttributes RCaps { get; set; }
+        public ProverCommittedAttributes RCaps { get; set; }
     }
 
-    public class MCaps
+    public class ProverMCaps
     {
         [JsonProperty("master_secret")]
         public string MasterSecret { get; set; }

@@ -11,6 +11,8 @@ namespace IndyDotNet.AnonCreds
         public string Id { get; set; }
         [JsonProperty("schemaId")]
         public string SchemaId { get; set; }
+        [JsonProperty("schema_id")]
+        public string SchemaId2 { get { return SchemaId; } }
         public string Type { get; set; }
         public string Tag { get; set; }
         public CredentialValue Value { get; set; }

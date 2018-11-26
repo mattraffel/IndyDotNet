@@ -23,10 +23,10 @@ namespace IndyDotNet.AnonCreds
             string configJson = definition.Config.ToJson();
             string signatureType = definition.SignatureType;
 
-            Logger.Info($"     schemaJson = {schemaJson}");
-            Logger.Info($"     configJson = {configJson}");
-            Logger.Info($"     tag = {tag}");
-            Logger.Info($"     signatureType = {signatureType}");
+            //Logger.Info($"     schemaJson = {schemaJson}");
+            //Logger.Info($"     configJson = {configJson}");
+            //Logger.Info($"     tag = {tag}");
+            //Logger.Info($"     signatureType = {signatureType}");
 
             IssuerCreateAndStoreCredentialDefResult result = AnonCredsAsync.IssuerCreateAndStoreCredentialDefAsync(_wallet, issuerDid, schemaJson, tag, signatureType, configJson).Result;
 
@@ -40,20 +40,20 @@ namespace IndyDotNet.AnonCreds
             return JsonConvert.DeserializeObject<IssuerCredentialOffer>(result);
         }
 
-        public string CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, string revcationId = null, IBlobStorageReader reader = null)
+        public IssuerCredential CreateCredential(IssuerCredentialOffer claimOffer, ProverCredentialRequest request, AttributeValuesList attributeValues, string revcationId = null, IBlobStorageReader reader = null)
         {
 
             string claimOfferJson = claimOffer.ToJson();
             string credentialRequestJson = request.ToJson();
             string attributeValuesJson = attributeValues.ToJson();
 
-            Logger.Info($"\n     claimOfferJson = {claimOfferJson}");
-            Logger.Info($"\n     credentialRequestJson = {credentialRequestJson}");
-            Logger.Info($"\n     attributeValuesJson = {attributeValuesJson}");
+            //Logger.Info($"\n     claimOfferJson = {claimOfferJson}");
+            //Logger.Info($"\n     credentialRequestJson = {credentialRequestJson}");
+            //Logger.Info($"\n     attributeValuesJson = {attributeValuesJson}");
 
             IssuerCreateCredentialResult credentialResult = AnonCredsAsync.IssuerCreateCredentialAsync(_wallet, claimOfferJson, credentialRequestJson, attributeValuesJson, revcationId, reader).Result;
 
-            return credentialResult.CredentialJson;
+            return JsonConvert.DeserializeObject<IssuerCredential>(credentialResult.CredentialJson);
         }
     }
 }

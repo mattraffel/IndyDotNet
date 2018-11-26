@@ -41,6 +41,7 @@ namespace Tests
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
+            LogManager.GetCurrentClassLogger().Info("Logging ending | testing ended");
         }
     }
 }

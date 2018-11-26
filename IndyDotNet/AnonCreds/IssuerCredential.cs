@@ -7,8 +7,10 @@ using Newtonsoft.Json.Converters;
 
 namespace IndyDotNet.AnonCreds
 {
-
-    public partial class IssuerCredential
+    /// <summary>
+    /// TODO:  this is exactly the same as <seealso cref="ProverCredentialRequest"/>
+    /// </summary>
+    public class IssuerCredential
     {
         [JsonProperty("prover_did")]
         public string ProverDid { get; set; }
@@ -17,16 +19,16 @@ namespace IndyDotNet.AnonCreds
         public string CredDefId { get; set; }
 
         [JsonProperty("blinded_ms")]
-        public BlindedMs BlindedMs { get; set; }
+        public IssuerBlindedMs BlindedMs { get; set; }
 
         [JsonProperty("blinded_ms_correctness_proof")]
-        public BlindedMsCorrectnessProof BlindedMsCorrectnessProof { get; set; }
+        public IssuerBlindedMsCorrectnessProof BlindedMsCorrectnessProof { get; set; }
 
         [JsonProperty("nonce")]
         public string Nonce { get; set; }
     }
 
-    public partial class BlindedMs
+    public class IssuerBlindedMs
     {
         [JsonProperty("u")]
         public string U { get; set; }
@@ -38,14 +40,14 @@ namespace IndyDotNet.AnonCreds
         public string[] HiddenAttributes { get; set; }
 
         [JsonProperty("committed_attributes")]
-        public CommittedAttributes CommittedAttributes { get; set; }
+        public IssuerCommittedAttributes CommittedAttributes { get; set; }
     }
 
-    public partial class CommittedAttributes
+    public class IssuerCommittedAttributes
     {
     }
 
-    public partial class BlindedMsCorrectnessProof
+    public class IssuerBlindedMsCorrectnessProof
     {
         [JsonProperty("c")]
         public string C { get; set; }
@@ -54,13 +56,13 @@ namespace IndyDotNet.AnonCreds
         public string VDashCap { get; set; }
 
         [JsonProperty("m_caps")]
-        public MCaps MCaps { get; set; }
+        public IssuerMCaps MCaps { get; set; }
 
         [JsonProperty("r_caps")]
-        public CommittedAttributes RCaps { get; set; }
+        public IssuerCommittedAttributes RCaps { get; set; }
     }
 
-    public partial class MCaps
+    public class IssuerMCaps
     {
         [JsonProperty("master_secret")]
         public string MasterSecret { get; set; }

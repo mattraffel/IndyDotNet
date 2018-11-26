@@ -1046,7 +1046,7 @@ namespace IndyDotNet.AnonCreds
         /// <param name="credId">(optional, default is a random one) identifier by which credential will be stored in the wallet</param>
         /// <param name="credReqMetadataJson">a credential request metadata created by indy_prover_create_credential_req</param>
         /// <param name="credJson">credential json received from issuer.</param>
-        /// <param name="credDefJson">redential definition json.</param>
+        /// <param name="credDefJson">credential definition json.</param>
         /// <param name="revRegDefJson">revocation registry definition json.</param>
         public static Task<string> ProverStoreCredentialAsync(IWallet wallet, string credId, string credReqMetadataJson, string credJson, string credDefJson, string revRegDefJson)
         {
