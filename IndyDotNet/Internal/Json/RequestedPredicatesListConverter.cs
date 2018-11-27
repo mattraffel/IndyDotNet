@@ -27,14 +27,12 @@ namespace IndyDotNet.Internal.Json
         {
             var list = value as RequestedPredicatesList;
 
-            //writer.WriteStartObject();
-            //writer.WritePropertyName("requested_attributes");
             writer.WriteStartObject();
 
             int count = 1;
             foreach (RequestedPredicate predicate in list)
             {
-                string objectName = $"attr{count}_referent";
+                string objectName = $"predicate{count}_referent";
                 writer.WritePropertyName(objectName);
                 writer.WriteStartObject();
                 writer.WritePropertyName("name");
