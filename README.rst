@@ -1,8 +1,11 @@
-﻿# WHAT
-
+﻿=========================================================
+WHAT
+=========================================================
 This project provides .NET facade for using IndySDK C callable API. 
 
-# WHY
+=========================================================
+WHY
+=========================================================
 
 IndySDK project does include a .NET wrapper. The IndySDK DotNet wrapper expects
 developers to know the intrisic details of IndySDK, explicitly needing to know the data
@@ -25,23 +28,33 @@ handling as well, unfortunately)
 - DotNetPay serves as an example for implementing specific Indy SDK Payment API.
 - For you developers, a true object oriented implementation that follows SOLID principles.
 
-# LICENSE
+LICENSE
+---------------------
+
 MIT  
 Apache 2.0
 
 
-# Components of this project
+Components of this project
+---------------------
+
 See [PROJECTS.md](PROJECTS.md)
 
-# Project Documentation
+Project Documentation
+---------------------
+
 [PROJECTS.md](PROJECTS.md) - describes the projects that make up this repo  
 [TESTING.md](TESTING.md) - how to setup environment for running the tests  
 [TODOS.md](TODOS.md) - important engineering topics to be completed 
 
-## Acknowledgements
+Acknowledgements
+---------------------
+
 Thank you to the indy-sdk-dotnet wrapper project members for assistance, even if indirectly
 helping us.  It would have been much more time consuming if we only had the IndySDK 
 rust libraries to rely on for information.
 
-# See Also
+See Also
+---------------------
+
 https://github.com/hyperledger/indy-sdk
