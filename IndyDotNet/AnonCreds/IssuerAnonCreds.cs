@@ -53,7 +53,7 @@ namespace IndyDotNet.AnonCreds
 
             IssuerCreateCredentialResult credentialResult = AnonCredsAsync.IssuerCreateCredentialAsync(_wallet, claimOfferJson, credentialRequestJson, attributeValuesJson, revcationId, reader).Result;
 
-            /*
+            /* here's what comes back.
                 {  
                    "schema_id":"id",
                    "cred_def_id":"Eo4fDS7JFYidRmCTYpxM8D:3:CL:1:TAG",
@@ -95,9 +95,9 @@ namespace IndyDotNet.AnonCreds
              */
 
 
-            Logger.Info($"\n ------- CreateCredential ----------- ");
-            Logger.Info($"\n     credentialJson = {credentialResult.CredentialJson}");
-            Logger.Info($"\n ------------------------------------ ");
+            //Logger.Info($"\n ------- CreateCredential ----------- ");
+            //Logger.Info($"\n     credentialJson = {credentialResult.CredentialJson}");
+            //Logger.Info($"\n ------------------------------------ ");
 
             return JsonConvert.DeserializeObject<IssuerCredential>(credentialResult.CredentialJson);
         }
