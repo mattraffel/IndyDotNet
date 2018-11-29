@@ -29,5 +29,6 @@
     <Folder Include="LedgerTests\" />
     <Folder Include="Demos\" />
     <Folder Include="InternalTests\" />
+    <Folder Include="BlobStorageTests\" />
   </ItemGroup>
 </Project>

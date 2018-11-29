@@ -11,3 +11,5 @@ correct with the changes made for IndyDotNet
 such as strings.  This is inconsistent.  
 [ ] General exception definitions
 [ ] Global handler for AggregateException 
+[ ] Design by Contract is not enforced.  Consider something like 
+https://github.com/Microsoft/CodeContracts
