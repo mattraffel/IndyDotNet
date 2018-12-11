@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IndyDotNet.Internal.OpenSSL
 {
-    public class RNG
+    internal class RNG
     {
 
         private static bool fSeeded = false;

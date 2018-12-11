@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IndyDotNet.Internal.OpenSSL
 {
-    public class BigNumber : IDisposable
+    internal class BigNumber : IDisposable
     {
 
         private IntPtr fBigNum;

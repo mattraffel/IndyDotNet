@@ -18,18 +18,7 @@ namespace IndyDotNet.Utils
                 return asci;
 
             byte[] hashBytes = asci.AsHashSha256();
-            BigNumber bigNumber = new BigNumber(hashBytes);
-            return bigNumber.ToString("d");
-
-            //StringBuilder builder = new StringBuilder();
-
-
-            //foreach (byte a in hashBytes)
-            //{
-            //    builder.Append(a);
-            //}
-
-            //return builder.ToString(); 
+            return new BigNumber(hashBytes).ToString();
         }
 
         public static byte[] AsHashSha256(this string text)
