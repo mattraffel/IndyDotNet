@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.10" />
+    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pool\" />
@@ -33,5 +34,6 @@
     <Folder Include="BlobStorage\" />
     <Folder Include="Internal\" />
     <Folder Include="Internal\Json\" />
+    <Folder Include="Internal\OpenSSL\" />
   </ItemGroup>
 </Project>

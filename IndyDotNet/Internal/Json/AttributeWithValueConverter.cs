@@ -55,6 +55,10 @@ namespace IndyDotNet.Internal.Json
         /// <summary>
         /// output needs to look like this
         /// {"age":["28","28"],"height":["175","175"],"name":["Alex","99262857098057710338306967609588410025648622308394250666849665532448612202874"],"sex":["male","5944657099558967239210949258394887428692050081607692519917050011144233115103"]}
+        /// 
+        /// TODO:  see https://jira.hyperledger.org/browse/IS-1101
+        /// needs to be changed to
+        /// {"age":{"raw":"28","encoded":"28"}}
         /// </summary>
         /// <param name="writer">Writer.</param>
         /// <param name="value">Value.</param>

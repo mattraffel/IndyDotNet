@@ -44,12 +44,12 @@ namespace IndyDotNetCLI
                 IndyDotNet.Utils.Logger.Info("application started");
 
                 Application.Init();
-                var top = Application.Top;
+                Toplevel top = Application.Top;
 
                 _mainWindow = new Window(new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1), "IndyDotNet Command Line");
                 top.Add(_mainWindow);
 
-                var menu = new MenuBar(new MenuBarItem[] 
+                MenuBar menu = new MenuBar(new MenuBarItem[] 
                 {
                     new MenuBarItem ("_Application", new MenuItem [] 
                         {
@@ -59,7 +59,6 @@ namespace IndyDotNetCLI
                 });
                 top.Add(menu);
 
-                // Add some controls
                 _mainWindow.Add(
                     _poolStatus,
                     _walletStatus,

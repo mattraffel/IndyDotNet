@@ -25,6 +25,7 @@ namespace IndyDotNetCLI.Views
         /// <param name="height">height of dialog box, default is 10</param>
         public EditDialog(string title, string message, int width = 60, int height = 10) : base(title, PADDING)
         {
+
             X = Pos.Center();
             Y = Pos.Center();
             Width = width;
@@ -55,14 +56,27 @@ namespace IndyDotNetCLI.Views
             this.Add(textLabel);
 
             const int EDIT_BOX_WIDTH = 40;
+            var editX = ComputeLeftOfCenter(width, EDIT_BOX_WIDTH + 10);
             _textInput = new TextField("")
                 {
-                    X = ComputeLeftOfCenter(width, EDIT_BOX_WIDTH),
+                    X = editX,
                     Y = Pos.Top(textLabel) + 1,
                     Width = EDIT_BOX_WIDTH
                 };
 
             this.Add(_textInput);
+
+            var browse = new Button("Browse");
+            browse.X = editX + EDIT_BOX_WIDTH + 1;
+            browse.Y = _textInput.Y;
+            browse.Clicked += delegate 
+                {
+                    FileDialog fileDialog = new FileDialog("Browse", "Pool configuration file", "", "");
+                    Application.Run(fileDialog);
+                    _textInput.Text = fileDialog.FilePath;
+                };
+
+            this.Add(browse);
         }
 
         /// <summary>

@@ -1,7 +1,9 @@
 ﻿using System;
-using Terminal.Gui;
-using IndyDotNet.Pool;
 using System.Collections.Generic;
+using Terminal.Gui;
+
+using IndyDotNet.Pool;
+
 
 namespace IndyDotNetCLI.Views
 {
@@ -50,6 +52,7 @@ namespace IndyDotNetCLI.Views
         {
             try
             {
+
                 EditDialog dlg = new EditDialog("Open Pool", "Enter pool name:");
                 var dlgResults = dlg.Show();
                 if (DialogConstants.OK == dlgResults.Item1)
