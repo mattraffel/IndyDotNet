@@ -9,9 +9,11 @@ namespace IndyDotNet.Utils
     {
         /// <summary>
         /// SHA256 encoded string converted to decimals
+        /// This implementation matches libindy vcx wrapper
+        /// https://github.com/hyperledger/indy-sdk/blob/f6a78a601f10d2e3498d060155276a69b96d93c5/vcx/libvcx/src/utils/openssl.rs#L5
         /// </summary>
         /// <returns>The encode.</returns>
-        /// <param name="asci">Asci.</param>
+        /// <param name="asci">extension method to a string</param>
         public static string AsSha256Decimal(this string asci)
         {
             if (asci.IsDigitsOnly())

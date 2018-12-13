@@ -29,7 +29,7 @@ namespace Tests
                 Layout = @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception}"
             };
             config.AddTarget(consoleTarget);
-            // config.AddRuleForAllLevels(consoleTarget);
+            config.AddRuleForAllLevels(consoleTarget);
             config.AddRule(LogLevel.Fatal, LogLevel.Trace, consoleTarget);
 
             LogManager.Configuration = config;
