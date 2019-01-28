@@ -72,8 +72,17 @@ namespace IndyDotNet.Pool
         public string alias { get; set; }
         public string blskey { get; set; }
         public string blskey_pop { get; set; }
+        /// <summary>
+        /// client IP/Port is where the app (consumers of indysdk, such as a 
+        /// mobile app) communicates with a node on client_ip/client_node
+        /// </summary>
+        /// <value>The client ip.</value>
         public string client_ip { get; set; }
         public int client_port { get; set; }
+        /// <summary>
+        /// server nodes IP/Port communicate on node_ip/node_port
+        /// </summary>
+        /// <value>The node ip.</value>
         public string node_ip { get; set; }
         public int node_port { get; set; }
         public List<string> services { get; set; }

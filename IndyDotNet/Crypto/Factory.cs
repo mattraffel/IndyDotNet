@@ -7,7 +7,7 @@ namespace IndyDotNet.Crypto
     {
         public static ICrypto GetCrypto(IWallet wallet)
         {
-            throw new NotImplementedException();
+            return new Crypto(wallet);
         }
     }
 }
