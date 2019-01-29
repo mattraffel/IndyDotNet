@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>0.1.1</PackageVersion>
+    <Authors>matt raffel </Authors>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <PackageLicenseUrl>https://github.com/tatmanblue/IndyDotNet/blob/master/LICENSE-MIT</PackageLicenseUrl>
+    <Owners>Matt Raffel</Owners>
+    <PackageProjectUrl>https://github.com/tatmanblue/IndyDotNet</PackageProjectUrl>
+    <Summary>
+This project provides .NET facade for using IndySDK C callable API.</Summary>
+    <PackageTags>C#, hyperledger, indy, SSI, identity, indysdk</PackageTags>
+    <Title>IndyDotNet</Title>
+    <Description>.NET wrapper (facade) for hyperledgers IndySDK library.  It can be used entirely excluding or inconjuction Hyperledgers indysdk dotnet wrapper.</Description>
+    <PackageId>IndyDotNet</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
@@ -20,6 +33,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.10" />
     <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.5.0" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pool\" />
@@ -35,5 +49,6 @@
     <Folder Include="Internal\" />
     <Folder Include="Internal\Json\" />
     <Folder Include="Internal\OpenSSL\" />
+    <Folder Include="Crypto\" />
   </ItemGroup>
 </Project>

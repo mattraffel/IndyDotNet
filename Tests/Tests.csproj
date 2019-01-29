@@ -34,5 +34,6 @@
     <Folder Include="Demos\" />
     <Folder Include="InternalTests\" />
     <Folder Include="BlobStorageTests\" />
+    <Folder Include="CryptoTests\" />
   </ItemGroup>
 </Project>
