@@ -17,11 +17,18 @@ namespace Tests.PaymentsTests
     /// is more involved
     /// </summary>
     [TestClass]
-    public class AllPaymentDotNetPayTests
+    public class AllPaymentDotNetPayTests 
     {
         private IPool _pool;
         private IWallet _wallet;
         private List<string> _filesCreated = new List<string>();
+        private static bool _registrationResult;
+
+        [ClassInitialize]
+        public static void Initialize(TestContext testContext)
+        {
+            _registrationResult = DotNetPay.Initialization.Register();
+        }
 
         [TestInitialize]
         public void Initialize()
@@ -77,8 +84,7 @@ namespace Tests.PaymentsTests
         [TestMethod]
         public void CreatePaymentAddressSuccessfully()
         {
-            bool registrationResult = DotNetPay.Initialization.Register();
-            Assert.IsTrue(registrationResult, "DotNetPay.Initialization.Register failed");
+            Assert.IsTrue(_registrationResult, "DotNetPay.Initialization.Register failed");
 
             IPayments payments = IndyDotNet.Payments.Factory.CreatePayment(_wallet);
 

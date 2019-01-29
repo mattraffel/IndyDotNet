@@ -24,12 +24,18 @@ namespace DotNetPay
             if (null != _handler)
             {
                 Logger.Warn("DotNetPay Payment Handler is already registered");
-                return false;
+                return true;
             }
 
             Logger.Info("Registering DotNetPay Payment Handlers");
-            _handler = new PaymentHandler();
-            return Factory.RegisterPaymentHandler(_handler);
+            var handler = new PaymentHandler();
+            bool registeredSuccessfully = Factory.RegisterPaymentHandler(handler);
+
+            // only save instance if handler succeeded in registering
+            if (registeredSuccessfully)
+                _handler = handler;
+
+            return registeredSuccessfully;
         }
     }
 }

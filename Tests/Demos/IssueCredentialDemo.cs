@@ -49,9 +49,12 @@ namespace Tests.Demos
         {
             try
             {
-                _wallet.Close();
-                _wallet.Delete();
-                _wallet = null;
+                if (null != _wallet)
+                {
+                    _wallet.Close();
+                    _wallet.Delete();
+                    _wallet = null;
+                }
 
                 if (null != _proverWallet)
                 {
@@ -59,7 +62,14 @@ namespace Tests.Demos
                     _proverWallet.Delete();
                     _proverWallet = null;
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"WriteDidAndQueryVeryKeyDemo failed to cleanup wallets {ex.Message}");
+            }
 
+            try 
+            { 
                 _pool.Close();
                 _pool.Delete();
                 _pool = null;
