@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>0.1.0</PackageVersion>
+    <PackageVersion>0.1.1</PackageVersion>
     <Authors>matt raffel </Authors>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageLicenseUrl>https://github.com/tatmanblue/IndyDotNet/blob/master/LICENSE-MIT</PackageLicenseUrl>
@@ -11,9 +11,9 @@
     <PackageProjectUrl>https://github.com/tatmanblue/IndyDotNet</PackageProjectUrl>
     <Summary>
 This project provides .NET facade for using IndySDK C callable API.</Summary>
-    <PackageTags>C#, hypderledger, indysdk</PackageTags>
+    <PackageTags>C#, hyperledger, indy, SSI, identity, indysdk</PackageTags>
     <Title>IndyDotNet</Title>
-    <Description>DotNet wrapper (facade) for hyperledgers IndySDK library.  Replaces Hyperledgers dotnet wrapper.</Description>
+    <Description>.NET wrapper (facade) for hyperledgers IndySDK library.  It can be used entirely excluding or inconjuction Hyperledgers indysdk dotnet wrapper.</Description>
     <PackageId>IndyDotNet</PackageId>
   </PropertyGroup>
 

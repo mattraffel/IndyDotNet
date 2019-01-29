@@ -8,7 +8,7 @@ IndySDK project does include a .NET wrapper. This project is different.
 
 The IndySDK .NET wrapper expects developers to know the intrinsic details of
 IndySDK, explicitly needing to know the data contracts.  Not necessarily a bad
-thing, but _it does make it every unfriendly and difficult to use._
+thing, but _it does make it very difficult to use._
 
 We believe .NET engineers should work with a library that is much easier to use
 and less fragile. This means an idiomatic, object oriented approach over json string data manipulation.
