@@ -14,6 +14,7 @@ This project provides .NET facade for using IndySDK C callable API.</Summary>
     <PackageTags>C#, hypderledger, indysdk</PackageTags>
     <Title>IndyDotNet</Title>
     <Description>DotNet wrapper (facade) for hyperledgers IndySDK library.  Replaces Hyperledgers dotnet wrapper.</Description>
+    <PackageId>IndyDotNet</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
