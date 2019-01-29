@@ -16,9 +16,8 @@ namespace IndyDotNet.Crypto
             _wallet = wallet;
         }
 
-        public string PackMessage(List<IDid> recipients, IDid sender, string message)
+        public PackedMessage PackMessage(List<IDid> recipients, IDid sender, string message)
         {
-
             List<string> recipientsVerkey = new List<string>();
             foreach(IDid did in recipients)
             {
@@ -30,22 +29,19 @@ namespace IndyDotNet.Crypto
 
             var byteResult = CryptoAsync.PackMessageAsync(_wallet, recipientsJson, sender.VerKey, messageBytes).Result;
 
-            string jsonResult = System.Text.UTF8Encoding.UTF8.GetString(byteResult);
-
-            return jsonResult;
+            return PackedMessage.FromBytes(byteResult);
         }
 
-        public string PackMessage(IDid recipient, IDid sender, string message)
+        public PackedMessage PackMessage(IDid recipient, IDid sender, string message)
         {
             List<IDid> list = new List<IDid>();
             list.Add(recipient);
             return PackMessage(list, sender, message);
         }
 
-        public UnpackedMessage UnpackMessage(string packedMessage)
+        public UnpackedMessage UnpackMessage(PackedMessage packedMessage)
         {
-            byte[] messageBytes = System.Text.UTF8Encoding.UTF8.GetBytes(packedMessage);
-            var byteResult = CryptoAsync.UnpackMessageAsync(_wallet, messageBytes).Result;
+            var byteResult = CryptoAsync.UnpackMessageAsync(_wallet, packedMessage.ToBytes()).Result;
 
             string jsonResult = System.Text.UTF8Encoding.UTF8.GetString(byteResult);
 

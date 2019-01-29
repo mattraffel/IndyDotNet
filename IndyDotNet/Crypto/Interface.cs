@@ -6,8 +6,8 @@ namespace IndyDotNet.Crypto
 {
     public interface ICrypto
     {
-        string PackMessage(List<IDid> recipients, IDid sender, string message);
-        string PackMessage(IDid recipient, IDid sender, string message);
-        UnpackedMessage UnpackMessage(string packedMessage);
+        PackedMessage PackMessage(List<IDid> recipients, IDid sender, string message);
+        PackedMessage PackMessage(IDid recipient, IDid sender, string message);
+        UnpackedMessage UnpackMessage(PackedMessage packedMessage);
     }
 }

@@ -82,9 +82,9 @@ namespace Tests.CryptoTests
         public void PackMessageSucceeds()
         {
             ICrypto crypto = IndyDotNet.Crypto.Factory.GetCrypto(_wallet);
-            string packedMessage = crypto.PackMessage(_senderDid, _senderDid, MESSAGE_TO_SEND);
+            PackedMessage packedMessage = crypto.PackMessage(_senderDid, _senderDid, MESSAGE_TO_SEND);
 
-            Assert.IsNotNull(packedMessage, "should have received over 600 bytes");
+            Assert.IsNotNull(packedMessage, "crypto.PackMessage failed to return PackMessage instance");
         }
 
         [TestMethod]
@@ -101,16 +101,16 @@ namespace Tests.CryptoTests
             recipients.Add(_senderDid);
             recipients.Add(IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed));
 
-            string packedMessage = crypto.PackMessage(recipients, _senderDid, MESSAGE_TO_SEND);
+            PackedMessage packedMessage = crypto.PackMessage(recipients, _senderDid, MESSAGE_TO_SEND);
 
-            Assert.IsNotNull(packedMessage, "should have received over 1000 bytes");
+            Assert.IsNotNull(packedMessage, "crypto.PackMessage failed to return PackMessage instance");
         }
 
         [TestMethod]
         public void UnpackPackedMessageSucceeds()
         {
             ICrypto crypto = IndyDotNet.Crypto.Factory.GetCrypto(_wallet);
-            string packedMessage = crypto.PackMessage(_senderDid, _senderDid, MESSAGE_TO_SEND);
+            PackedMessage packedMessage = crypto.PackMessage(_senderDid, _senderDid, MESSAGE_TO_SEND);
             UnpackedMessage unpackedMessage = crypto.UnpackMessage(packedMessage);
 
             Assert.IsNotNull(unpackedMessage, $"did not get back an unpacked message");
@@ -137,7 +137,8 @@ namespace Tests.CryptoTests
             };
             recipients.Add(IndyDotNet.Did.Factory.CreateMyDid(_pool, _wallet, seed));
 
-            string packedMessage = crypto.PackMessage(recipients, _senderDid, MESSAGE_TO_SEND);
+
+            PackedMessage packedMessage = crypto.PackMessage(recipients, _senderDid, MESSAGE_TO_SEND);
             UnpackedMessage unpackedMessage = crypto.UnpackMessage(packedMessage);
 
             Assert.IsNotNull(unpackedMessage, $"did not get back an unpacked message");
