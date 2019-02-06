@@ -46,19 +46,19 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<BuildRequestResult>(json);
         }
 
-        public BuildRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest)
+        public BuildRequestResult SignRequest(IWallet wallet, IDid submitterDid, BuildRequestResult buildRequest)
         {
-            string nymRequestJson = nymRequest.ToJson();
-            Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
+            string nymRequestJson = buildRequest.ToJson();
+            Logger.Info($"buildRequest as json: {nymRequestJson}");
             string json = SignRequest(wallet, submitterDid, nymRequestJson);
             Logger.Info($"SignRequestAsync returned: {json}");
 
             return JsonConvert.DeserializeObject<BuildRequestResult>(json);
         }
 
-        public SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult nymRequest)
+        public SignAndSubmitRequestResponse SignAndSubmitRequest(IPool pool, IWallet wallet, IDid submitterDid, BuildRequestResult buildRequest)
         {
-            string nymRequestJson = nymRequest.ToJson();
+            string nymRequestJson = buildRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {nymRequestJson}");
             string json = SignAndSubmitRequest(pool, wallet, submitterDid, nymRequestJson);
             Logger.Info($"SignAndSubmitRequestAsync returned: {json}");
@@ -66,9 +66,9 @@ namespace IndyDotNet.Ledger
             return JsonConvert.DeserializeObject<SignAndSubmitRequestResponse>(json);
         }
 
-        public SignAndSubmitRequestResponse SubmitRequest(IPool pool, BuildRequestResult nymRequest)
+        public SignAndSubmitRequestResponse SubmitRequest(IPool pool, BuildRequestResult buildRequest)
         {
-            string requestJson = nymRequest.ToJson();
+            string requestJson = buildRequest.ToJson();
             Logger.Info($"BuildNymRequestResult as json: {requestJson}");
             string json = SubmitRequest(pool, requestJson);
             Logger.Info($"SubmitRequest as json: {json}");
