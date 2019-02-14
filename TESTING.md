@@ -9,6 +9,7 @@ Tested and building against Indy-Sdk 1.8.0 (master)
 # Link to LibIndy
 1. Download and build LibIndy (requires rust) using master for now
 2. copy or create symbolic link to libindy.dylib.  it must be called indy for now
+
 eg `ln -s ~/src/work/indy-sdk/libindy/target/debug/libindy.dylib indy`
 
 # Setting up pools
