@@ -55,5 +55,5 @@ This is typically `{libindy source directory}\target\[debug | release]`
 build indy-sdk (if you can get the windows build of indy-sdk then you can skip this) using the standard `cargo build` command and, 
 if necessary, copy dll and lib to `LIBINDY_DIR`
 
-### Step 4 Building Libsovtoken
+### Step 4 Building IndyDotNet
 build IndyDotNet using the standard `dotnet build` command
