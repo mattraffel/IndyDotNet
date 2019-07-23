@@ -29,6 +29,14 @@ handling as well, unfortunately)
 - DotNetPay serves as an example for implementing specific Indy SDK Payment API.
 - For you developers, a true object oriented implementation that follows SOLID principles.
 
+# Nuget Package
+There is now a [nuget package available](https://www.nuget.org/packages/IndyDotNet/):
+
+As of the last update, run this command to install it:
+```
+dotnet add package IndyDotNet --version 0.1.1
+```
+
 # LICENSE
 MIT  
 Apache 2.0
