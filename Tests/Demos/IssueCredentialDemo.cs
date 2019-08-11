@@ -26,9 +26,16 @@ namespace Tests.Demos
 
         [TestInitialize]
         public void Initialize()
-        {
-            string file = PoolUtils.GenerateGenesisFile();
-            _filesCreated.Add(file);
+        {            
+
+            string file = Environment.GetEnvironmentVariable("POOL_GENESIS_FILE");
+            throw new Exception($"environment variable POOL_GENESIS_FILE is {file}");
+
+            if (string.IsNullOrEmpty(file))
+            {
+                file = PoolUtils.GenerateGenesisFile();
+                _filesCreated.Add(file);
+            }
 
             _pool = IndyDotNet.Pool.Factory.GetPool("IssueCredentialDemoPool", file);
             _pool.Create();
