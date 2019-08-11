@@ -59,4 +59,4 @@ rust libraries to rely on for information.
 https://github.com/hyperledger/indy-sdk
 
 # Indy-sdk version
-Works with indy-sdk master branch, and version 1.8.0
+Works with indy-sdk master branch, and version 1.8.0 - 1.10.0
