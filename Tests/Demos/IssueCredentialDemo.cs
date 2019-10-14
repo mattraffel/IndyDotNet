@@ -29,7 +29,7 @@ namespace Tests.Demos
         {            
 
             string file = Environment.GetEnvironmentVariable("POOL_GENESIS_FILE");
-            throw new Exception($"environment variable POOL_GENESIS_FILE is {file}");
+            // throw new Exception($"environment variable POOL_GENESIS_FILE is {file}");
 
             if (string.IsNullOrEmpty(file))
             {

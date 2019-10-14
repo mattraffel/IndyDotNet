@@ -21,8 +21,13 @@ namespace Tests.Demos
         [TestInitialize]
         public void Initialize()
         {
-            string file = PoolUtils.GenerateGenesisFile();
-            _filesCreated.Add(file);
+            string file = Environment.GetEnvironmentVariable("POOL_GENESIS_FILE");
+
+            if (string.IsNullOrEmpty(file))
+            {
+                file = PoolUtils.GenerateGenesisFile();
+                _filesCreated.Add(file);
+            }
 
             _pool = IndyDotNet.Pool.Factory.GetPool("WriteDidAndQueryVeryKeyDemoPool", file);
             _pool.Create();
