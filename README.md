@@ -41,6 +41,9 @@ dotnet add package IndyDotNet --version 0.1.1
 MIT  
 Apache 2.0
 
+# Status
+Functional/Maintainence updates until [Aries](https://github.com/hyperledger/aries) stablizes
+
 
 # Components of this project
 See [PROJECTS.md](PROJECTS.md)
