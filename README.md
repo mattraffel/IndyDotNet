@@ -44,6 +44,11 @@ Apache 2.0
 # Status
 Functional/Maintainence updates until [Aries](https://github.com/hyperledger/aries) stablizes
 
+## build status
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://app.circleci.com/pipelines/github/tatmanblue/IndyDotNet)
+
+## README Revision
+2020.03.10
 
 # Components of this project
 See [PROJECTS.md](PROJECTS.md)
@@ -63,3 +68,4 @@ https://github.com/hyperledger/indy-sdk
 
 # Indy-sdk version
 Works with indy-sdk master branch, and version 1.8.0 - 1.10.0
+
