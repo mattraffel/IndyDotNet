@@ -15,7 +15,7 @@ namespace IndyDotNet.Wallet
         /// Wallet handle.  Consumers shouldn't need to directly reference this
         /// </summary>
         /// <value>The handle.</value>
-        IntPtr Handle { get; }
+        int Handle { get; }
         /// <summary>
         /// Closes a wallet
         /// </summary>

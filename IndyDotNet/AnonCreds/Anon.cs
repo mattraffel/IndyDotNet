@@ -19,7 +19,7 @@ namespace IndyDotNet.AnonCreds
         /// Gets the handle.
         /// </summary>
         /// <value>The handle.</value>
-        public IntPtr Handle { get; }
+        public int Handle { get; }
 
         /// <summary>
         /// Gets the total count of items.
@@ -36,7 +36,7 @@ namespace IndyDotNet.AnonCreds
         /// <param name="handle">Handle.</param>
         /// <param name="total_count">Total count.</param>
         /// <param name="proofRequest">If set to <c>true</c> proof request.</param>
-        internal CredentialSearch(IntPtr handle, int? total_count, bool proofRequest)
+        internal CredentialSearch(int handle, int? total_count, bool proofRequest)
         {
             ProofRequest = proofRequest;
             TotalCount = total_count;
@@ -497,7 +497,7 @@ namespace IndyDotNet.AnonCreds
     #if __IOS__
         [MonoPInvokeCallback(typeof(ProverSearchCredentialsCompletedDelegate))]
     #endif
-        private static void ProverSearchCredentialsCallbackMethod(int xcommand_handle, int err, IntPtr search_handle, int total_count)
+        private static void ProverSearchCredentialsCallbackMethod(int xcommand_handle, int err, int search_handle, int total_count)
         {
             var taskCompletionSource = PendingCommands.Remove<CredentialSearch>(xcommand_handle);
 
@@ -525,7 +525,7 @@ namespace IndyDotNet.AnonCreds
     #if __IOS__
         [MonoPInvokeCallback(typeof(ProverSearchCredentialsForProofReqCompletedDelegate))]
     #endif
-        private static void ProverSearchCredentialsForProofRequestCallbackMethod(int xcommand_handle, int err, IntPtr search_handle)
+        private static void ProverSearchCredentialsForProofRequestCallbackMethod(int xcommand_handle, int err, int search_handle)
         {
             var taskCompletionSource = PendingCommands.Remove<CredentialSearch>(xcommand_handle);
 

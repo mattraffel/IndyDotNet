@@ -12,7 +12,7 @@ namespace IndyDotNet.Payments
     {    
     
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_create_payment_address(int command_handle, IntPtr wallet_handle, string payment_method, string config, CreatePaymentAddressDelegate cb);
+        internal static extern int indy_create_payment_address(int command_handle, int wallet_handle, string payment_method, string config, CreatePaymentAddressDelegate cb);
 
         /// <summary>
         /// Create payment address delegate.
@@ -23,13 +23,13 @@ namespace IndyDotNet.Payments
         /// </summary>
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_list_payment_addresses(int command_handle, IntPtr wallet_handle, ListPaymentAddressesDelegate cb);
+        internal static extern int indy_list_payment_addresses(int command_handle, int wallet_handle, ListPaymentAddressesDelegate cb);
 
         internal delegate void ListPaymentAddressesDelegate(int command_handle, int err, string payment_addresses_json);
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_add_request_fees(int command_handle, IntPtr wallet_handle, string submitter_did, string req_json, string inputs_json, string outputs_json, string extra, AddRequestFeesDelegate cb);
+        internal static extern int indy_add_request_fees(int command_handle, int wallet_handle, string submitter_did, string req_json, string inputs_json, string outputs_json, string extra, AddRequestFeesDelegate cb);
 
         /// <summary>
         /// Add request fees delegate.
@@ -47,7 +47,7 @@ namespace IndyDotNet.Payments
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_get_payment_sources_request(int command_handle, IntPtr wallet_handle, string submitter_did, string payment_address, BuildGetUtxoRequstDelegate cb);
+        internal static extern int indy_build_get_payment_sources_request(int command_handle, int wallet_handle, string submitter_did, string payment_address, BuildGetUtxoRequstDelegate cb);
 
         /// <summary>
         /// Build get utxo requst delegate.
@@ -65,7 +65,7 @@ namespace IndyDotNet.Payments
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_payment_req(int command_handle, IntPtr wallet_handle, string submitter_did, string inputs_json, string outputs_json, string extra, BuildPaymentRequestDelegate cb);
+        internal static extern int indy_build_payment_req(int command_handle, int wallet_handle, string submitter_did, string inputs_json, string outputs_json, string extra, BuildPaymentRequestDelegate cb);
 
         /// <summary>
         /// Build payment request delegate.
@@ -83,7 +83,7 @@ namespace IndyDotNet.Payments
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_mint_req(int command_handle, IntPtr wallet_handle, string submitter_did, string outputs_json, string extra, BuildMintReqDelegate cb);
+        internal static extern int indy_build_mint_req(int command_handle, int wallet_handle, string submitter_did, string outputs_json, string extra, BuildMintReqDelegate cb);
 
         /// <summary>
         /// Build mint req delegate.
@@ -92,7 +92,7 @@ namespace IndyDotNet.Payments
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_set_txn_fees_req(int command_handle, IntPtr wallet_handle, string submitter_did, string payment_method, string fees_json, BuildSetTxnFeesReqDelegate cb);
+        internal static extern int indy_build_set_txn_fees_req(int command_handle, int wallet_handle, string submitter_did, string payment_method, string fees_json, BuildSetTxnFeesReqDelegate cb);
         /// <summary>
         /// Build set txn fees req delegate.
         /// </summary>
@@ -100,7 +100,7 @@ namespace IndyDotNet.Payments
 
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_get_txn_fees_req(int command_handle, IntPtr wallet_handle, string submitter_did, string payment_method, BuildGetTxnFeesReqDelegate cb);
+        internal static extern int indy_build_get_txn_fees_req(int command_handle, int wallet_handle, string submitter_did, string payment_method, BuildGetTxnFeesReqDelegate cb);
         /// <summary>
         /// Build get txn fees req delegate.
         /// </summary>
@@ -116,7 +116,7 @@ namespace IndyDotNet.Payments
         public delegate void ParseGetTxnFeesResponseDelegate(int command_handle, int err, string fees_json);
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false)]
-        internal static extern int indy_build_verify_payment_req(int command_handle, IntPtr wallet_handle, string submitter_did, string receipt, BuildVerifyPaymentRequestDelegate cb);
+        internal static extern int indy_build_verify_payment_req(int command_handle, int wallet_handle, string submitter_did, string receipt, BuildVerifyPaymentRequestDelegate cb);
 
         /// <summary>
         /// Build verify payment request delegate.
