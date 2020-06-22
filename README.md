@@ -34,7 +34,7 @@ There is now a [nuget package available](https://www.nuget.org/packages/IndyDotN
 
 As of the last update, run this command to install it:
 ```
-dotnet add package IndyDotNet --version 0.1.1
+dotnet add package IndyDotNet --version 0.1.2
 ```
 
 # LICENSE
@@ -48,7 +48,7 @@ Functional/Maintainence updates until [Aries](https://github.com/hyperledger/ari
 [![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=shield)](https://app.circleci.com/pipelines/github/tatmanblue/IndyDotNet)
 
 ## README Revision
-2020.03.10
+2020.06.22
 
 # Components of this project
 See [PROJECTS.md](PROJECTS.md)
