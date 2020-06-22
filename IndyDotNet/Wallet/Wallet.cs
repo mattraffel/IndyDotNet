@@ -12,6 +12,7 @@ namespace IndyDotNet.Wallet
     /// </summary>
     internal class WalletInstance : IWallet
     {
+        private static readonly int INVALID_WALLET_HANDLE = 0;
         private WalletAsync _asyncHandle = null;
         private readonly WalletConfig _config;
         private readonly WalletCredentials _credentials;
@@ -22,7 +23,7 @@ namespace IndyDotNet.Wallet
             _credentials = credentials;
         }
 
-        public IntPtr Handle { get; internal set; } = IntPtr.Zero;
+        public int Handle { get; internal set; } = INVALID_WALLET_HANDLE;
 
         public void Close() 
         {
@@ -30,7 +31,7 @@ namespace IndyDotNet.Wallet
 
             _asyncHandle.CloseAsync().Wait();
             _asyncHandle = null;
-            Handle = IntPtr.Zero;
+            Handle = INVALID_WALLET_HANDLE;
         }
 
         public void Create()

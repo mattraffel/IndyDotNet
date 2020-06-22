@@ -53,7 +53,7 @@ namespace IndyDotNet.Pool
         #endregion
 
         private PoolAsync _asyncHandle = null;
-        public IntPtr Handle { get; protected internal set; }
+        public int Handle { get; protected internal set; }
         public string Name { get; protected internal set; }
         public string GenesisFileName { get; protected internal set; }
         public int ProtocolVersion { get; protected internal set; }

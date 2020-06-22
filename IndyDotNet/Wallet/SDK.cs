@@ -78,9 +78,11 @@ namespace IndyDotNet.Wallet
         /// <param name="value">A pointer to the value to be freed.</param>
         internal delegate ErrorCode WalletTypeFreeDelegate(int handle, IntPtr value);
 
-        internal delegate void OpenWalletCompletedDelegate(int xcommand_handle, int err, IntPtr wallet_handle);
+        internal delegate void OpenWalletCompletedDelegate(int xcommand_handle, int err, int wallet_handle);
 
         internal delegate void GenerateWalletKeyCompletedDelegate(int xcommand_handle, int err, string key);
+
+        internal delegate void GetRecordCompletedDelegate(int xcommand_handle, int err, string value);
         #endregion
 
         #region API methods
@@ -91,7 +93,7 @@ namespace IndyDotNet.Wallet
         internal static extern int indy_open_wallet(int command_handle, string config, string credentials, OpenWalletCompletedDelegate cb);
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern int indy_export_wallet(int command_handle, IntPtr wallet_handle, string export_config, IndyMethodCompletedDelegate cb);
+        internal static extern int indy_export_wallet(int command_handle, int wallet_handle, string export_config, IndyMethodCompletedDelegate cb);
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int indy_import_wallet(int command_handle, string config, string credentials, string import_config, IndyMethodCompletedDelegate cb);
@@ -104,7 +106,7 @@ namespace IndyDotNet.Wallet
         /// <param name="cb">The function that will be called when the asynchronous call is complete.</param>
         /// <returns>0 if the command was initiated successfully.  Any non-zero result indicates an error.</returns>
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern int indy_close_wallet(int command_handle, IntPtr wallet_handle, IndyMethodCompletedDelegate cb);
+        internal static extern int indy_close_wallet(int command_handle, int wallet_handle, IndyMethodCompletedDelegate cb);
 
         /// <summary>
         /// Deletes created wallet.
@@ -119,6 +121,56 @@ namespace IndyDotNet.Wallet
 
         [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int indy_generate_wallet_key(int command_handle, string config, GenerateWalletKeyCompletedDelegate cb);
+
+        /// <summary>
+        /// adds a record to the wallet
+        /// </summary>
+        /// <param name="command_handle"></param>
+        /// <param name="wallet_handle">wallet handle returned by indy_open_wallet.</param>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <param name="tags"></param>
+        /// <param name="cb"></param>
+        /// <returns></returns>
+        [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern int indy_add_wallet_record(int command_handle, int wallet_handle, string type, string id, string data, string tags, IndyMethodCompletedDelegate cb);
+
+        /// <summary>
+        /// 5
+        /// </summary>
+        /// <param name="command_handle"></param>
+        /// <param name="wallet_handle"></param>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="data"></param>
+        /// <param name="cb"></param>
+        /// <returns></returns>
+        [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern int indy_update_wallet_record(int command_handle, int wallet_handle, string type, string id, string data, IndyMethodCompletedDelegate cb);
+
+        /// <summary>
+        /// deletes a record in the wallet
+        /// </summary>
+        /// <param name="command_handle"></param>
+        /// <param name="wallet_handle">wallet handle returned by indy_open_wallet.</param>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="cb"></param>
+        /// <returns></returns>
+        [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern int indy_delete_wallet_record(int command_handle, int wallet_handle, string type, string id, IndyMethodCompletedDelegate cb);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command_handle"></param>
+        /// <param name="wallet_handle">wallet handle returned by indy_open_wallet.</param>
+        /// <param name="id"></param>
+        /// <param name="cb"></param>
+        /// <returns></returns>
+        [DllImport(Consts.NATIVE_LIB_NAME, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        internal static extern int indy_get_wallet_record(int command_handle, int wallet_handle, string type, string id, string options, GetRecordCompletedDelegate cb);
         #endregion
     }
 }

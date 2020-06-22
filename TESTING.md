@@ -1,12 +1,13 @@
 ﻿# Assumptions
 This document itself is work in progress.  Right now, its pretty terse and
 the makes more sense in my head than anyone else.  Feel free to contact [me](
-matt.raffel@evernym.com)
+matt.raffel@gmail.com)
 
 # Current Version supported
 Tested and building against Indy-Sdk 1.8.0 (master)
 
 # Link to LibIndy
+Note: this is OS specific, looks to be macos
 1. Download and build LibIndy (requires rust) using master for now
 2. copy or create symbolic link to libindy.dylib.  it must be called indy for now
 

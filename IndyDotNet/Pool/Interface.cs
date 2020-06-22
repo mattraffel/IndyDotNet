@@ -13,7 +13,7 @@ namespace IndyDotNet.Pool
         /// Pool handle
         /// </summary>
         /// <value>The handle.</value>
-        IntPtr Handle { get; }
+        int Handle { get; }
         /// <summary>
         /// The pool name.
         /// </summary>

@@ -17,7 +17,7 @@ namespace IndyDotNet.Pool
 #if __IOS__
         [MonoPInvokeCallback(typeof(OpenPoolLedgerCompletedDelegate))]
 #endif
-        private static void OpenPoolLedgerCallbackMethod(int command_handle, int err, IntPtr pool_handle)
+        private static void OpenPoolLedgerCallbackMethod(int command_handle, int err, int pool_handle)
         {
             var taskCompletionSource = PendingCommands.Remove<PoolAsync>(command_handle);
 
@@ -49,7 +49,7 @@ namespace IndyDotNet.Pool
         /// Initializes a new Pool instance with the specified handle.
         /// </summary>
         /// <param name="handle">The handle of the underlying unmanaged pool.</param>
-        private PoolAsync(IntPtr handle)
+        private PoolAsync(int handle)
         {
             Handle = handle;
             _requiresClose = true;
@@ -63,7 +63,7 @@ namespace IndyDotNet.Pool
         /// <summary>
         /// Gets the handle for the pool.
         /// </summary>
-        internal IntPtr Handle { get; }
+        internal int Handle { get; }
 
         /// <summary>
         /// Creates a new local pool configuration with the specified name that can be used later to open a connection to 
