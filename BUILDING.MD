@@ -13,7 +13,7 @@ notes should help with that.
 ### Step 1 Preparation 
 Start with reading the directions for [building indy sdk on windows](https://github.com/hyperledger/indy-sdk/blob/master/docs/build-guides/windows-build.md).
 
-The most important step is downloading the prebuilt dependencies (unless you want to build them yourself).
+The most important step is downloading the [prebuilt dependencies](https://repo.sovrin.org/windows/libindy/deps/).  Alternatively, you can build them yourself.
 
 Building LibIndy is not required if you are able to download the prebuilt LibIndy libraries.  Suggestion is to start [here](https://github.com/hyperledger/indy-sdk/blob/master/docs/build-guides/windows-build.md#build) and work backward if there are any problems.
 
